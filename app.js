@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var volunteers = require('./routes/volunteers');
 
 var app = express();
 
@@ -18,8 +19,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Configuration
-mongoose.connect('mongodb://localhost/ndcDB');
+let MongoURI = process.env.MONGOURI || 'mongodb://localhost/ndcDB';
+mongoose.connect(MongoURI, function(err, res){
+  if(err) {
+    console.log('Error connecting to: ' + MongoURI + '. ' + err);
+  } else {
+    console.log('Successful connection to ' + MongoURI + '.');
+  }
+});
 var Contact = require('./models/contact');
+var Volunteer = require('./models/volunteer');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -41,6 +50,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/volunteers', volunteers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
