@@ -11,6 +11,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var volunteers = require('./routes/volunteers');
+var records = require('./routes/records');
+var elections = require('./routes/elections');
 
 var app = express();
 
@@ -27,8 +29,11 @@ mongoose.connect(MongoURI, function(err, res){
     console.log('Successful connection to ' + MongoURI + '.');
   }
 });
+
+// Models
 var Contact = require('./models/contact');
 var Volunteer = require('./models/volunteer');
+var User = require('./models/user');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -51,6 +56,8 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/volunteers', volunteers);
+app.use('/records', records);
+app.use('/elections', elections);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

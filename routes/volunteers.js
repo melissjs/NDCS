@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
+
+// Models
 var Volunteer = require('../models/volunteer');
+var User = require('../models/user');
+var Timesheet = require('../models/timesheet');
 
 /* GET volunteers listing. */
 router.get('/', function(req, res, next) {
@@ -41,7 +45,7 @@ router.route('/:volunteer_id')
         next();
       })
   }).get(function(req, res) {
-      res.send('Get for volunteer ' + volunteer_id + volunteer.firstName);
+      res.send('Get for volunteer ' + volunteer_id + volunteer.firstName   );
   }).post(function(req, res) {
       res.send('Post for volunteer ' + volunteer_id);
   }).put(function(req, res) {
