@@ -20,8 +20,14 @@ router.route('/add')
     new Volunteer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        emailAddress: req.body.emailAddress,
+        exposeEmail: req.body.exposeEmail,
         phoneNumber: req.body.phoneNumber,
-        email: req.body.email
+        age: req.body.age,
+        sex: req.body.sex,
+        partyAffiliation: req.body.partyAffiliation,
+        shifts: req.body.shifts,
+        associatePollingStationKey: req.body.associatePollingStationKey
     }).save(function(err, volunteer, count) {
         if(err) {
             res.status(400).send('Error saving Volunteer: ' + err);

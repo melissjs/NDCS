@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var pollingstationSchema = new Schema({
   // id is created automatically
-  pollingStationKey: String,
+  pollingStationKey: Schema.Types.ObjectId,
   precinctNumber: String,
   streetAddress: String,
   unitNumber: String,
