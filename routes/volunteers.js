@@ -6,17 +6,34 @@ var Volunteer = require('../models/volunteer');
 var User = require('../models/user');
 var Timesheet = require('../models/timesheet');
 
-/* GET volunteers listing. */
+/* GET VOLUNTEERS*/
+// router.get('/', function(req, res, next) {
+//     Volunteer.find( function(err, volunteers, count) {
+//         // res.send('respond with a volunteer resource' + volunteers);
+//         res.send(volunteers);        
+//     })
+// });
+
+// // tryyyyyy
 router.get('/', function(req, res, next) {
-    Volunteer.find( function(err, volunteers, count) {
-        // res.send('respond with a volunteer resource' + volunteers);
-        res.send(volunteers);        
-    })
+  Volunteer.find()
+    .exec(function(err, volunteers) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: volunteers
+      });
+    });
 });
 
 // add volunteer
 router.route('/add')
-  .post(function(req, res) {
+  .post(function(req, res) {    
     new Volunteer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -30,14 +47,19 @@ router.route('/add')
         associatePollingStationKey: req.body.associatePollingStationKey
     }).save(function(err, volunteer, count) {
         if(err) {
-            res.status(400).send('Error saving Volunteer: ' + err);
+            res.status(400).json('Error saving Volunteer: ' + err);
         } else {
-            res.send('Volunteer created');
+            res.status(200).json('Volunteer created: ' + volunteer.firstName);
+            // res.status(201).json({
+            //   message: "volunteer saved",
+            //   volunteer: volunteer
+            // })
         }
     })
   });
 
 /* POST volunteers listing. */
+// for all volunteers in users team only
 router.post('/', function(req, res, next) {
     res.send('posted volunteer resource');
   });

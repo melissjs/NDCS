@@ -12,8 +12,8 @@ var volunteerSchema = new Schema({
   age: Number,
   sex: String,
   partyAffiliation: String,
-  shifts: String,
-  associatedPollingStationKey: [{type: Schema.Types.ObjectId, ref: 'Pollingstation'}]
+  shifts: [String],
+  associatedPollingStationKey: {type: Schema.Types.ObjectId, ref: 'Pollingstation'}
 });
 
 module.exports = mongoose.model('Volunteer', volunteerSchema);
