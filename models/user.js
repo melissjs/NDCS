@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   // id is created automatically
-  userName: {type: String, required: true},
+  username: {type: String, required: true},
   password: {type: String, required: true},
   volunteerKey: {type: Schema.Types.ObjectId, ref: 'Volunteer'}
 });
