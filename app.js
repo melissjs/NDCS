@@ -45,13 +45,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride());
 app.use(cors());
 
+/* CORS STUFF OUT WITH JWT? */
+
 // not sure
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
+// for testing with ionicdevapp
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+//   res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+//      next();
+// });
+
 
 app.use('/', index);
 app.use('/users', users);

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var jwt = require('jsonwebtoken');
 // Models
 var Volunteer = require('../models/volunteer');
 var User = require('../models/user');
@@ -13,6 +13,32 @@ var Timesheet = require('../models/timesheet');
 //         res.send(volunteers);        
 //     })
 // });
+
+/* VALIDATE AUTHORIZATION QUERY STRING */
+// router.use('/', function(req, res, next) {
+//   jwt.verify(req.query.token, 'secret', function(err, decoded) {
+//     if (err) {
+//       return res.status(401).json({
+//         title: 'Not authenticated',
+//         error: err
+//       });
+//     }
+//     next();
+//   });
+// });
+
+/* VALIDATE AUTHORIZATION HEADER*/
+router.use('/', function(req, res, next) {
+  jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
+    if (err) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: err
+      });
+    }
+    next();
+  });
+});
 
 // // tryyyyyy
 router.get('/', function(req, res, next) {
