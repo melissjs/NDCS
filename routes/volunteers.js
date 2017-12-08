@@ -61,6 +61,7 @@ router.get('/', function(req, res, next) {
 router.route('/add')
   .post(function(req, res) {    
     new Volunteer({
+        volunteerKey: req.body.volunteerKey,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         emailAddress: req.body.emailAddress,

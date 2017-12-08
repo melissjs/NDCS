@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var volunteerSchema = new Schema({
   // id is created automatically
-  volunteerKey: Schema.Types.ObjectId,
+  // volunteerKey: Schema.Types.ObjectId,
+  volunteerKey: String,
   firstName: String,
   lastName: String,
   emailAddress: String,
