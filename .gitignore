@@ -10,4 +10,5 @@ plugins/
 Thumbs.db
 *.*~
 www.zip
-
+.env
+notes.js
