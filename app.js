@@ -21,7 +21,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Configuration
-let MongoURI = process.env.MONGOURI || 'mongodb://localhost/ndcDB';
+// let MongoURI = process.env.MONGOURI || 'mongodb://localhost/ndcDB'; process.env.PORT_DEV
+let MongoURI = process.env.MONGOURI || process.env.MONGOURI_DEV; 
 mongoose.connect(MongoURI, function(err, res){
   if(err) {
     console.log('Error connecting to: ' + MongoURI + '. ' + err);
