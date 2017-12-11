@@ -73,17 +73,19 @@ router.route('/add')
         shifts: req.body.shifts,
         associatePollingStationKey: req.body.associatePollingStationKey
     }).save(function(err, volunteer, count) {
-        if(err) {
-            res.status(400).json('Error saving Volunteer: ' + err);
-        } else {
-            res.status(200).json('Volunteer created: ' + volunteer.firstName);
-            // res.status(201).json({
-            //   message: "volunteer saved",
-            //   volunteer: volunteer
-            // })
-        }
-    })
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred while creating volunteer',
+          error: err
+        });
+      }
+      res.status(201).json({
+        message: 'Volunteer created',
+        obj: result
+      });
+    });
   });
+  
 
 /* POST volunteers listing. */
 // for all volunteers in users team only

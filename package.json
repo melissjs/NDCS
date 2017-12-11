@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.1.0",
     "method-override": "^2.3.10",
     "mongoose": "^4.13.1",
+    "mongoose-unique-validator": "^1.0.6",
     "morgan": "~1.8.1",
     "passport": "^0.4.0",
     "serve-favicon": "~2.4.2",

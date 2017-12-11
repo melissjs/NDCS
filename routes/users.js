@@ -31,7 +31,7 @@ router.post('/add', function(req, res, next) {
   user.save(function(err, result){
     if (err) {
       return res.status(500).json({
-        title: 'An error occurred',
+        title: 'An error occurred while creating user',
         error: err
       });
     }
@@ -47,7 +47,7 @@ router.post('/signin', function(req, res, next) {
   User.findOne({username: req.body.username}, function(err, user){
     if (err) {
       return res.status(500).json({
-        title: 'An error occured',
+        title: 'An error occured while signing in user',
         error: err
       });
     }
