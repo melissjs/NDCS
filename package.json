@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node node_modules/.bin/supervisor ./bin/www"
+    "start": "node node_modules/.bin/supervisor ./bin/www",
+    "test": "mocha"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -25,6 +26,7 @@
     "supervisor": "^0.12.0"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "mocha": "^4.0.1"
   }
 }
