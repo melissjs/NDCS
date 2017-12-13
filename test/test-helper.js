@@ -1,12 +1,23 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/ndcDB');
+mongoose.Promise = global.Promise;
 
-mongoose.connection
-  .once('open', () => { console.log('Opened connection') })
-  .on('error', (error) => { console.log('Warning', error) });
+before((done) => {
+  mongoose.connect('mongodb://localhost/ndcDB_test', {useMongoClient: true});
+  mongoose.connection
+    .once('open', () => { 
+      done();
+    })
+    .on('error', (error) => { 
+      console.warn('Warning', error); 
+    });
+  });
 
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => {
-    done();
-  });
+  mongoose.connection.collections.users.remove({})
+    .then(() => {done()})
+    .catch((e) => done(e));
 });
+
+
+
+

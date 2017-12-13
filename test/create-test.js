@@ -11,6 +11,9 @@ describe('Creating records', () => {
       .then(() => {
         assert(!thisUser.isNew);
         done();
+      })
+      .catch((e) => {
+        done(e);
       });
   });
 })
