@@ -44,7 +44,7 @@ describe('Deleting records', () => {
     });
   });
 
-  it('class methos findByIdAndRemove', (done) => {
+  it('class method findByIdAndRemove', (done) => {
     User.findByIdAndRemove(joe._id)
     .then(() => {
       User.findOne({ username: 'joe' })
