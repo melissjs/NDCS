@@ -14,7 +14,7 @@ before((done) => {
 
 beforeEach((done) => {
   mongoose.connection.collections.users.remove({})
-    .then(() => {done()})
+    .then(() => {console.log('remove all'); done()})
     .catch((e) => done(e));
 });
 
