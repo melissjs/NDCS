@@ -16,6 +16,10 @@ beforeEach((done) => {
   mongoose.connection.collections.users.remove({})
     .then(() => done())
     .catch((e) => done(e));
+
+  // mongoose.connection.collections.volunteers.remove({})
+  // .then(() => done())
+  // .catch((e) => done(e));
 });
 
 

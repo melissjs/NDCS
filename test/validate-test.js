@@ -1,31 +1,64 @@
-// const User = require('../models/user');
-// const assert = require('assert');
+const Volunteer = require('../models/volunteer');
+const assert = require('assert');
 
-// describe('Updating records', () => {
-//   let joe;
+describe('Validation tests', () => {
+  // let thisVolunteer;
 
-//   beforeEach((done) => {
-//     joe = new User({ username: 'joe', password: '11111111' });
-//     joe.save()
-//       .then(() => done());
-//   });
+  // beforeEach((done) => {
+  //   thisVolunteer = new Volunteer({ 
+  //     volunteerKey: '5a3047c071b36b39cfce6640',
+  //     firstName: 'thisVolunteerFirstname', 
+  //     lastName: 'thisVolunteerLastName',
+  //     emailAddress: 'thisVolunteerEmailAddress',
+  //     exposeEmail: 'thisVolunteerExposeEmail',
+  //     phoneNumber: 'thisVolunteerPhoneNumber',
+  //     age: 'thisVolunteerAge',
+  //     sex: 'thisVolunteerSex',
+  //     partyAffiliation: 'thisVolunteerPartyAffiliation',
+  //     shifts: 'thisVolunteerShifts',
+  //     associatedPollingStationKey: '5a3047c071b36b39cfce6640'
+  //  });
+  //   thisVolunteer.save()
+  //     .then(() => done());
+  // });
 
-//   function assertName(operation, done) {
-//     operation
-//     .then(() => {
-//       User.find({})
-//         .then((users) => {
-//           assert(users.length === 1);
-//           assert(users[0].username === 'alex');
-//           done();
-//         })
-//     })
-//   }
+  it('Requires a first name', () => {
+    const thisVolunteer = new Volunteer({ 
+      volunteerKey: '5a3047c071b36b39cfce6640',
+      firstName: undefined, 
+      lastName: 'thisVolunteerLastName',
+      emailAddress: 'thisVolunteerEmailAddress',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 'thisVolunteerPhoneNumber',
+      age: 'thisVolunteerAge',
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      shifts: 'thisVolunteerShifts',
+      associatedPollingStationKey: '5a3047c071b36b39cfce6640'
+   });
+   const validationResult = thisVolunteer.validateSync();
+   const { message } = validationResult.errors.firstName;
+   assert(message === 'First name is required')
+  });
 
-//   it('Model instance set and save', (done) => {
-//     joe.set('username', 'alex');
-//     assertName(joe.save(), done);
-//   });
+  it('Requires a last name with at least two characters', () => {
+    const thisVolunteer = new Volunteer({ 
+      volunteerKey: '5a3047c071b36b39cfce6640',
+      firstName: 'thisVolunteerFirstName', 
+      lastName: 't',
+      emailAddress: 'thisVolunteerEmailAddress',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 'thisVolunteerPhoneNumber',
+      age: 'thisVolunteerAge',
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      shifts: 'thisVolunteerShifts',
+      associatedPollingStationKey: '5a3047c071b36b39cfce6640'
+   });
+   const validationResult = thisVolunteer.validateSync();
+   const { message } = validationResult.errors.lastName;
+   assert(message === 'Last name must be at least two characters')
+  });
 
-// })
+})
 
