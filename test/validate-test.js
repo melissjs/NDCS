@@ -60,5 +60,28 @@ describe('Validation tests', () => {
    assert(message === 'Last name must be at least two characters')
   });
 
+  it('Disallows invalid records to be saved', () => {
+    const thisVolunteer = new Volunteer({ 
+      volunteerKey: '5a3047c071b36b39cfce6640',
+      firstName: undefined, 
+      lastName: 't',
+      emailAddress: 'thisVolunteerEmailAddress',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 'thisVolunteerPhoneNumber',
+      age: 'thisVolunteerAge',
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      shifts: 'thisVolunteerShifts',
+      associatedPollingStationKey: '5a3047c071b36b39cfce6640'
+   });
+   thisVolunteer.save()
+    .catch((validationResult) => {
+      const messageFirst = validationResult.errors.firstName.message;
+      const messageLast = validationResult.errors.lastName.message;
+      assert(messageFirst === 'First name is required')
+      assert(messageLast === 'Last name must be at least two characters');
+    });
+  });
+
 })
 
