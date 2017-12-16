@@ -2,25 +2,6 @@ const Volunteer = require('../models/volunteer');
 const assert = require('assert');
 
 describe('Validation tests', () => {
-  // let thisVolunteer;
-
-  // beforeEach((done) => {
-  //   thisVolunteer = new Volunteer({ 
-  //     volunteerKey: '5a3047c071b36b39cfce6640',
-  //     firstName: 'thisVolunteerFirstname', 
-  //     lastName: 'thisVolunteerLastName',
-  //     emailAddress: 'thisVolunteerEmailAddress',
-  //     exposeEmail: 'thisVolunteerExposeEmail',
-  //     phoneNumber: 'thisVolunteerPhoneNumber',
-  //     age: 'thisVolunteerAge',
-  //     sex: 'thisVolunteerSex',
-  //     partyAffiliation: 'thisVolunteerPartyAffiliation',
-  //     shifts: 'thisVolunteerShifts',
-  //     associatedPollingStationKey: '5a3047c071b36b39cfce6640'
-  //  });
-  //   thisVolunteer.save()
-  //     .then(() => done());
-  // });
 
   it('Requires a first name', () => {
     const thisVolunteer = new Volunteer({ 

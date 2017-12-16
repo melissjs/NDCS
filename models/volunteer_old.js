@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const ScheduleSchema = require('../schemas/shift');
+const scheduleSchema = require('../schemas/shift');
 var mongooseUniqueValidator = require('mongoose-unique-validator')
 
 var volunteerSchema = new Schema({
@@ -13,7 +13,8 @@ var volunteerSchema = new Schema({
   age: {type: Number, required: true},
   sex: {type: String, required: true},
   partyAffiliation: {type: String, required: true},
-  schedule: [ScheduleSchema]
+  shifts: {type: [String], required: false},
+  associatedPollingStationKey: {type: Schema.Types.ObjectId, ref: 'Pollingstation', required: false}
 });
 
 volunteerSchema.plugin(mongooseUniqueValidator);
