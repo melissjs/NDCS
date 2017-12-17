@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Volunteer = require('../models/volunteer');
 const assert = require('assert');
 
 describe('Deleting records', () => {

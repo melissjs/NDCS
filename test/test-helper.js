@@ -12,16 +12,27 @@ before((done) => {
     });
   });
 
+// beforeEach((done) => {
+//   mongoose.connection.collections.users.remove({})
+//     .then(() => done())
+//     .catch((e) => done(e));
+// });
+
+// beforeEach((done) => {
+//   mongoose.connection.collections.volunteers.remove({})
+//   .then(() => done())
+//   .catch((e) => done(e));
+// });
+
 beforeEach((done) => {
-  mongoose.connection.collections.users.remove({})
-    .then(() => done())
-    .catch((e) => done(e));
-
-  // mongoose.connection.collections.volunteers.remove({})
-  // .then(() => done())
-  // .catch((e) => done(e));
+  const { users, volunteers, pollingstations, elections } =  mongoose.connection.collections; 
+  users.remove({})
+  .then(volunteers.remove({}))
+  // .then(pollingstations.remove({}))
+  // .then(elections.remove({}))
+  .then(() => done())
+  .catch((e) => done(e));
 });
-
 
 
 
