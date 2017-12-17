@@ -48,18 +48,20 @@ describe('Associations', () => {
     })
 
     thisVolunteer.userId = thisUser;
-    thisVolunteer.schedule.pollingStationId = thisPollingStation;
-    thisVolunteer.schedule.electionId = thisElection;
+    thisVolunteer.schedule[0].pollingStationId = thisPollingStation;
+    thisVolunteer.schedule[0].electionId = thisElection;
 
     Promise.all([thisUser.save(), thisVolunteer.save(), thisPollingStation.save(), thisElection.save()])
     .then(() => done());
     
   });
 
-  it.only('Saves relation  between user and volunteer', (done) => {
-    Volunteer.findOne({ firstName: 'thisVolunteerFirstName' })
-    .then((volunteer) => console.log(volunteer));
-    done();
+  it('Saves relation between user and volunteer', (done) => {
+    Volunteer.findOne({ firstName: 'thisVolunteerFirstName' }).populate('userId')
+    .then((volunteer) => {
+      assert(volunteer.userId.password === 'thisPassword');
+      done();
+    });
   })
 
 })

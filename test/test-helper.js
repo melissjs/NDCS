@@ -28,8 +28,8 @@ beforeEach((done) => {
   const { users, volunteers, pollingstations, elections } =  mongoose.connection.collections; 
   users.remove({})
   .then(volunteers.remove({}))
-  // .then(pollingstations.remove({}))
-  // .then(elections.remove({}))
+  .then(pollingstations.remove({}))
+  .then(elections.remove({}))
   .then(() => done())
   .catch((e) => done(e));
 });
