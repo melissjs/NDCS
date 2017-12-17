@@ -14,7 +14,7 @@ describe('Associations', () => {
     });
 
     thisVolunteer = new Volunteer({ 
-      userId: '5a3047c071b36b39cfce6640',
+      // userId: '5a3047c071b36b39cfce6640',
       volunteerRoles: ['user', 'volunteer'],
       firstName: 'thisVolunteerFirstName', 
       lastName: 'thisVolunteerLastName',
@@ -23,7 +23,12 @@ describe('Associations', () => {
       phoneNumber: 'thisVolunteerPhoneNumber',
       age: 22,
       sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation'
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      schedule: [{
+        // pollingStationId: '5a3047c071b36b39cfce6640',
+        // electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2]
+      }]
    });
 
     thisElection = new Election({
@@ -42,6 +47,19 @@ describe('Associations', () => {
       zip: '00000'
     })
 
+    thisVolunteer.userId = thisUser;
+    thisVolunteer.schedule.pollingStationId = thisPollingStation;
+    thisVolunteer.schedule.electionId = thisElection;
+
+    Promise.all([thisUser.save(), thisVolunteer.save(), thisPollingStation.save(), thisElection.save()])
+    .then(() => done());
+    
+  });
+
+  it.only('Saves relation  between user and volunteer', (done) => {
+    Volunteer.findOne({ firstName: 'thisVolunteerFirstName' })
+    .then((volunteer) => console.log(volunteer));
+    done();
   })
 
 })
