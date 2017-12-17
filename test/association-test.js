@@ -38,6 +38,7 @@ describe('Associations', () => {
     });
 
     thisPollingStation = new Pollingstation({
+      // electionId: 'thisElectionId',
       precinctNumber: 'thisprecinctNumber',
       streetAddress: 'thisStreetAddress',
       unitNumber: 'thisUnitNumber',
@@ -50,6 +51,7 @@ describe('Associations', () => {
     thisVolunteer.userId = thisUser;
     thisVolunteer.schedule[0].pollingStationId = thisPollingStation;
     thisVolunteer.schedule[0].electionId = thisElection;
+    thisPollingStation.electionId = thisElection;
 
     Promise.all([thisUser.save(), thisVolunteer.save(), thisPollingStation.save(), thisElection.save()])
     .then(() => done());
@@ -58,10 +60,26 @@ describe('Associations', () => {
 
   it('Saves relation between user and volunteer', (done) => {
     Volunteer.findOne({ firstName: 'thisVolunteerFirstName' }).populate('userId')
-    .then((volunteer) => {
-      assert(volunteer.userId.password === 'thisPassword');
-      done();
-    });
+      .then((volunteer) => {
+        assert(volunteer.userId.password === 'thisPassword');
+        done();
+      });
+  })
+
+  it.only('Saves a full relation graph', (done) => {
+    Volunteer.findOne({ firstName: 'thisVolunteerFirstName' })
+      .populate('userId')
+      .populate({
+        path: 'schedule.pollingStationId',
+        populate: { 
+          path: 'electionId',
+          model: Election
+        }
+      })
+      .then((volunteer) => {
+        console.log(volunteer.schedule[0]);
+        done();
+      })
   })
 
 })
