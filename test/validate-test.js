@@ -61,7 +61,7 @@ describe('Validation tests', () => {
     });
   });
 
-    xit('can validate schedule sub schema (shifts custom validation)', (done) => {
+    it('can validate schedule sub schema (shifts custom validation)', (done) => {
       const thisVolunteer = new Volunteer({
         userId: '5a3047c071b36b39cfce6640',
         volunteerRoles: ['user', 'volunteer'],
@@ -81,13 +81,13 @@ describe('Validation tests', () => {
       });
       thisVolunteer.save()
       .catch((validationResult) => {
-        console.log('RESULT', validationResult.errors)
-        // const { message } = validationResult.errors;
-        // assert(message === 'Invalid shift options')
+        const { message } = validationResult.errors['schedule.0.shifts'];
+        assert(message === 'Invalid shift options');
+        done();
       });
     });
 
-  xit('can validate schedule sub schema (electionId required)', (done) => {
+  it('can validate schedule sub schema (electionId required)', (done) => {
     const thisVolunteer = new Volunteer({
       userId: '5a3047c071b36b39cfce6640',
       volunteerRoles: ['user', 'volunteer'],
@@ -107,9 +107,9 @@ describe('Validation tests', () => {
     });
     thisVolunteer.save()
     .catch((validationResult) => {
-      console.log('RESULT', validationResult.errors)
-      // const { message } = validationResult.errors;
-      // assert(message === 'Invalid shift options')
+      const { message } = validationResult.errors['schedule.0.electionId'];
+      assert(message === 'Path `electionId` is required.');
+      done();
     });
   });
 

@@ -66,18 +66,19 @@ describe('Associations', () => {
       });
   })
 
-  it.only('Saves a full relation graph', (done) => {
+  it('Saves a full relation graph', (done) => {
     Volunteer.findOne({ firstName: 'thisVolunteerFirstName' })
       .populate('userId')
       .populate({
         path: 'schedule.pollingStationId',
         populate: { 
           path: 'electionId',
-          model: Election
+          model: 'Election'
         }
       })
       .then((volunteer) => {
-        console.log(volunteer.schedule[0]);
+        assert(volunteer.userId.password === 'thisPassword');
+        assert(volunteer.schedule[0].electionId.toString() == volunteer.schedule[0].pollingStationId.electionId._id.toString());
         done();
       })
   })

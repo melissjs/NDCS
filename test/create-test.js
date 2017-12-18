@@ -30,7 +30,12 @@ describe('Creating records (user and volunteer, etc)', () => {
       phoneNumber: 'thisVolunteerPhoneNumber',
       age: 22,
       sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation'
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      schedule: [{
+        pollingStationId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3]
+      }]
    });
     thisVolunteer.save()
       .then(() => {
