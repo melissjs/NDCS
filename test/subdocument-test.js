@@ -5,7 +5,7 @@ const THM = require('./test-helper-methods');
 describe('Creating, adding and deleting Sub Schemas (volunteer schedule)', () => {
 
   it('can create volunteer with schedule sub schema', (done) => {
-    const thisVolunteer = THM.thisUser;
+    const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
@@ -15,7 +15,7 @@ describe('Creating, adding and deleting Sub Schemas (volunteer schedule)', () =>
   })
 
   it('can create subsequent schedule array items to existing volunteer', (done) => {
-    const thisVolunteer = THM.thisUser;
+    const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
@@ -34,7 +34,7 @@ describe('Creating, adding and deleting Sub Schemas (volunteer schedule)', () =>
   });
 
   it('can create delete schedule array item from existing volunteer', (done) => {
-    const thisVolunteer = THM.thisUser;
+    const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
