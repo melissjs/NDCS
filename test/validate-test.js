@@ -1,7 +1,28 @@
 const Volunteer = require('../models/volunteer');
+const User = require('../models/user');
 const assert = require('assert');
 
 describe('Validation tests', () => {
+
+  it('Requires a unique username', (done) => {
+    const thisUser = new User({
+      username: 'thisUsername',
+      password: 'thisPassword'
+    });
+    thisUser.save()
+    .then(() => {
+      const thisOtherUser = new User({
+        username: 'thisUsername',
+        password: 'thisPassword'
+      });
+      thisOtherUser.validate()
+      .catch((validationResult) => {
+        const { message } = validationResult.errors.username;
+        assert(message === 'Username must be unique, please enter another username');
+        done();
+      })
+    })
+  })
 
   it('Requires a first name', () => {
     const thisVolunteer = new Volunteer({ 
