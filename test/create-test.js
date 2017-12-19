@@ -1,27 +1,15 @@
 const User = require('../models/user');
-const Volunteer = require('../models/volunteer');
+const Election = require('../models/election');
+const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
+const thm = require('./test-helper-methods');
 
 describe('Creating records (user and volunteer, etc)', () => {
 
   it('saves a user', (done) => {
     const thisUser = new User({
       username: 'thisUsername',
-      password: 'thisPassword'
-    });
-    thisUser.save()
-      .then(() => {
-        assert(!thisUser.isNew);
-        done();
-      })
-      .catch((e) => {
-        done(e);
-      });
-  });
-
-  it('saves a volunteer', (done) => {
-    const thisVolunteer = new Volunteer({ 
-      userId: '5a3047c071b36b39cfce6640',
+      password: 'thisPassword',
       volunteerRoles: ['user', 'volunteer'],
       firstName: 'thisVolunteerFirstName', 
       lastName: 'thisVolunteerLastName',
@@ -37,14 +25,51 @@ describe('Creating records (user and volunteer, etc)', () => {
         shifts: [1,2,3]
       }]
    });
-    thisVolunteer.save()
+    thisUser.save()
       .then(() => {
-        assert(!thisVolunteer.isNew);
+        assert(!thisUser.isNew);
         done();
       })
       .catch((e) => {
         done(e);
       });
+  });
+
+  it('saves an election', (done) => {
+    thisElection = new Election({
+      electionTitle: '2018 Midterm Election',
+      electionType: 'primary',
+      country: 'USA'
+    });
+    thisElection.save()
+      .then(() => {
+        assert(!thisElection.isNew);
+        done();
+      })
+      .catch((e) => {
+        done(e);
+      });
+  });
+
+  it('saves a pollingstation', (done) => {
+    thisPollingStation = new Pollingstation({
+      electionId: '5a3047c071b36b39cfce6640',
+      precinctNumber: 'thisprecinctNumber',
+      streetAddress: 'thisStreetAddress',
+      unitNumber: 'thisUnitNumber',
+      roomNumber: 'thisRoomNumber',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: '00000'
+    })
+    thisPollingStation.save()
+    .then(() => {
+      assert(!thisPollingStation.isNew);
+      done();
+    })
+    .catch((e) => {
+      done(e);
+    });
   });
 
 })

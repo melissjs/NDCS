@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var pollingstationSchema = new Schema({
-  electionId: {type: Schema.Types.ObjectId, required: true, ref: 'Election'},
+  // electionId: {type: Schema.Types.ObjectId, required: true, ref: 'Election'},
   precinctNumber: String,
   streetAddress: String,
   unitNumber: String,

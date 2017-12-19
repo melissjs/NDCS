@@ -7,6 +7,7 @@ function typeValidator(type) {
 }
 
 var electionSchema = new Schema({
+  pollingStationId: {type: [Schema.Types.ObjectId], ref: 'Pollingstation'},
   electionTitle: String,
   electionType: {type: String, validate: {validator: typeValidator, message: 'Type does not exist'}},
   country: String
