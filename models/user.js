@@ -30,6 +30,6 @@ userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 })
 
-userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another {PATH}' });
+userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });
 
 module.exports = mongoose.model('User', userSchema);
