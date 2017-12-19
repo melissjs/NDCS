@@ -1,32 +1,32 @@
-// const User = require('../models/user');
-// const assert = require('assert');
+const User = require('../models/user');
+const assert = require('assert');
+const THM = require('./test-helper-methods');
 
-// describe('Reading records', () => {
-//   let joe;
+describe('Reading records', () => {
+  let thisUser;
 
-//   beforeEach((done) => {
-//     joe = new User({ username: 'joe', password: '11111111' });
-//     joe.save()
-//       .then(() => done());
-//   });
+  beforeEach((done) => {
+    thisUser = THM.thisUser;
+    thisUser.save()
+      .then(() => done());
+  });
 
-//   it('Reads all users named Joe', (done) => {
-//     User.find({ username: 'joe'})
-//     .then((users) => {
-//       // assert(users[0]._id.toString() === joe._id.toString());
-//       var joeFromMongo = users.find((obj) => {return obj._id.toString() === joe._id.toString()});
-//       assert(joeFromMongo != undefined)
-//       done();
-//     })
-//   });
+  it('Reads all users named thisUsername', (done) => {
+    User.find({ username: 'thisUsername'})
+    .then((users) => {
+      console.log(users)
+      assert(users[0]._id.toString() === thisUser._id.toString());
+      done();
+    })
+  });
 
-//   it('finds a user with _id', (done) => {
-//     User.findOne({ _id: joe._id })
-//     .then((user) => {
-//       assert(user.username === 'joe');
-//       done();
-//     });
-//   })
+  it('finds a user with _id', (done) => {
+    User.findOne({ _id: thisUser._id })
+    .then((user) => {
+      assert(user.username === 'thisUsername');
+      done();
+    });
+  })
 
-// })
+})
 

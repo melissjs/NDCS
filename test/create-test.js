@@ -7,24 +7,7 @@ const THM = require('./test-helper-methods');
 describe('Creating records (user and volunteer, etc)', () => {
 
   it('saves a user', (done) => {
-    const thisUser = new User({
-      username: 'thisUsername',
-      password: 'thisPassword',
-      volunteerRoles: ['user', 'volunteer'],
-      firstName: 'thisVolunteerFirstName', 
-      lastName: 'thisVolunteerLastName',
-      emailAddress: 'thisVolunteerEmailAddress',
-      exposeEmail: 'thisVolunteerExposeEmail',
-      phoneNumber: 'thisVolunteerPhoneNumber',
-      age: 22,
-      sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation',
-      schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
-        shifts: [1,2,3]
-      }]
-   });
+    const thisUser = THM.thisUser;
     thisUser.save()
       .then(() => {
         assert(!thisUser.isNew);
@@ -36,11 +19,7 @@ describe('Creating records (user and volunteer, etc)', () => {
   });
 
   it('saves an election', (done) => {
-    thisElection = new Election({
-      electionTitle: '2018 Midterm Election',
-      electionType: 'primary',
-      country: 'USA'
-    });
+    thisElection = THM.thisElection;
     thisElection.save()
       .then(() => {
         assert(!thisElection.isNew);
@@ -52,16 +31,7 @@ describe('Creating records (user and volunteer, etc)', () => {
   });
 
   it('saves a pollingstation', (done) => {
-    thisPollingStation = new Pollingstation({
-      electionId: '5a3047c071b36b39cfce6640',
-      precinctNumber: 'thisprecinctNumber',
-      streetAddress: 'thisStreetAddress',
-      unitNumber: 'thisUnitNumber',
-      roomNumber: 'thisRoomNumber',
-      city: 'thisCity',
-      state: 'thisState',
-      zip: '00000'
-    })
+    thisPollingStation = THM.thisPollingStation;
     thisPollingStation.save()
     .then(() => {
       assert(!thisPollingStation.isNew);

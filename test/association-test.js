@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
+const THM = require('./test-helper-methods');
 
 describe('Associations', () => {
   let thisUser, thisVolunteer, thisElection, thisPollingStation;
@@ -40,7 +41,7 @@ describe('Associations', () => {
       roomNumber: 'thisRoomNumber',
       city: 'thisCity',
       state: 'thisState',
-      zip: '10001'
+      zip: 10001
     })
 
     thisUser.schedule[0].pollingStationId = thisPollingStation;
