@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-const thm = {
+const THM = {
 
   createVolunteer: function() {
     const thisUser = new User({
@@ -26,4 +26,4 @@ const thm = {
 
 }
 
-module.exports = thm;
+module.exports = THM;

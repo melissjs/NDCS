@@ -2,7 +2,7 @@ const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
-const thm = require('./test-helper-methods');
+const THM = require('./test-helper-methods');
 
 describe('Creating records (user and volunteer, etc)', () => {
 
