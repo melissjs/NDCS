@@ -7,7 +7,7 @@ const THM = require('./test-helper-methods');
 describe('Creating records (user and volunteer, etc)', () => {
 
   it('saves a user', (done) => {
-    const thisUser = THM.thisUser;
+    const thisUser = new User(THM.userObj);
     thisUser.save()
       .then(() => {
         assert(!thisUser.isNew);
@@ -19,7 +19,7 @@ describe('Creating records (user and volunteer, etc)', () => {
   });
 
   it('saves an election', (done) => {
-    thisElection = THM.thisElection;
+    thisElection = new Election(THM.electionObj);
     thisElection.save()
       .then(() => {
         assert(!thisElection.isNew);
@@ -31,7 +31,7 @@ describe('Creating records (user and volunteer, etc)', () => {
   });
 
   it('saves a pollingstation', (done) => {
-    thisPollingStation = THM.thisPollingStation;
+    thisPollingStation = new Pollingstation(THM.pollingstationObj);
     thisPollingStation.save()
     .then(() => {
       assert(!thisPollingStation.isNew);

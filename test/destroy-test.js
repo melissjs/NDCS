@@ -6,7 +6,7 @@ describe('Deleting records', () => {
   let thisUser;
 
   beforeEach((done) => {
-    thisUser = THM.thisUser;
+    thisUser = new User(THM.userObj);
     thisUser.save()
       .then(() => done());
   });
