@@ -2,15 +2,15 @@
     var Schema = mongoose.Schema;
     
     var affidavitSchema = new Schema({
-      // id is created automatically
-      //affidavitNumber: string;
-      volunteerKey: String,
+      userId: {type: [Schema.Types.ObjectId], ref: 'User'},
       fullName: String,
+      consent: { type: Boolean, required: true },
       streetAddress: String,
       zip: Number,
       comments: String,
-      emailAddress: String,
-      evidence: Boolean
+      emailAddress: {type: String, lowercase: true},
+      evidence: Boolean,
+      images: {type: [Schema.Types.ObjectId], ref: 'Image'}
     });
     
     module.exports = mongoose.model('Affidavit', affidavitSchema);
