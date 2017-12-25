@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var contactSchema = new Schema({
-  // id is created automatically
-  nameName: String,
-  lastName: String,
+  firstName: {type: String, required: [true, 'First name is required'], minlength: [2, 'First name must be at least two characters']},
+  lastName: {type: String, required: [true, 'Last name is required'], minlength: [2, 'Last name must be at least two characters']},
   phoneNumber: String,
-  email: String
+  emailAddress: {type: String, lowercase: true, unique: true, uniqueCaseInsensitive: true, trim: true, required: [true, 'Email is required']},
+  timestamp: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Contact', contactSchema);

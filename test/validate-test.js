@@ -58,6 +58,17 @@ describe('Validation tests', () => {
     });
   });
 
+  it('can validate enums', (done) => {
+    const thisVolunteer = new User(THM.userObj);
+    thisVolunteer.volunteerRoles.push('tech');
+    thisVolunteer.save()
+    .catch((validationResult) => {
+      const { message } = validationResult.errors.volunteerRoles;
+      assert(message === 'Role does not exist');
+      done();
+    });
+  });
+
   it('can validate schedule sub schema (electionId required)', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.schedule[0].electionId = undefined;

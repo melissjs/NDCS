@@ -2,11 +2,10 @@ var mongoose = require('mongoose');
   var Schema = mongoose.Schema;
   
   var timesheetSchema = new Schema({
-    // id is created automatically
-    volunteerKey: String,
-    authenticatingVolunteerKey: String,
-    checkInTime: String,
-    checkOuttime: String,
+    userId: {type: [Schema.Types.ObjectId], ref: 'User'},
+    authenticatingVolunteerKey: {type: [Schema.Types.ObjectId], ref: 'User'},
+    checkInTime: { type: Date }  ,
+    checkOuttime: { type: Date }  ,
     geoLocation: String
   });
   

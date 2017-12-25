@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var amendmentSchema = new Schema({
-  // id is created automatically
-  voteRecordKey: String,
-  volunteerKey: String,
+  voteId: {type: [Schema.Types.ObjectId], ref: 'Vote'},
+  userId: {type: [Schema.Types.ObjectId], ref: 'User'},
   incorrectSelection: String,
   correctSelection: String,
-  authenticatedByKey: String
+  authenticatedByKey: {type: [Schema.Types.ObjectId], ref: 'User'},
+  timestamp: { type: Date, default: Date.now }  
 });
 
 module.exports = mongoose.model('Amendment', amendmentSchema);

@@ -2,9 +2,7 @@
   var Schema = mongoose.Schema;
   
   var voteSchema = new Schema({
-    // id is created automatically
-    voteRecordKey: String,
-    volunteerKey: String,
+    userId: {type: [Schema.Types.ObjectId], ref: 'User'},
     generalSuccess: Boolean,
     generalCouldNotVoteReason: String,
     generalCastBy: String,
@@ -14,7 +12,8 @@
     primaryVotePollingLocation: String,
     presFirst: String,
     presSecond: String,
-    presThird: String
+    presThird: String,
+    timestamp: { type: Date, default: Date.now }
   });
   
   module.exports = mongoose.model('Vote', voteSchema);
