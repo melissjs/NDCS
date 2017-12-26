@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
 
 var electionSchema = new Schema({
   cIId: {type: String, required: true},
-  pollingStations: {type: [Schema.Types.ObjectId], ref: 'Pollingstation'},
+  // pollingStations: {type: [Schema.Types.ObjectId], ref: 'Pollingstation'},
   electionTitle: {type: String, required: true},
   electionDay: {type: Date, required: true},
   electionType: {type: String, enum: {validator: values: ['primary', 'general', 'special'], message: 'Election type does not exist'}},

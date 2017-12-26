@@ -2,8 +2,6 @@
   var Schema = mongoose.Schema;
   
   var demographicsSchema = new Schema({
-    voteId: {type: [Schema.Types.ObjectId], ref: 'Vote'},
-    userId: {type: [Schema.Types.ObjectId], ref: 'User'},
     sex: String,
     age: String,
     ethnicity: String,
@@ -14,6 +12,8 @@
     naturalizedCitizen: Boolean,
     countryOfOrigin: String,
     firstTimeVoter: Boolean,
+    voteId: {type: [Schema.Types.ObjectId], ref: 'Vote'},
+    volunteerId: {type: [Schema.Types.ObjectId], ref: 'User'},
     ttimestamp: { type: Date, default: Date.now }
   });
   
