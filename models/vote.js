@@ -2,17 +2,18 @@
   var Schema = mongoose.Schema;
   
   var voteSchema = new Schema({
-    userId: {type: [Schema.Types.ObjectId], ref: 'User'},
-    generalSuccess: Boolean,
-    generalCouldNotVoteReason: String,
-    generalCastBy: String,
-    primarySuccess: Boolean,
-    primaryCouldNotVoteReason: String,
-    primaryCastBy: String,
-    primaryVotePollingLocation: String,
+    Success: Boolean,
+    couldNotVoteReason: String,
+    castBy: String,
+    previousSuccess: Boolean,
+    previousCouldNotVoteReason: String,
+    previousCastBy: String,
+    previousVotePollingLocation: String,
     presFirst: String,
     presSecond: String,
     presThird: String,
+    officeVotes: {type: [Schema.Types.ObjectId], ref: 'Officevote'},
+    volunteerId: {type: Schema.Types.ObjectId, ref: 'User'},
     timestamp: { type: Date, default: Date.now }
   });
   

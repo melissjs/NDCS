@@ -2,10 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var officevoteSchema = new Schema({
-  // id is created automatically
-  voteRecordKey: String,
-  electOfficeKey: String,
-  success: Boolean,
+  voteId: String,
+  electOfficeId: String,
   candidateValue: String,
   levelOfSupport: String
 });
