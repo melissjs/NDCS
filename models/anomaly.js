@@ -10,6 +10,7 @@
     comments: String,
     evidence: {type: [Schema.Types.ObjectId], ref: 'Evidence'},
     volunteerId: {type: [Schema.Types.ObjectId], ref: 'User'},
+    electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
     timestamp: { type: Date, default: Date.now }
   });
   

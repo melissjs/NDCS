@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const RankvoteSchema = require('../schemas/rankvote');
 
 var officevoteSchema = new Schema({
   voteId: { type: [Schema.Types.ObjectId], ref: 'User' },
   electOfficeId: { type: Schema.Types.ObjectId, ref: 'Electoffice' },
   candidateId:{ type: Schema.Types.ObjectId, ref: 'Candidate' },
   levelOfSupport: { type: String, enum: {values: ['Highly', 'Moderately', 'Dislike'], message: 'Invalid LOS' }},
-  rankedVotes: { type: [Schema.Types.ObjectId], ref: 'Rankedvote' }
+  rankedVotes: [RankvoteSchema]
 });
 
 officevoteSchema.virtual('totalVotes').get(function() {

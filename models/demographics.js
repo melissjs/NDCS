@@ -14,7 +14,7 @@
     firstTimeVoter: Boolean,
     voteId: {type: [Schema.Types.ObjectId], ref: 'Vote'},
     volunteerId: {type: [Schema.Types.ObjectId], ref: 'User'},
-    ttimestamp: { type: Date, default: Date.now }
+    timestamp: { type: Date, default: Date.now }
   });
   
   module.exports = mongoose.model('Demographics', demographicsSchema);

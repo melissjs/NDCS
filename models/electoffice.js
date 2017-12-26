@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var electofficeSchema = new Schema({
-  election: String,
+  election: {type: Schema.Types.ObjectId, ref: 'Election'},
   office: String,
   mandatory: Boolean
 });

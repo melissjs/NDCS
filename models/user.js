@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const ScheduleSchema = require('../schemas/schedule');
+const TimesheetSchema = require('../schemas/timesheet');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
 
 let roles = ['user', 'volunteer', 'lead', 'admin']
@@ -15,7 +16,6 @@ var userSchema = new Schema({
   username: { type: String, required: true, unique: true, uniqueCaseInsensitive: true },
   password: { type: String, required: true },
   volunteerRoles: {type: [String], required: true, validate: {validator: roleValidator, message: "Role does not exist"}},
-  // volunteerRoles: {type: [String], required: true, enum: {values: ['user', 'volunteer', 'lead', 'admin'], message: "Role does not exist"}},
   firstName: {type: String, required: [true, 'First name is required'], minlength: [2, 'First name must be at least two characters']},
   lastName: {type: String, required: [true, 'Last name is required'], minlength: [2, 'Last name must be at least two characters']},
   emailAddress: {type: String, lowercase: true, unique: true, uniqueCaseInsensitive: true, trim: true, required: [true, 'Email is required']},
@@ -24,7 +24,8 @@ var userSchema = new Schema({
   age: {type: Number, required: true},
   sex: {type: String, required: true},
   partyAffiliation: {type: String, required: true},
-  schedule: [ScheduleSchema]
+  schedule: [ScheduleSchema],
+  timeSheet: {type: [TimesheetSchema], required: function() { return this.volunteerRoles.includes('volunteer') }},
 });
 
 userSchema.virtual('scheduleCount').get(function() {

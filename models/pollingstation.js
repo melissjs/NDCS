@@ -2,14 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var pollingstationSchema = new Schema({
-  // electionId: {type: Schema.Types.ObjectId, required: true, ref: 'Election'},
+  electionId: { type: [Schema.Types.ObjectId], required: true, ref: 'Election' },
   precinctNumber: String,
-  streetAddress: String,
-  unitNumber: String,
-  roomNumber: String,
-  city: String,
-  state: String,
-  zip: Number
+  locationName: String,
+  streetAddress: { type: String, required: [true, 'Address required'] },
+  line1: String,
+  line2: String,
+  line3: String,
+  city: { type: String, required: [true, 'City required'] },
+  state:  { type: String, required: [true, 'State required'] },
+  zip:  { type: Number, required: [true, 'Zip code required'] },
+  pollingHours: String,
+  notes: String
 });
 
 module.exports = mongoose.model('Pollingstation', pollingstationSchema);
