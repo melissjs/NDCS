@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var amendmentSchema = new Schema({
+const amendmentSchema = new Schema({
   incorrectSelection: { type: String, required: [true, 'Incorrect selection required'] },
   correctSelection: { type: String, required: [true, 'Correct selection required'] },
-  volunteerId: { type: Schema.Types.ObjectId, ref: 'User' },
-  authenticatingVolunteerId: { type: Schema.Types.ObjectId, ref: 'User' },
+  volunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'VolunteerId required'] },
+  authenticatingVolunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'authenticatingVolunteerId required']  },
+  electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
   timestamp: { type: Date, default: Date.now }  
 });
 
