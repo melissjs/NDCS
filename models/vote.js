@@ -9,12 +9,13 @@
     previousCouldNotVoteReason: String,
     previousCastBy: String,
     previousVotePollingLocation: String,
-    presFirst: String,
-    presSecond: String,
-    presThird: String,
     officeVotes: {type: [Schema.Types.ObjectId], ref: 'Officevote'},
+    PreviousOfficeVotes: {type: [Schema.Types.ObjectId], ref: 'Officevote'},
     volunteerId: {type: Schema.Types.ObjectId, ref: 'User'},
     timestamp: { type: Date, default: Date.now }
   });
   
   module.exports = mongoose.model('Vote', voteSchema);
+
+  ranked vote
+  success 

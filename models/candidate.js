@@ -7,4 +7,12 @@ var candidateSchema = new Schema({
   electOffice: { type: [Schema.Types.ObjectId], ref: 'Electoffice' },
 });
 
+candidateSchema.virtual('totalVotes').get(function() {
+  let total;
+  Officevote.count({ candidateId: this._id}, function(err, count){
+    total = count;
+  })
+  return total;
+})
+
 module.exports = mongoose.model('Candidate', candidateSchema);
