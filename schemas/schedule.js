@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 function ShiftValidator(shiftArray) {
 	return shiftArray.every((shift)=>{
@@ -8,9 +8,9 @@ function ShiftValidator(shiftArray) {
 }
 
 const ScheduleSchema = new Schema({
-  pollingStationId: {type: Schema.Types.ObjectId, required: true, ref: 'Pollingstation'},
-  electionId: {type: Schema.Types.ObjectId, required: true, ref: 'Election'},
-  shifts: {type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options'}}
+  pollingStationId: { type: Schema.Types.ObjectId, ref: 'Pollingstation', required: [true, 'PollingStationId required'] },
+  electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
+  shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } }
 });
 
 module.exports = ScheduleSchema;
