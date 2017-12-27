@@ -4,11 +4,26 @@ const Pollingstation = require('../models/pollingstation');
 
 const THM = {
 
+  affidavitObj: {
+    firstName: 'thisVoterFirstName', 
+    lastName: 'thisVoterLastName',
+    consent: true,
+    streetAddress: '111ThisStreet',
+    zip: 10001,
+    emailAddress: 'thisVoter@Email.Address',
+    comments: 'AffidavitComment',
+    volunteerId: '5a3047c071b36b39cfce6640',
+    electionId: '5a3047c071b36b39cfce6640',
+    timestamp: Date.now()
+  },
+
   electionObj: {
-    pollingStationId: ['5a3047c071b36b39cfce6640'],
-    electionTitle: '2018 Midterm Election',
+    cIId: 'thiscIId',
+    electionTitle: 'thisElectionTitle',
+    electionDay: Date.now(),
     electionType: 'primary',
-    country: 'USA'
+    ocdDivisionId: 'thisOcdDivisionId',
+    previousElection: '5a3047c071b36b39cfce6640',
   },
 
   pollingstationObj: {
@@ -27,7 +42,7 @@ const THM = {
     volunteerRoles: ['user', 'volunteer'],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
-    emailAddress: 'thisVolunteerEmailAddress',
+    emailAddress: 'thisVolunteer@Email.Address',
     exposeEmail: 'thisVolunteerExposeEmail',
     phoneNumber: 'thisVolunteerPhoneNumber',
     age: 22,
@@ -37,6 +52,15 @@ const THM = {
       pollingStationId: '5a3047c071b36b39cfce6640',
       electionId: '5a3047c071b36b39cfce6640',
       shifts: [1,2,3]
+    }],
+    timeSheet: [{
+      roleInOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+       },
+       authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
+       electionId: '5a3047c071b36b39cfce6640'
     }]
   }
 
