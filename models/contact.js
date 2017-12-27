@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var contactSchema = new Schema({
+const contactSchema = new Schema({
   firstName: { type: String, required: [true, 'First name required'], minlength: [2, 'First name must be at least two characters'] },
   lastName: { type: String, required: [true, 'Last name required'], minlength: [2, 'Last name must be at least two characters'] },
   phoneNumber: String,

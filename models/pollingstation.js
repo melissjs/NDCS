@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var pollingstationSchema = new Schema({
+const pollingstationSchema = new Schema({
   electionId: { type: [Schema.Types.ObjectId], required: true, ref: 'Election' },
   precinctNumber: String,
   locationName:{ type: String, required: [true, 'LocationName required'] },
