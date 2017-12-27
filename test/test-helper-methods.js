@@ -32,10 +32,25 @@ const THM = {
     lastName: 'thisVoterLastName',
     consentToContact: true,
     emailAddress: 'thisVoterEmailAddress',
+    phoneNumber: '1111111111',
     comments: 'thisComment',
     evidence: ['5a3047c071b36b39cfce6640'],
     volunteerId: '5a3047c071b36b39cfce6640',
     electionId: '5a3047c071b36b39cfce6640',
+    timestamp: Date.now()
+  },
+
+  candidateObj: {
+    name: 'thisCandidateName',
+    party: 'thisCandidateParty',
+    electOffice: ['5a3047c071b36b39cfce6640'],
+  },
+
+  contactObj: {
+    firstName: 'thisContactFirstName',
+    lastName: 'thisContactLastName',
+    phoneNumber: '1111111111',
+    emailAddress: 'thisContact@email.address',
     timestamp: Date.now()
   },
 
@@ -66,7 +81,7 @@ const THM = {
     lastName: 'thisVolunteerLastName',
     emailAddress: 'thisVolunteer@Email.Address',
     exposeEmail: 'thisVolunteerExposeEmail',
-    phoneNumber: 'thisVolunteerPhoneNumber',
+    phoneNumber: 1111111111,
     age: 22,
     sex: 'thisVolunteerSex',
     partyAffiliation: 'thisVolunteerPartyAffiliation',

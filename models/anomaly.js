@@ -7,6 +7,7 @@
     lastName: { type: String, required: [true, 'Last name is required'], minlength: [2, 'Last name must be at least two characters'] },
     consentToContact: { type: Boolean, required: [true, 'Consent required'] },
     emailAddress: { type: String, lowercase: true, trim: true },
+    phoneNumber: { type: Number, minlength: [10, 'Phone number must be 10 characters'],  maxlength: [10, 'Phone number must be 10 characters'] },
     comments: String,
     evidence: {type: [Schema.Types.ObjectId], ref: 'Evidence'},
     volunteerId: {type: Schema.Types.ObjectId, ref: 'User', required: [true, 'VolunteerId required'] },

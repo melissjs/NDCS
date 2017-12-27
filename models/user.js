@@ -20,7 +20,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: [true, 'Last name required'], minlength: [2, 'Last name must be at least two characters'] },
   emailAddress: { type: String, required: [true, 'Email required'], trim: true, lowercase: true, unique: true, uniqueCaseInsensitive: true },
   exposeEmail: { type: Boolean, required: [true, 'exposeEmail required'] },
-  phoneNumber: { type: String, required: [true, 'Phone number required'], unique: true, uniqueCaseInsensitive: true },
+  phoneNumber: {  type: Number, minlength: [10, 'Phone number must be 10 characters'],  maxlength: [10, 'Phone number must be 10 characters'], required: [true, 'Phone number required'], unique: true },
   age: { type: Number, required: [true, 'Age required']},
   sex: { type: String, required: [true, 'Sex required'] },
   partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
