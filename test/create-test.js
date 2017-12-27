@@ -124,17 +124,24 @@ describe.only('Creating records (user and volunteer, etc)', () => {
       });
   });
 
-  // it('saves an officevote record', (done) => {
-  //   thisOfficeVote = new Officevote(THM.officeVoteObj);
-  //   thisOfficeVote.save()
-  //     .then(() => {
-  //       assert(!thisOfficeVote.isNew);
-  //       done();
-  //     })
-  //     .catch((e) => {
-  //       done(e);
-  //     });
-  // });
+  it('saves an officevote record', (done) => {
+    thisElectOffice = new Electoffice(THM.electOfficeObj);
+    thisElectOffice.save()
+      .then(() => {
+        thisOfficeVote = new Officevote(THM.officeVoteObj);
+        thisOfficeVote.set('electOfficeId', thisElectOffice._id);
+        thisOfficeVote.save()
+        .then(() => {
+          console.log('ELECTOFFICEID', thisElectOffice._id)
+          console.log('OFFICEVOTE', thisOfficeVote.electOfficeId)
+          // assert(!thisOfficeVote.isNew);
+          done();
+        })
+        .catch((e) => {
+          done(e);
+        });
+      })
+  });
 
   it('saves a pollingstation', (done) => {
     thisPollingStation = new Pollingstation(THM.pollingstationObj);

@@ -14,4 +14,14 @@ electofficeSchema.virtual('totalVotes').get(async function() {
   })
 })
 
+// function rankedRequired() {
+//   Electoffice.find()
+//   .distinct(this.electOfficeId)
+//   .count(function (err, count) {
+//       //The number of unique users is 'count'
+//       console.log('COUNT', count);
+//       return true;
+//   });
+// }
+
 module.exports = mongoose.model('Electoffice', electofficeSchema);

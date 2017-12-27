@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const RankvoteSchema = require('../schemas/rankvote');
-const Electoffice = require('../models/electoffice');
 
 async function rankedRequired() {
-  return await Electoffice.find({ _id: this.electOfficeId }, function(err, result) {
-    return result.mandatory;
+  const Electoffice = require('../models/electoffice');
+  return await Electoffice.findById(this.electOfficeId, function(err, result) {
+    if (err) {
+      console.log('ERR', err)
+      return false
+    } else {
+      return result.mandatory;
+    }
   })
 }
 
@@ -13,7 +18,7 @@ const officevoteSchema = new Schema({
   electOfficeId: { type: Schema.Types.ObjectId, ref: 'Electoffice', required: [true, 'ElectOfficeId required'] },
   candidateId: { type: Schema.Types.ObjectId, ref: 'Candidate', required: [true, 'CandidateId required'] },
   levelOfSupport: { type: String, enum: { values: ['highly', 'moderately', 'dislike'], message: 'Invalid LOS' }, required: [true, 'LOS required'] },
-  rankedVotes: { type: [RankvoteSchema], required: [rankedRequired, 'AnomalyId required'] },
+  rankedVotes: { type: [RankvoteSchema], required: [rankedRequired, 'rankedRequired required'] },
   voteId: { type: Schema.Types.ObjectId, ref: 'Vote', required: [true, 'VoteId required'] },
 });
 
