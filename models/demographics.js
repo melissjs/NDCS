@@ -12,9 +12,9 @@
     naturalizedCitizen: Boolean,
     countryOfOrigin: String,
     firstTimeVoter: Boolean,
-    voteId: {type: [Schema.Types.ObjectId], ref: 'Vote'},
-    volunteerId: {type: [Schema.Types.ObjectId], ref: 'User'},
-    timestamp: { type: Date, default: Date.now }
+    voteId: {type: [Schema.Types.ObjectId], ref: 'Vote',  required: [true, 'VoteId required']},
+    volunteerId: {type: [Schema.Types.ObjectId], ref: 'User',  required: [true, 'VolunteerId required']},
+    timestamp: { type: Date, default: Date.now,  required: [true, 'Timestamp required'] }
   });
   
   module.exports = mongoose.model('Demographics', demographicsSchema);
