@@ -1,30 +1,28 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const RankvoteSchema = require('../schemas/rankvote');
 
-var officevoteSchema = new Schema({
-  voteId: { type: [Schema.Types.ObjectId], ref: 'User' },
-  electOfficeId: { type: Schema.Types.ObjectId, ref: 'Electoffice' },
-  candidateId:{ type: Schema.Types.ObjectId, ref: 'Candidate' },
-  levelOfSupport: { type: String, enum: {values: ['Highly', 'Moderately', 'Dislike'], message: 'Invalid LOS' }},
-  rankedVotes: [RankvoteSchema]
+async function rankedRequired() {
+  return await Electoffice.find({ _id: this.electOfficeId }, function(err, result) {
+    return result.mandatory;
+  })
+}
+
+const officevoteSchema = new Schema({
+  electOfficeId: { type: Schema.Types.ObjectId, ref: 'Electoffice', required: [true, 'ElectOfficeId required'] },
+  candidateId:{ type: Schema.Types.ObjectId, ref: 'Candidate', required: [true, 'CandidateId required'] },
+  levelOfSupport: { type: String, enum: { values: ['Highly', 'Moderately', 'Dislike'], message: 'Invalid LOS' }, required: [true, 'LOS required'] },
+  rankedVotes: { type: [RankvoteSchema], required: [rankedRequired(), 'AnomalyId required'] },
+  voteId: { type: Schema.Types.ObjectId, ref: 'Vote', required: [true, 'VoteId required'] },
 });
 
-officevoteSchema.virtual('totalVotes').get(function() {
-  let total;
-  Officevote.count({}, function(err, count){
-    total = count;
+officevoteSchema.virtual('totalVotes').get(async function() {
+  return await Officevote.count({}, function(err, count){
+    return count;
   })
-  return total;
 })
 
 // get total vote, non vote, provisional, outside records
 // get each of the above for each candidate
-
-// officevoteSchema.virtual('electionResults').get(function() {
-//   let total = officevoteSchema.count({});
-//   let
-//   // return this.schedule.length;
-// })
 
 module.exports = mongoose.model('Officevote', officevoteSchema);

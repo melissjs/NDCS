@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var pollingstationSchema = new Schema({
   electionId: { type: [Schema.Types.ObjectId], required: true, ref: 'Election' },
   precinctNumber: String,
-  locationName: String,
+  locationName:{ type: String, required: [true, 'LocationName required'] },
   streetAddress: { type: String, required: [true, 'Address required'] },
   line1: String,
   line2: String,
