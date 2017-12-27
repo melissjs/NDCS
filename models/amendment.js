@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+function validateAuthenticatingVolunteer() {
+  return this.volunteerId.toString() != this.authenticatingVolunteerId.toString();
+}
+
 const amendmentSchema = new Schema({
   incorrectSelection: { type: String, required: [true, 'Incorrect selection required'] },
   correctSelection: { type: String, required: [true, 'Correct selection required'] },
   volunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'VolunteerId required'] },
-  authenticatingVolunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'AuthenticatingVolunteerId required']  },
+  authenticatingVolunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'AuthenticatingVolunteerId required'], validate: { validator: validateAuthenticatingVolunteer, message: "Volunteer may not authenticate self" } },
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
-  timestamp: { type: Date, default: Date.now, required: [true, 'Timestamp required'] }  
+  timestamp: { type: Date, default: Date.now, required: [true, 'Timestamp required'] }
 });
 
 module.exports = mongoose.model('Amendment', amendmentSchema);

@@ -1,4 +1,6 @@
 const Affidavit = require('../models/affidavit');
+const Amendment = require('../models/amendment');
+const Anomaly = require('../models/anomaly');
 const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
@@ -19,6 +21,30 @@ describe('Creating records (user and volunteer, etc)', () => {
     });
   });
 
+  it('saves an amendment record', (done) => {
+    thisAmendment = new Amendment(THM.amendmentObj);
+    thisAmendment.save()
+    .then(() => {
+      assert(!thisAmendment.isNew);
+      done();
+    })
+    .catch((e) => {
+      done(e);
+    });
+  });
+
+  it.only('saves an anomaly record', (done) => {
+    thisAnomaly = new Anomaly(THM.anomalyObj);
+    thisAnomaly.save()
+    .then(() => {
+      assert(!thisAnomaly.isNew);
+      done();
+    })
+    .catch((e) => {
+      done(e);
+    });
+  });
+
   it('saves a user', (done) => {
     const thisUser = new User(THM.userObj);
     thisUser.save()
@@ -31,7 +57,7 @@ describe('Creating records (user and volunteer, etc)', () => {
       });
   });
 
-  it.only('saves an election', (done) => {
+  it('saves an election', (done) => {
     thisElection = new Election(THM.electionObj);
     thisElection.save()
       .then(() => {
