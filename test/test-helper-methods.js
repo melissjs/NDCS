@@ -1,8 +1,10 @@
-const User = require('../models/user');
-const Election = require('../models/election');
-const Pollingstation = require('../models/pollingstation');
+// const User = require('../models/user');
+// const Election = require('../models/election');
+// const Pollingstation = require('../models/pollingstation');
 
 const THM = {
+
+  // for creating records
 
   affidavitObj: {
     firstName: 'thisVoterFirstName', 
@@ -54,6 +56,21 @@ const THM = {
     timestamp: Date.now()
   },
 
+  demographicsObj: {
+    sex: 'female',
+    age: '35-44',
+    ethnicity: ['asian'],
+    partyAffiliation: 'independent',
+    annualIncome: '1M+',
+    education: 'underGraduateSchool',
+    maritalStatus: 'unmarried',
+    naturalizedCitizen: false,
+    firstTimeVoter: false,
+    voteId: '5a3047c071b36b39cfce6640',
+    volunteerId: '5a3047c071b36b39cfce6640',
+    timestamp: Date.now()
+  },
+
   electionObj: {
     cIId: 'thiscIId',
     electionTitle: 'thisElectionTitle',
@@ -61,6 +78,33 @@ const THM = {
     electionType: 'primary',
     ocdDivisionId: 'thisOcdDivisionId',
     previousElection: '5a3047c071b36b39cfce6640',
+  },
+
+  electOfficeObj: {
+    election: '5a3047c071b36b39cfce6640',
+    office: 'thisOffice',
+    mandatory: true,
+  },
+
+  evidenceObj: {
+    kind: 'image',
+    fileName: 'image.jpg',
+    tags: ['givenIncorrectBallot', 'pollingStationProblem'],
+    anomalyId:'5a3047c071b36b39cfce6640'
+  },
+
+  officeVoteObj: {
+    electOfficeId: '5a3047c071b36b39cfce6640',
+    candidateId: '5a3047c071b36b39cfce6641',
+    levelOfSupport: 'highly',
+    rankedVotes: [{ 
+      candidate: '5a3047c071b36b39cfce6640',
+      choice: 1,
+     }, { 
+      candidate: '5a3047c071b36b39cfce6641',
+      choice: 2,
+     }],
+    voteId: '5a3047c071b36b39cfce6640'
   },
 
   pollingstationObj: {
@@ -99,6 +143,51 @@ const THM = {
        authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
        electionId: '5a3047c071b36b39cfce6640'
     }]
+  },
+
+  voteObj: {
+    voteSuccessDetails: [{
+      election: '5a3047c071b36b39cfce6640',
+      success: false,
+      couldNotVoteReason: 'noTimeOff', 
+      castBy: 'votingMachine',
+    }],
+    samePreviousVotePollingLocation: 'no',
+    officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
+    PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+    volunteerId: '5a3047c071b36b39cfce6640',
+    electionId: '5a3047c071b36b39cfce6640',
+    timestamp: Date.now()
+  },
+
+  // for virtual office votes
+
+  officeVoteObj1: {
+    electOfficeId: '5a43f25081fbb7218e9122fd',
+    candidateId: '5a3047c071b36b39cfce6641',
+    levelOfSupport: 'highly',
+    rankedVotes: [{ 
+      candidate: '5a3047c071b36b39cfce6640',
+      choice: 1,
+     }, { 
+      candidate: '5a3047c071b36b39cfce6641',
+      choice: 2,
+     }],
+    voteId: '5a3047c071b36b39cfce6640'
+  },
+
+  officeVoteObj2: {
+    electOfficeId: '5a43f25081fbb7218e9122fd',
+    candidateId: '5a3047c071b36b39cfce6641',
+    levelOfSupport: 'highly',
+    rankedVotes: [{ 
+      candidate: '5a3047c071b36b39cfce6640',
+      choice: 1,
+     }, { 
+      candidate: '5a3047c071b36b39cfce6641',
+      choice: 2,
+     }],
+    voteId: '5a3047c071b36b39cfce6640'
   }
 
 }

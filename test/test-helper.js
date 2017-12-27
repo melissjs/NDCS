@@ -13,10 +13,12 @@ before((done) => {
   });
 
 beforeEach((done) => {
-  const { users, pollingstations, elections } =  mongoose.connection.collections; 
+  const { users, pollingstations, elections, officevotes, electoffices } =  mongoose.connection.collections; 
   users.remove({})
   .then(pollingstations.remove({}))
   .then(elections.remove({}))
+  .then(officevotes.remove({}))
+  .then(electoffices.remove({}))
   .then(() => done())
   .catch((e) => done(e));
 });

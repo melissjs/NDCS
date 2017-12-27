@@ -5,7 +5,6 @@ const TimesheetSchema = require('../schemas/timesheet');
 const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 let roles = ['user', 'volunteer', 'lead', 'admin'];
-
 function roleValidator(roleArray) {
   return roleArray.every((role)=>{
     return (roles.includes(role))  
