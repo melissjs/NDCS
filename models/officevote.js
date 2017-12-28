@@ -23,17 +23,17 @@ const officevoteSchema = new Schema({
 });
 
 
-// try as method
-// get all election/office votes for one candidate
+
+// statistics
 officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId){
   return await this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })
     .count(function (err, count) {
-        console.log('COUNT', count);
         return true;
     });
 };
 
+// methods
 
 // get total vote, non vote, provisional, outside records
 // get each of the above for each candidate

@@ -202,7 +202,16 @@ const THM = {
       choice: 2,
      }],
     voteId: '5a3047c071b36b39cfce6640'
-  }
+  },
+
+  previousElectionObj: {
+    cIId: 'thiscIId',
+    electionTitle: 'thisPreviousElectionTitle',
+    electionDay: Date.now(),
+    electionType: 'primary',
+    ocdDivisionId: 'thisOcdDivisionId',
+    previousElection: '5a3047c071b36b39cfce6640',
+  },
 
 }
 
