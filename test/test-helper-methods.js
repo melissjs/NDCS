@@ -188,6 +188,20 @@ const THM = {
       choice: 2,
      }],
     voteId: '5a3047c071b36b39cfce6640'
+  },
+
+  officeVoteObj3: {
+    electOfficeId: '5a43f25081fbb7218e9122fd',
+    candidateId: '5a3047c071b36b39cfce6642',
+    levelOfSupport: 'highly',
+    rankedVotes: [{ 
+      candidate: '5a3047c071b36b39cfce6640',
+      choice: 1,
+     }, { 
+      candidate: '5a3047c071b36b39cfce6641',
+      choice: 2,
+     }],
+    voteId: '5a3047c071b36b39cfce6640'
   }
 
 }

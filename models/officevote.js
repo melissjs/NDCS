@@ -22,14 +22,22 @@ const officevoteSchema = new Schema({
   voteId: { type: Schema.Types.ObjectId, ref: 'Vote', required: [true, 'VoteId required'] },
 });
 
-// this belongs as middleware - not a property of each record itself
-// officevoteSchema.virtual('totalVotes').get(async function() {
-//   return await Officevote.count({}, function(err, count){
-//     return count;
-//   })
-// })
+
+// try as method
+// get all election/office votes for one candidate
+officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId){
+  return await this.where({ electOfficeId: electOfficeId})
+    .find({ candidateId: candidateId })
+    .count(function (err, count) {
+        console.log('COUNT', count);
+        return true;
+    });
+};
+
 
 // get total vote, non vote, provisional, outside records
 // get each of the above for each candidate
+
+
 
 module.exports = mongoose.model('Officevote', officevoteSchema);

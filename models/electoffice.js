@@ -8,20 +8,11 @@ const electofficeSchema = new Schema({
   mandatory: { type: Boolean, required: [true, 'Mandatory required'] },
 });
 
+// finds total votes for this election/office
 electofficeSchema.virtual('totalVotes').get(async function() {
   return await Officevote.find({ electOfficeId: this._id }).count({}, function(err, count){
     return count;
   })
 })
-
-// function rankedRequired() {
-//   Electoffice.find()
-//   .distinct(this.electOfficeId)
-//   .count(function (err, count) {
-//       //The number of unique users is 'count'
-//       console.log('COUNT', count);
-//       return true;
-//   });
-// }
 
 module.exports = mongoose.model('Electoffice', electofficeSchema);
