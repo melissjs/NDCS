@@ -23,7 +23,7 @@ describe('Validation tests', () => {
     thisVolunteer.firstName = undefined;
    const validationResult = thisVolunteer.validateSync();
    const { message } = validationResult.errors.firstName;
-   assert(message === 'First name is required')
+   assert(message === 'First name required')
   });
 
   it('Requires a last name with at least two characters', () => {
@@ -42,7 +42,7 @@ describe('Validation tests', () => {
     .catch((validationResult) => {
       const messageFirst = validationResult.errors.firstName.message;
       const messageLast = validationResult.errors.lastName.message;
-      assert(messageFirst === 'First name is required')
+      assert(messageFirst === 'First name required')
       assert(messageLast === 'Last name must be at least two characters');
     });
   });
@@ -75,7 +75,7 @@ describe('Validation tests', () => {
     thisVolunteer.save()
     .catch((validationResult) => {
       const { message } = validationResult.errors['schedule.0.electionId'];
-      assert(message === 'Path `electionId` is required.');
+      assert(message === 'ElectionId required');
       done();
     });
   });

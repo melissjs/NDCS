@@ -4,7 +4,7 @@ const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe.only('Associations', () => {
+describe('Associations', () => {
   let thisUser, thisVolunteer, thisElection, thisPollingStation;
 
   beforeEach((done) => {
