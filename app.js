@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var volunteers = require('./routes/volunteers');
+// var volunteers = require('./routes/volunteers');
 var records = require('./routes/records');
 var elections = require('./routes/elections');
 
@@ -33,7 +33,7 @@ mongoose.connect(MongoURI, {useMongoClient: true}, function(err, res){
 
 // Models
 var Contact = require('./models/contact');
-var Volunteer = require('./models/volunteer');
+// var Volunteer = require('./models/volunteer');
 var User = require('./models/user');
 
 // uncomment after placing your favicon in /public
@@ -68,7 +68,7 @@ app.use(cors());
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/volunteers', volunteers);
+// app.use('/volunteers', volunteers);
 app.use('/records', records);
 app.use('/elections', elections);
 

@@ -6,7 +6,7 @@ var Candidate = require('../models/candidate');
 var Electoffice = require('../models/electoffice');
 var Pollingstation = require('../models/pollingstation');
 
-/* GET users listing. */
+/* GET election listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with an elections resource, like office or candidates');
 });
