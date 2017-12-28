@@ -14,7 +14,7 @@ const Vote = require('../models/vote');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe.only('Creating records (user and volunteer, etc)', () => {
+describe('Creating records (user and volunteer, etc)', () => {
 
   it('saves an affidavit', (done) => {
     const thisAffidavit = new Affidavit(THM.affidavitObj);
@@ -132,9 +132,7 @@ describe.only('Creating records (user and volunteer, etc)', () => {
         thisOfficeVote.set('electOfficeId', thisElectOffice._id);
         thisOfficeVote.save()
         .then(() => {
-          console.log('ELECTOFFICEID', thisElectOffice._id)
-          console.log('OFFICEVOTE', thisOfficeVote.electOfficeId)
-          // assert(!thisOfficeVote.isNew);
+          assert(!thisOfficeVote.isNew);
           done();
         })
         .catch((e) => {
