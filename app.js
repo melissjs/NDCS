@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 var methodOverride = require('method-override');
 var cors = require('cors');
 var path = require('path');
@@ -7,6 +8,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var MD = require('./test/mock-data');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -32,6 +34,7 @@ mongoose.connect(MongoURI, {useMongoClient: true}, function(err, res){
 });
 
 // Models
+var Affidavit = require('./models/affidavit');
 var Contact = require('./models/contact');
 // var Volunteer = require('./models/volunteer');
 var User = require('./models/user');
@@ -89,5 +92,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// UNCOMMENT FOR DEVELOPMENT MOCK DATA
+MD.createMockData();
+// MD.deleteMockData(); 
 
 module.exports = app;
