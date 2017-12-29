@@ -1,6 +1,7 @@
 const Affidavit = require('../models/affidavit');
 const Amendment = require('../models/amendment');
 const Anomaly = require('../models/anomaly');
+const Candidate = require('../models/candidate');
 const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
@@ -125,19 +126,32 @@ const MD = {
     })
   },
 
-  // //candidate 
-  // [
-  //   {
-  //     name: 'thisCandidateName',
-  //     party: 'thisCandidateParty',
-  //     electOffice: ['5a3047c071b36b39cfce6640'],
-  //   },
-  //   {
-  //     name: 'thisCandidateName',
-  //     party: 'thisCandidateParty',
-  //     electOffice: ['5a3047c071b36b39cfce6640'],
-  //   }
-  // ]
+  //candidate
+  candidateArray:
+  [
+    {
+      name: 'thisCandidateName',
+      party: 'thisCandidateParty',
+      electOffice: ['5a3047c071b36b39cfce6640'],
+    },
+    {
+      name: 'thisCandidateName',
+      party: 'thisCandidateParty',
+      electOffice: ['5a3047c071b36b39cfce6640'],
+    }
+  ],
+
+  mockCandidates: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Candidate(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // // contact
   // [
@@ -443,10 +457,17 @@ const MD = {
     this.mockAffidavits(this.affidavitArray);
     this.mockAmendments(this.amendmentArray);
     this.mockAnomalies(this.anomalyArray);
+    this.mockCandidates(this.candidateArray);
   },
 
   deleteMockData: function() {
-    Promise.all([Affidavit.remove({}), Amendment.remove({}), Anomaly.remove({}), User.remove({})])
+    Promise.all([
+      Affidavit.remove({}), 
+      Amendment.remove({}), 
+      Anomaly.remove({}), 
+      Candidate.remove({}),
+      User.remove({})
+    ])
       .then(() => console.log('Deleted all mock data'))
   }
 
