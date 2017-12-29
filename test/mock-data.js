@@ -2,6 +2,8 @@ const Affidavit = require('../models/affidavit');
 const Amendment = require('../models/amendment');
 const Anomaly = require('../models/anomaly');
 const Candidate = require('../models/candidate');
+const Contact = require('../models/contact');
+const Demographics = require('../models/demographics');
 const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
@@ -153,55 +155,81 @@ const MD = {
     })
   },
 
-  // // contact
-  // [
-  //   {
-  //     firstName: 'thisContactFirstName',
-  //     lastName: 'thisContactLastName',
-  //     phoneNumber: '1111111111',
-  //     emailAddress: 'thisContact@email.address',
-  //     timestamp: Date.now()
-  //   },
-  //   {
-  //     firstName: 'thisContactFirstName',
-  //     lastName: 'thisContactLastName',
-  //     phoneNumber: '1111111111',
-  //     emailAddress: 'thisContact@email.address',
-  //     timestamp: Date.now()
-  //   }
-  // ]
+  // contact
+  contactArray:
+  [
+    {
+      firstName: 'thisContactFirstName',
+      lastName: 'thisContactLastName',
+      phoneNumber: '1111111111',
+      emailAddress: 'thisContact@email.address',
+      timestamp: Date.now()
+    },
+    {
+      firstName: 'thisContactFirstName',
+      lastName: 'thisContactLastName',
+      phoneNumber: '1111111111',
+      emailAddress: 'thisContact@email.address',
+      timestamp: Date.now()
+    }
+  ],
 
-  // // demographics
-  // [
-  //   {
-  //     sex: 'female',
-  //     age: '35-44',
-  //     ethnicity: ['asian'],
-  //     partyAffiliation: 'independent',
-  //     annualIncome: '1M+',
-  //     education: 'underGraduateSchool',
-  //     maritalStatus: 'unmarried',
-  //     naturalizedCitizen: false,
-  //     firstTimeVoter: false,
-  //     voteId: '5a3047c071b36b39cfce6640',
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   },
-  //   {
-  //     sex: 'female',
-  //     age: '35-44',
-  //     ethnicity: ['asian'],
-  //     partyAffiliation: 'independent',
-  //     annualIncome: '1M+',
-  //     education: 'underGraduateSchool',
-  //     maritalStatus: 'unmarried',
-  //     naturalizedCitizen: false,
-  //     firstTimeVoter: false,
-  //     voteId: '5a3047c071b36b39cfce6640',
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   }
-  // ]
+  mockContacts: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Contact(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
+
+  // demographics
+  demographicsArray:
+  [
+    {
+      sex: 'female',
+      age: '35-44',
+      ethnicity: ['asian'],
+      partyAffiliation: 'independent',
+      annualIncome: '1M+',
+      education: 'underGraduateSchool',
+      maritalStatus: 'unmarried',
+      naturalizedCitizen: false,
+      firstTimeVoter: false,
+      voteId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    },
+    {
+      sex: 'female',
+      age: '35-44',
+      ethnicity: ['asian'],
+      partyAffiliation: 'independent',
+      annualIncome: '1M+',
+      education: 'underGraduateSchool',
+      maritalStatus: 'unmarried',
+      naturalizedCitizen: false,
+      firstTimeVoter: false,
+      voteId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    }
+  ],
+
+  mockDemographics: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Demographics(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // // election
   // [
@@ -458,6 +486,8 @@ const MD = {
     this.mockAmendments(this.amendmentArray);
     this.mockAnomalies(this.anomalyArray);
     this.mockCandidates(this.candidateArray);
+    this.mockContacts(this.contactArray);
+    this.mockDemographics(this.demographicsArray);
   },
 
   deleteMockData: function() {
@@ -466,6 +496,8 @@ const MD = {
       Amendment.remove({}), 
       Anomaly.remove({}), 
       Candidate.remove({}),
+      Contact.remove({}),
+      Demographics.remove({}),
       User.remove({})
     ])
       .then(() => console.log('Deleted all mock data'))
