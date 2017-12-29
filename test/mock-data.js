@@ -4,10 +4,11 @@ const Anomaly = require('../models/anomaly');
 const Candidate = require('../models/candidate');
 const Contact = require('../models/contact');
 const Demographics = require('../models/demographics');
-const User = require('../models/user');
 const Election = require('../models/election');
+const Electoffice = require('../models/electoffice');
 const Pollingstation = require('../models/pollingstation');
-
+const User = require('../models/user');
+const Vote = require('../models/vote');
 
 const MD = {
 
@@ -231,39 +232,66 @@ const MD = {
     })
   },
 
-  // // election
-  // [
-  //   {
-  //     cIId: 'thiscIId',
-  //     electionTitle: 'thisElectionTitle',
-  //     electionDay: Date.now(),
-  //     electionType: 'primary',
-  //     ocdDivisionId: 'thisOcdDivisionId',
-  //     previousElection: '5a3047c071b36b39cfce6640',
-  //   },
-  //   {
-  //     cIId: 'thiscIId',
-  //     electionTitle: 'thisElectionTitle',
-  //     electionDay: Date.now(),
-  //     electionType: 'primary',
-  //     ocdDivisionId: 'thisOcdDivisionId',
-  //     previousElection: '5a3047c071b36b39cfce6640',
-  //   }
-  // ]
+  // election
+  electionArray:
+  [
+    {
+      cIId: 'thiscIId',
+      electionTitle: 'thisElectionTitle',
+      electionDay: Date.now(),
+      electionType: 'primary',
+      ocdDivisionId: 'thisOcdDivisionId',
+      previousElection: '5a3047c071b36b39cfce6640',
+    },
+    {
+      cIId: 'thiscIId',
+      electionTitle: 'thisElectionTitle',
+      electionDay: Date.now(),
+      electionType: 'primary',
+      ocdDivisionId: 'thisOcdDivisionId',
+      previousElection: '5a3047c071b36b39cfce6640',
+    }
+  ],
 
-  // // electoffice
-  // [
-  //   {
-  //     election: '5a3047c071b36b39cfce6640',
-  //     office: 'thisOffice',
-  //     mandatory: true,
-  //   },
-  //   {
-  //     election: '5a3047c071b36b39cfce6640',
-  //     office: 'thisOffice',
-  //     mandatory: true,
-  //   }
-  // ]
+  mockElections: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Election(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
+
+
+  // electoffice
+  electofficeArray:
+  [
+    {
+      election: '5a3047c071b36b39cfce6640',
+      office: 'thisOffice',
+      mandatory: true,
+    },
+    {
+      election: '5a3047c071b36b39cfce6640',
+      office: 'thisOffice',
+      mandatory: true,
+    }
+  ],
+
+  mockElectOffices: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Electoffice(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // // evidence 
   // [
@@ -348,136 +376,162 @@ const MD = {
   //   }
   // ]
 
-  // // user
-  // [
-  //   {
-  //     username: 'thisUsername',
-  //     password: 'thisPassword',
-  //     volunteerRoles: ['user', 'volunteer'],
-  //     firstName: 'thisVolunteerFirstName', 
-  //     lastName: 'thisVolunteerLastName',
-  //     emailAddress: 'thisVolunteer@Email.Address',
-  //     exposeEmail: 'thisVolunteerExposeEmail',
-  //     phoneNumber: 1111111111,
-  //     age: 22,
-  //     sex: 'thisVolunteerSex',
-  //     partyAffiliation: 'thisVolunteerPartyAffiliation',
-  //     schedule: [{
-  //       pollingStationId: '5a3047c071b36b39cfce6640',
-  //       electionId: '5a3047c071b36b39cfce6640',
-  //       shifts: [1,2,3]
-  //     }],
-  //     timeSheet: [{
-  //       roleInOrOut: 'in',
-  //       location: {
-  //         type: 'Point', 
-  //         coordinates: [111, 111]
-  //         },
-  //         authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-  //         electionId: '5a3047c071b36b39cfce6640'
-  //     }]
-  //   },
-  //   {
-  //     username: 'thisUsername',
-  //     password: 'thisPassword',
-  //     volunteerRoles: ['user', 'volunteer'],
-  //     firstName: 'thisVolunteerFirstName', 
-  //     lastName: 'thisVolunteerLastName',
-  //     emailAddress: 'thisVolunteer@Email.Address',
-  //     exposeEmail: 'thisVolunteerExposeEmail',
-  //     phoneNumber: 1111111111,
-  //     age: 22,
-  //     sex: 'thisVolunteerSex',
-  //     partyAffiliation: 'thisVolunteerPartyAffiliation',
-  //     schedule: [{
-  //       pollingStationId: '5a3047c071b36b39cfce6640',
-  //       electionId: '5a3047c071b36b39cfce6640',
-  //       shifts: [1,2,3]
-  //     }],
-  //     timeSheet: [{
-  //       roleInOrOut: 'in',
-  //       location: {
-  //         type: 'Point', 
-  //         coordinates: [111, 111]
-  //         },
-  //         authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-  //         electionId: '5a3047c071b36b39cfce6640'
-  //     }]
-  //   },
-  //   {
-  //     username: 'thisUsername',
-  //     password: 'thisPassword',
-  //     volunteerRoles: ['user', 'volunteer'],
-  //     firstName: 'thisVolunteerFirstName', 
-  //     lastName: 'thisVolunteerLastName',
-  //     emailAddress: 'thisVolunteer@Email.Address',
-  //     exposeEmail: 'thisVolunteerExposeEmail',
-  //     phoneNumber: 1111111111,
-  //     age: 22,
-  //     sex: 'thisVolunteerSex',
-  //     partyAffiliation: 'thisVolunteerPartyAffiliation',
-  //     schedule: [{
-  //       pollingStationId: '5a3047c071b36b39cfce6640',
-  //       electionId: '5a3047c071b36b39cfce6640',
-  //       shifts: [1,2,3]
-  //     }],
-  //     timeSheet: [{
-  //       roleInOrOut: 'in',
-  //       location: {
-  //         type: 'Point', 
-  //         coordinates: [111, 111]
-  //         },
-  //         authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-  //         electionId: '5a3047c071b36b39cfce6640'
-  //     }]
-  //   }
-  // ]
+  // user
+  userArray:
+  [
+    {
+      username: 'thisUsername1',
+      password: 'thisPassword',
+      volunteerRoles: ['user', 'volunteer'],
+      firstName: 'thisVolunteerFirstName', 
+      lastName: 'thisVolunteerLastName',
+      emailAddress: 'thisVolunteer1@Email.Address',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 1111111111,
+      age: 22,
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      schedule: [{
+        pollingStationId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3]
+      }],
+      timeSheet: [{
+        roleInOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+          },
+          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
+          electionId: '5a3047c071b36b39cfce6640'
+      }]
+    },
+    {
+      username: 'thisUsername2',
+      password: 'thisPassword',
+      volunteerRoles: ['user', 'volunteer'],
+      firstName: 'thisVolunteerFirstName', 
+      lastName: 'thisVolunteerLastName',
+      emailAddress: 'thisVolunteer2@Email.Address',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 2222222222,
+      age: 22,
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      schedule: [{
+        pollingStationId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3]
+      }],
+      timeSheet: [{
+        roleInOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+          },
+          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
+          electionId: '5a3047c071b36b39cfce6640'
+      }]
+    },
+    {
+      username: 'thisUsername3',
+      password: 'thisPassword',
+      volunteerRoles: ['user', 'volunteer'],
+      firstName: 'thisVolunteerFirstName', 
+      lastName: 'thisVolunteerLastName',
+      emailAddress: 'thisVolunteer3@Email.Address',
+      exposeEmail: 'thisVolunteerExposeEmail',
+      phoneNumber: 3333333333,
+      age: 22,
+      sex: 'thisVolunteerSex',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      schedule: [{
+        pollingStationId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3]
+      }],
+      timeSheet: [{
+        roleInOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+          },
+          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
+          electionId: '5a3047c071b36b39cfce6640'
+      }]
+    }
+  ],
 
-  // // vote
-  // [
-  //   {
-  //     voteSuccessDetails: [{
-  //       election: '5a3047c071b36b39cfce6640',
-  //       success: false,
-  //       couldNotVoteReason: 'noTimeOff', 
-  //       castBy: 'votingMachine',
-  //     }],
-  //     samePreviousVotePollingLocation: 'no',
-  //     officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-  //     PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   },
-  //   {
-  //     voteSuccessDetails: [{
-  //       election: '5a3047c071b36b39cfce6640',
-  //       success: false,
-  //       couldNotVoteReason: 'noTimeOff', 
-  //       castBy: 'votingMachine',
-  //     }],
-  //     samePreviousVotePollingLocation: 'no',
-  //     officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-  //     PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   },
-  //   {
-  //     voteSuccessDetails: [{
-  //       election: '5a3047c071b36b39cfce6640',
-  //       success: false,
-  //       couldNotVoteReason: 'noTimeOff', 
-  //       castBy: 'votingMachine',
-  //     }],
-  //     samePreviousVotePollingLocation: 'no',
-  //     officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-  //     PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   }
-  // ]
+  mockUsers: function(arr) {
+    arr.forEach((el) => {
+      let EL = new User(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
+
+  // vote
+  voteArray:
+  [
+    {
+      voteSuccessDetails: [{
+        election: '5a3047c071b36b39cfce6640',
+        success: false,
+        couldNotVoteReason: 'noTimeOff', 
+        castBy: 'votingMachine',
+      }],
+      samePreviousVotePollingLocation: 'no',
+      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
+      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+      volunteerId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    },
+    {
+      voteSuccessDetails: [{
+        election: '5a3047c071b36b39cfce6640',
+        success: false,
+        couldNotVoteReason: 'noTimeOff', 
+        castBy: 'votingMachine',
+      }],
+      samePreviousVotePollingLocation: 'no',
+      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
+      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+      volunteerId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    },
+    {
+      voteSuccessDetails: [{
+        election: '5a3047c071b36b39cfce6640',
+        success: false,
+        couldNotVoteReason: 'noTimeOff', 
+        castBy: 'votingMachine',
+      }],
+      samePreviousVotePollingLocation: 'no',
+      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
+      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+      volunteerId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    }
+  ],
+
+  mockVotes: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Vote(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // FUNCTIONS
 
@@ -488,6 +542,10 @@ const MD = {
     this.mockCandidates(this.candidateArray);
     this.mockContacts(this.contactArray);
     this.mockDemographics(this.demographicsArray);
+    this.mockElections(this.electionArray);
+    this.mockElectOffices(this.electofficeArray);
+    this.mockUsers(this.userArray);
+    this.mockVotes(this.voteArray);
   },
 
   deleteMockData: function() {
@@ -498,7 +556,10 @@ const MD = {
       Candidate.remove({}),
       Contact.remove({}),
       Demographics.remove({}),
-      User.remove({})
+      Election.remove({}),
+      Electoffice.remove({}),
+      User.remove({}),
+      Vote.remove({})
     ])
       .then(() => console.log('Deleted all mock data'))
   }
