@@ -1,5 +1,6 @@
 const Affidavit = require('../models/affidavit');
 const Amendment = require('../models/amendment');
+const Anomaly = require('../models/anomaly');
 const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
@@ -81,35 +82,48 @@ const MD = {
     })
   },
 
-  // //anomaly
-  // [
-  //   {
-  //     nature: 'thisNature',
-  //     firstName: 'thisVoterFirstName',
-  //     lastName: 'thisVoterLastName',
-  //     consentToContact: true,
-  //     emailAddress: 'thisVoterEmailAddress',
-  //     phoneNumber: '1111111111',
-  //     comments: 'thisComment',
-  //     evidence: ['5a3047c071b36b39cfce6640'],
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   },
-  //   {
-  //     nature: 'thisNature',
-  //     firstName: 'thisVoterFirstName',
-  //     lastName: 'thisVoterLastName',
-  //     consentToContact: true,
-  //     emailAddress: 'thisVoterEmailAddress',
-  //     phoneNumber: '1111111111',
-  //     comments: 'thisComment',
-  //     evidence: ['5a3047c071b36b39cfce6640'],
-  //     volunteerId: '5a3047c071b36b39cfce6640',
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     timestamp: Date.now()
-  //   }
-  // ]
+  //anomaly
+  anomalyArray:
+  [
+    {
+      nature: 'thisNature',
+      firstName: 'thisVoterFirstName',
+      lastName: 'thisVoterLastName',
+      consentToContact: true,
+      emailAddress: 'thisVoterEmailAddress',
+      phoneNumber: '1111111111',
+      comments: 'thisComment',
+      evidence: ['5a3047c071b36b39cfce6640'],
+      volunteerId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    },
+    {
+      nature: 'thisNature',
+      firstName: 'thisVoterFirstName',
+      lastName: 'thisVoterLastName',
+      consentToContact: true,
+      emailAddress: 'thisVoterEmailAddress',
+      phoneNumber: '1111111111',
+      comments: 'thisComment',
+      evidence: ['5a3047c071b36b39cfce6640'],
+      volunteerId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6640',
+      timestamp: Date.now()
+    }
+  ],
+
+  mockAnomalies: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Anomaly(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // //candidate 
   // [
@@ -428,10 +442,11 @@ const MD = {
   createMockData: function() {
     this.mockAffidavits(this.affidavitArray);
     this.mockAmendments(this.amendmentArray);
+    this.mockAnomalies(this.anomalyArray);
   },
 
   deleteMockData: function() {
-    Promise.all([Affidavit.remove({}), User.remove({})])
+    Promise.all([Affidavit.remove({}), Amendment.remove({}), Anomaly.remove({}), User.remove({})])
       .then(() => console.log('Deleted all mock data'))
   }
 
