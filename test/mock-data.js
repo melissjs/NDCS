@@ -135,27 +135,30 @@ const MD = {
   candidateArray:
   [
     {
-      name: 'thisCandidateName',
-      party: 'thisCandidateParty',
-      electOffice: ['5a3047c071b36b39cfce6640'],
+      name: 'Congress Candidate One',
+      party: 'Independent',
+      electOffice: ['5a3047c071b36b39cfce6622'],
     },
     {
-      name: 'thisCandidateName',
-      party: 'thisCandidateParty',
-      electOffice: ['5a3047c071b36b39cfce6640'],
+      name: 'Congress Candidate Two',
+      party: 'Democratic',
+      electOffice: ['5a3047c071b36b39cfce6622'],
+    },
+    {
+      name: 'Senate Candidate One',
+      party: 'Democratic',
+      electOffice: ['5a3047c071b36b39cfce6633'],
     }
   ],
 
-  mockCandidates: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Candidate(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockCandidates: async function(arr) {
+    let cC1 = new Candidate(this.candidateArray[0]);
+    cC1.set('_id', '5a3047c071b36b39cfce6677');
+    let cC2 = new Candidate(this.candidateArray[0]);
+    cC1.set('_id', '5a3047c071b36b39cfce6688');
+    let sC1 = new Candidate(this.candidateArray[0]);
+    cC1.set('_id', '5a3047c071b36b39cfce6699');
+    await Promise.all([cC1.save(), cC2.save(), sC1.save()])
   },
 
   // contact
@@ -577,9 +580,7 @@ const MD = {
     ])
     // 2 pollingstation
     .then(() => {
-      Promise.all([
-        this.mockPollingstations(this.polligstationArray),
-      ])
+        this.mockPollingstations(this.polligstationArray)
     }) 
     // 2) candidates, users
     .then(() => {
@@ -636,3 +637,7 @@ module.exports = MD;
 // pollingStation (federal): 5a3047c071b36b39cfce6644
 // pollingStation (angeles): 5a3047c071b36b39cfce6655
 // pollingStation (westood): 5a3047c071b36b39cfce6666
+// candidate (cc1): 5a3047c071b36b39cfce6677
+// candidate (cc2): 5a3047c071b36b39cfce6688
+// candidate (sc1): 5a3047c071b36b39cfce6699
+// user:
