@@ -369,47 +369,45 @@ const MD = {
   },
 
   // pollingstation
-  polligstationArray:
+  pollingstationArray:
   [
     {
-      electionId: '5a3047c071b36b39cfce6640',
-      precinctNumber: 'thisPrecinctNumber',
-      locationName: 'thisLocationName',
-      streetAddress: 'thisStreetAddress',
-      city: 'thisCity',
-      state: 'thisState',
+      electionId: ['5a3047c071b36b39cfce6611'],
+      precinctNumber: '2600',
+      locationName: 'Federal Building',
+      streetAddress: '444 thisStreetAddress',
+      city: 'Hollywood',
+      state: 'FL',
       zip: 11111
     },
     {
-      electionId: '5a3047c071b36b39cfce6640',
-      precinctNumber: 'thisPrecinctNumber',
-      locationName: 'thisLocationName',
-      streetAddress: 'thisStreetAddress',
-      city: 'thisCity',
-      state: 'thisState',
+      electionId: ['5a3047c071b36b39cfce6611'],
+      precinctNumber: '2001A - 2001B',
+      locationName: 'Angeles High School',
+      streetAddress: '555 thisStreetAddress',
+      city: 'Hollywood',
+      state: 'FL',
       zip: 11111
     },
     {
-      electionId: '5a3047c071b36b39cfce6640',
-      precinctNumber: 'thisPrecinctNumber',
-      locationName: 'thisLocationName',
-      streetAddress: 'thisStreetAddress',
-      city: 'thisCity',
-      state: 'thisState',
+      electionId: ['5a3047c071b36b39cfce6611'],
+      precinctNumber: '2800',
+      locationName: 'Westwood Masonic Lodge',
+      streetAddress: '666 thisStreetAddress',
+      city: 'Atlanta',
+      state: 'FL',
       zip: 11111
     }
   ],
 
-  mockPollingstations: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Pollingstation(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockPollingstations: async function(arr) {
+    let federalStation = new Pollingstation(this.pollingstationArray[0]);
+    federalStation.set('_id', '5a3047c071b36b39cfce6644');
+    let angelesStation = new Pollingstation(this.pollingstationArray[1]);
+    angelesStation.set('_id', '5a3047c071b36b39cfce6655');
+    let westwoodStation = new Pollingstation(this.pollingstationArray[2]);
+    westwoodStation.set('_id', '5a3047c071b36b39cfce6666');
+    await Promise.all([federalStation.save(), angelesStation.save(), westwoodStation.save()]);
   },
 
   // user
@@ -635,3 +633,6 @@ module.exports = MD;
 // currentElection: 5a3047c071b36b39cfce6611
 // electOffice (congress): 5a3047c071b36b39cfce6622
 // electOffice (senate): 5a3047c071b36b39cfce6633
+// pollingStation (federal): 5a3047c071b36b39cfce6644
+// pollingStation (angeles): 5a3047c071b36b39cfce6655
+// pollingStation (westood): 5a3047c071b36b39cfce6666
