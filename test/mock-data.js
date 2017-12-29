@@ -270,30 +270,24 @@ const MD = {
   // electoffice
   electofficeArray:
   [
-    // {
-    //   election: '5a3047c071b36b39cfce6640',
-    //   office: 'thisOffice',
-    //   mandatory: true,
-    // },
     {
-      election: '5a3047c071b36b39cfce6641',
-      office: 'thisOffice',
+      election: '5a3047c071b36b39cfce6611',
+      office: 'Congress - District 34',
+      mandatory: true,
+    },
+    {
+      election: '5a3047c071b36b39cfce6611',
+      office: 'Senate',
       mandatory: true,
     }
   ],
 
-  mockElectOffices: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Electoffice(el);
-      // so office vote validates
-      EL._id = '5a45cae86b2f1c401d705623'
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockElectOffices: async function(arr) {
+    let congress2018 = new Electoffice(this.electofficeArray[0]);
+    congress2018.set('_id', '5a3047c071b36b39cfce6622');
+    let senate2018 = new Electoffice(this.electofficeArray[1]);
+    senate2018.set('_id', '5a3047c071b36b39cfce6633');
+    await Promise.all([congress2018.save(), senate2018.save()]);
   },
 
   // evidence
@@ -639,3 +633,5 @@ module.exports = MD;
 // mock data _id keys
 // previousElection: 5a3047c071b36b39cfce6600
 // currentElection: 5a3047c071b36b39cfce6611
+// electOffice (congress): 5a3047c071b36b39cfce6622
+// electOffice (senate): 5a3047c071b36b39cfce6633
