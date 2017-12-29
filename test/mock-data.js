@@ -6,6 +6,8 @@ const Contact = require('../models/contact');
 const Demographics = require('../models/demographics');
 const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
+const Evidence = require('../models/evidence');
+const Officevote = require('../models/officevote')
 const Pollingstation = require('../models/pollingstation');
 const User = require('../models/user');
 const Vote = require('../models/vote');
@@ -236,32 +238,31 @@ const MD = {
   electionArray:
   [
     {
-      cIId: 'thiscIId',
-      electionTitle: 'thisElectionTitle',
+      cIId: '2016',
+      electionTitle: '2016 General Election',
       electionDay: Date.now(),
-      electionType: 'primary',
+      electionType: 'general',
       ocdDivisionId: 'thisOcdDivisionId',
-      previousElection: '5a3047c071b36b39cfce6640',
+      previousElection: '5a3047c071b36b39cfce6643',
     },
     {
-      cIId: 'thiscIId',
-      electionTitle: 'thisElectionTitle',
+      cIId: '2018',
+      electionTitle: '2018 Midterm Election',
       electionDay: Date.now(),
       electionType: 'primary',
       ocdDivisionId: 'thisOcdDivisionId',
-      previousElection: '5a3047c071b36b39cfce6640',
+      previousElection: '5a3047c071b36b39cfce6600',
     }
   ],
 
-  mockElections: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Election(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
+  mockElections: async function(arr) {
+    let previousElection = new Election(this.electionArray[0]);
+    previousElection.set('_id', '5a3047c071b36b39cfce6600');
+    await previousElection.save()
+    .then(() => {
+      let currentElection = new Election(this.electionArray[1]);
+      currentElection.set('_id', '5a3047c071b36b39cfce6611');
+      currentElection.save();
     })
   },
 
@@ -269,13 +270,13 @@ const MD = {
   // electoffice
   electofficeArray:
   [
+    // {
+    //   election: '5a3047c071b36b39cfce6640',
+    //   office: 'thisOffice',
+    //   mandatory: true,
+    // },
     {
-      election: '5a3047c071b36b39cfce6640',
-      office: 'thisOffice',
-      mandatory: true,
-    },
-    {
-      election: '5a3047c071b36b39cfce6640',
+      election: '5a3047c071b36b39cfce6641',
       office: 'thisOffice',
       mandatory: true,
     }
@@ -284,6 +285,8 @@ const MD = {
   mockElectOffices: function(arr) {
     arr.forEach((el) => {
       let EL = new Electoffice(el);
+      // so office vote validates
+      EL._id = '5a45cae86b2f1c401d705623'
       EL.save()
       .then(() => {
       })
@@ -293,88 +296,127 @@ const MD = {
     })
   },
 
-  // // evidence 
-  // [
-  //   {
-  //     kind: 'image',
-  //     fileName: 'image.jpg',
-  //     tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-  //     anomalyId:'5a3047c071b36b39cfce6640'
-  //   },
-  //   {
-  //     kind: 'video',
-  //     fileName: 'image.mp3',
-  //     tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-  //     anomalyId:'5a3047c071b36b39cfce6640'
-  //   },
-  //   {
-  //     kind: 'audio',
-  //     fileName: 'image.wav',
-  //     tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-  //     anomalyId:'5a3047c071b36b39cfce6640'
-  //   }
-  // ]
+  // evidence
+  evidenceArray:
+  [
+    {
+      kind: 'image',
+      fileName: 'image.jpg',
+      tags: ['givenIncorrectBallot', 'pollingStationProblem'],
+      anomalyId:'5a3047c071b36b39cfce6640'
+    },
+    {
+      kind: 'video',
+      fileName: 'image.mp3',
+      tags: ['givenIncorrectBallot', 'pollingStationProblem'],
+      anomalyId:'5a3047c071b36b39cfce6640'
+    },
+    {
+      kind: 'audio',
+      fileName: 'image.wav',
+      tags: ['givenIncorrectBallot', 'pollingStationProblem'],
+      anomalyId:'5a3047c071b36b39cfce6640'
+    }
+  ],
 
-  // // officevote
-  // [
-  //   {
-  //     electOfficeId: '5a3047c071b36b39cfce6640',
-  //     candidateId: '5a3047c071b36b39cfce6641',
-  //     levelOfSupport: 'highly',
-  //     rankedVotes: [{ 
-  //       candidate: '5a3047c071b36b39cfce6640',
-  //       choice: 1,
-  //       }, { 
-  //       candidate: '5a3047c071b36b39cfce6641',
-  //       choice: 2,
-  //       }],
-  //     voteId: '5a3047c071b36b39cfce6640'
-  //   },
-  //   {
-  //     electOfficeId: '5a3047c071b36b39cfce6640',
-  //     candidateId: '5a3047c071b36b39cfce6641',
-  //     levelOfSupport: 'highly',
-  //     rankedVotes: [{ 
-  //       candidate: '5a3047c071b36b39cfce6640',
-  //       choice: 1,
-  //       }, { 
-  //       candidate: '5a3047c071b36b39cfce6641',
-  //       choice: 2,
-  //       }],
-  //     voteId: '5a3047c071b36b39cfce6640'
-  //   }
-  // ]
+  mockEvidence: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Evidence(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
-  // // pollingstation
-  // [
-  //   {
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     precinctNumber: 'thisPrecinctNumber',
-  //     locationName: 'thisLocationName',
-  //     streetAddress: 'thisStreetAddress',
-  //     city: 'thisCity',
-  //     state: 'thisState',
-  //     zip: 11111
-  //   },
-  //   {
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     precinctNumber: 'thisPrecinctNumber',
-  //     locationName: 'thisLocationName',
-  //     streetAddress: 'thisStreetAddress',
-  //     city: 'thisCity',
-  //     state: 'thisState',
-  //     zip: 11111
-  //   },
-  //   {
-  //     electionId: '5a3047c071b36b39cfce6640',
-  //     precinctNumber: 'thisPrecinctNumber',
-  //     locationName: 'thisLocationName',
-  //     streetAddress: 'thisStreetAddress',
-  //     city: 'thisCity',
-  //     state: 'thisState',
-  //     zip: 11111
-  //   }
-  // ]
+  // officevote
+  officevoteArray:
+  [
+    { 
+      electOfficeId: '5a45cae86b2f1c401d705623',
+      candidateId: '5a3047c071b36b39cfce6641',
+      levelOfSupport: 'highly',
+      rankedVotes: [{ 
+        candidate: '5a3047c071b36b39cfce6640',
+        choice: 1,
+        }, { 
+        candidate: '5a3047c071b36b39cfce6641',
+        choice: 2,
+        }],
+      voteId: '5a3047c071b36b39cfce6640'
+    },
+    {
+      electOfficeId: '5a45cae86b2f1c401d705623',
+      candidateId: '5a3047c071b36b39cfce6641',
+      levelOfSupport: 'highly',
+      rankedVotes: [{ 
+        candidate: '5a3047c071b36b39cfce6640',
+        choice: 1,
+        }, { 
+        candidate: '5a3047c071b36b39cfce6641',
+        choice: 2,
+        }],
+      voteId: '5a3047c071b36b39cfce6640'
+    }
+  ],
+
+  mockOfficeVotes: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Officevote(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
+
+  // pollingstation
+  polligstationArray:
+  [
+    {
+      electionId: '5a3047c071b36b39cfce6640',
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    },
+    {
+      electionId: '5a3047c071b36b39cfce6640',
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    },
+    {
+      electionId: '5a3047c071b36b39cfce6640',
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    }
+  ],
+
+  mockPollingstations: function(arr) {
+    arr.forEach((el) => {
+      let EL = new Pollingstation(el);
+      EL.save()
+      .then(() => {
+      })
+      .catch((e) => {
+        console.log('Mock data error: ', e);
+      });
+    })
+  },
 
   // user
   userArray:
@@ -535,21 +577,40 @@ const MD = {
 
   // FUNCTIONS
 
-  createMockData: function() {
-    this.mockAffidavits(this.affidavitArray);
-    this.mockAmendments(this.amendmentArray);
-    this.mockAnomalies(this.anomalyArray);
-    this.mockCandidates(this.candidateArray);
-    this.mockContacts(this.contactArray);
-    this.mockDemographics(this.demographicsArray);
-    this.mockElections(this.electionArray);
-    this.mockElectOffices(this.electofficeArray);
-    this.mockUsers(this.userArray);
-    this.mockVotes(this.voteArray);
+  createMockData: async function() {
+    // 1) election, electoffice
+    await Promise.all([
+      this.mockElections(this.electionArray),
+      this.mockElectOffices(this.electofficeArray),
+    ])
+    // 2 pollingstation
+    .then(() => {
+      Promise.all([
+        this.mockPollingstations(this.polligstationArray),
+      ])
+    }) 
+    // 2) candidates, users
+    .then(() => {
+      Promise.all([
+        this.mockCandidates(this.candidateArray),
+        this.mockUsers(this.userArray)
+      ])
+    }) 
+    // 3) Records
+    await Promise.all([
+    this.mockAffidavits(this.affidavitArray),
+    this.mockAmendments(this.amendmentArray),
+    this.mockAnomalies(this.anomalyArray),
+    this.mockContacts(this.contactArray),
+    this.mockDemographics(this.demographicsArray),
+    this.mockEvidence(this.evidenceArray),
+    this.mockOfficeVotes(this.officevoteArray),
+    this.mockVotes(this.voteArray),
+    ]).then(() => console.log('All mock data created'))
   },
 
-  deleteMockData: function() {
-    Promise.all([
+  deleteMockData: async function() {
+    await Promise.all([
       Affidavit.remove({}), 
       Amendment.remove({}), 
       Anomaly.remove({}), 
@@ -558,12 +619,23 @@ const MD = {
       Demographics.remove({}),
       Election.remove({}),
       Electoffice.remove({}),
+      Evidence.remove({}),
+      Officevote.remove({}),
+      Pollingstation.remove({}),
       User.remove({}),
       Vote.remove({})
     ])
       .then(() => console.log('Deleted all mock data'))
+  },
+
+  cleanMockData: async function() {
+    await this.deleteMockData().then(() => this.createMockData())
   }
 
 }
 
 module.exports = MD;
+
+// mock data _id keys
+// previousElection: 5a3047c071b36b39cfce6600
+// currentElection: 5a3047c071b36b39cfce6611
