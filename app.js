@@ -95,8 +95,8 @@ app.use(function(err, req, res, next) {
 
 // UNCOMMENT FOR DEVELOPMENT MOCK DATA
 
-// MD.deleteMockData();
-MD.mockCandidates();
+MD.deleteMockData();
+// MD.mockCandidates();
 // MD.cleanMockData();
 
 module.exports = app;
