@@ -25,8 +25,8 @@ const MD = {
       zip: 10001,
       emailAddress: 'thisVoter@Email.Address',
       comments: 'AffidavitComment',
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7700',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
@@ -37,8 +37,8 @@ const MD = {
       zip: 10001,
       emailAddress: 'thisVoter@Email.Address',
       comments: 'AffidavitComment',
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7711',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
   ],
@@ -61,17 +61,17 @@ const MD = {
     {
       incorrectSelection: 'thisIncorrectSelection',
       correctSelection: 'thisCorrectSelection',
-      volunteerId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7722',
       authenticatingVolunteerId: '5a3047c071b36b39cfce6641',
-      electionId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
       incorrectSelection: 'thisIncorrectSelection',
       correctSelection: 'thisCorrectSelection',
-      volunteerId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7722',
       authenticatingVolunteerId: '5a3047c071b36b39cfce6641',
-      electionId: '5a3047c071b36b39cfce6640',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
   ],
@@ -100,8 +100,8 @@ const MD = {
       phoneNumber: '1111111111',
       comments: 'thisComment',
       evidence: ['5a3047c071b36b39cfce6640'],
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7722',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
@@ -113,8 +113,8 @@ const MD = {
       phoneNumber: '1111111111',
       comments: 'thisComment',
       evidence: ['5a3047c071b36b39cfce6640'],
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      volunteerId: '5a3047c071b36b39cfce7722',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
   ],
@@ -151,7 +151,7 @@ const MD = {
     }
   ],
 
-  mockCandidates: async function(arr) {
+  mockCandidates: async function() {
     let cC1 = new Candidate(this.candidateArray[0]);
     cC1.set('_id', '5a3047c071b36b39cfce6677');
     let cC2 = new Candidate(this.candidateArray[0]);
@@ -258,7 +258,7 @@ const MD = {
     }
   ],
 
-  mockElections: async function(arr) {
+  mockElections: async function() {
     let previousElection = new Election(this.electionArray[0]);
     previousElection.set('_id', '5a3047c071b36b39cfce6600');
     await previousElection.save()
@@ -281,11 +281,11 @@ const MD = {
     {
       election: '5a3047c071b36b39cfce6611',
       office: 'Senate',
-      mandatory: true,
+      mandatory: false,
     }
   ],
 
-  mockElectOffices: async function(arr) {
+  mockElectOffices: async function() {
     let congress2018 = new Electoffice(this.electofficeArray[0]);
     congress2018.set('_id', '5a3047c071b36b39cfce6622');
     let senate2018 = new Electoffice(this.electofficeArray[1]);
@@ -332,44 +332,59 @@ const MD = {
   officevoteArray:
   [
     { 
-      electOfficeId: '5a45cae86b2f1c401d705623',
-      candidateId: '5a3047c071b36b39cfce6641',
+      electOfficeId: '5a3047c071b36b39cfce6622',
+      candidateId: '5a3047c071b36b39cfce6677',
       levelOfSupport: 'highly',
       rankedVotes: [{ 
-        candidate: '5a3047c071b36b39cfce6640',
+        candidate: '5a3047c071b36b39cfce6677',
         choice: 1,
         }, { 
-        candidate: '5a3047c071b36b39cfce6641',
+        candidate: '5a3047c071b36b39cfce6688',
         choice: 2,
         }],
-      voteId: '5a3047c071b36b39cfce6640'
+      voteId: '5a3047c071b36b39cfce9900'
     },
     {
-      electOfficeId: '5a45cae86b2f1c401d705623',
-      candidateId: '5a3047c071b36b39cfce6641',
+      electOfficeId: '5a3047c071b36b39cfce6622',
+      candidateId: '5a3047c071b36b39cfce6688',
       levelOfSupport: 'highly',
       rankedVotes: [{ 
-        candidate: '5a3047c071b36b39cfce6640',
+        candidate: '5a3047c071b36b39cfce6688',
         choice: 1,
         }, { 
-        candidate: '5a3047c071b36b39cfce6641',
+        candidate: '5a3047c071b36b39cfce6677',
         choice: 2,
         }],
-      voteId: '5a3047c071b36b39cfce6640'
+      voteId: '5a3047c071b36b39cfce9911'
+    },
+    {
+      electOfficeId: '5a3047c071b36b39cfce6633',
+      candidateId: '5a3047c071b36b39cfce6699',
+      levelOfSupport: 'highly',
+      rankedVotes: [],
+      // rankedVotes: [{ 
+      //   candidate: '5a3047c071b36b39cfce6688',
+      //   choice: 1,
+      //   }, { 
+      //   candidate: '5a3047c071b36b39cfce6677',
+      //   choice: 2,
+      //   }],
+      voteId: '5a3047c071b36b39cfce9922'
     }
   ],
 
-  mockOfficeVotes: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Officevote(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
-  },
+  // Moved into mockVotes
+  // mockOfficeVotes: function(arr) {
+  //   arr.forEach((el) => {
+  //     let EL = new Officevote(el);
+  //     EL.save()
+  //     .then(() => {
+  //     })
+  //     .catch((e) => {
+  //       console.log('Mock data error: ', e);
+  //     });
+  //   })
+  // },
 
   // pollingstation
   pollingstationArray:
@@ -403,7 +418,7 @@ const MD = {
     }
   ],
 
-  mockPollingstations: async function(arr) {
+  mockPollingstations: async function() {
     let federalStation = new Pollingstation(this.pollingstationArray[0]);
     federalStation.set('_id', '5a3047c071b36b39cfce6644');
     let angelesStation = new Pollingstation(this.pollingstationArray[1]);
@@ -577,7 +592,7 @@ const MD = {
     }
   ],
 
-  mockUsers: async function(arr) {
+  mockUsers: async function() {
     let user1 = new User(this.userArray[0]);
     user1.set('_id', '5a3047c071b36b39cfce7700');
     let user2 = new User(this.userArray[1]);
@@ -592,58 +607,67 @@ const MD = {
   [
     {
       voteSuccessDetails: [{
-        election: '5a3047c071b36b39cfce6640',
+        election: '5a3047c071b36b39cfce6611',
+        success: false,
+        couldNotVoteReason: 'noTimeOff', 
+        castBy: 'votingMachine',
+      }, {
+        election: '5a3047c071b36b39cfce6600',
         success: false,
         couldNotVoteReason: 'noTimeOff', 
         castBy: 'votingMachine',
       }],
       samePreviousVotePollingLocation: 'no',
-      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822'],
+      PreviousOfficeVotes: ['5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
+      volunteerId: '5a3047c071b36b39cfce7700',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
       voteSuccessDetails: [{
-        election: '5a3047c071b36b39cfce6640',
+        election: '5a3047c071b36b39cfce6611',
         success: false,
         couldNotVoteReason: 'noTimeOff', 
         castBy: 'votingMachine',
       }],
       samePreviousVotePollingLocation: 'no',
-      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      officeVotes: ['5a3047c071b36b39cfce8811', '5a3047c071b36b39cfce8822'],
+      // PreviousOfficeVotes: [],
+      volunteerId: '5a3047c071b36b39cfce7711',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
       voteSuccessDetails: [{
-        election: '5a3047c071b36b39cfce6640',
+        election: '5a3047c071b36b39cfce6611',
         success: false,
         couldNotVoteReason: 'noTimeOff', 
         castBy: 'votingMachine',
       }],
       samePreviousVotePollingLocation: 'no',
-      officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-      PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
-      volunteerId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
+      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822'],
+      PreviousOfficeVotes: ['5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
+      volunteerId: '5a3047c071b36b39cfce7722',
+      electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
   ],
 
-  mockVotes: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Vote(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockVotesAndOfficeVotes: async function() {
+    let vote1 = new Vote(this.voteArray[0]);
+    vote1.set('_id', '5a3047c071b36b39cfce9900');
+    let vote2 = new Vote(this.voteArray[1]);
+    vote2.set('_id', '5a3047c071b36b39cfce9911');
+    let vote3 = new Vote(this.voteArray[2]);
+    vote3.set('_id', '5a3047c071b36b39cfce9922');
+    let officeVote1 = new Officevote(this.officevoteArray[0]);
+    officeVote1.set('_id', '5a3047c071b36b39cfce8800');
+    let officeVote2 = new Officevote(this.officevoteArray[1]);
+    officeVote2.set('_id', '5a3047c071b36b39cfce8811');
+    let officeVote3 = new Officevote(this.officevoteArray[2]);
+    officeVote3.set('_id', '5a3047c071b36b39cfce8822');
+    await Promise.all([vote1.save(), vote2.save(), vote3.save(), officeVote1.save(), officeVote2.save(), officeVote3.save()])
   },
 
   // FUNCTIONS
@@ -651,30 +675,40 @@ const MD = {
   createMockData: async function() {
     // 1) election, electoffice
     await Promise.all([
-      this.mockElections(this.electionArray),
-      this.mockElectOffices(this.electofficeArray),
+      this.mockElections(),
+      this.mockElectOffices(),
     ])
     // 2 pollingstation
     .then(() => {
-        this.mockPollingstations(this.polligstationArray)
+        this.mockPollingstations()
     }) 
-    // 2) candidates, users
+    // 3) candidates, users
     .then(() => {
       Promise.all([
-        this.mockCandidates(this.candidateArray),
-        this.mockUsers(this.userArray)
+        this.mockCandidates(),
+        this.mockUsers()
       ])
     }) 
-    // 3) Records
+    // 4) Vote Records
+    .then(() => {
+      Promise.all([
+      this.mockVotesAndOfficeVotes(),
+      // this.mockOfficeVotes(),
+      this.mockDemographics(this.demographicsArray)
+      ])
+    })
+    // 6) Anomaly Records
+    .then(() => {
+      Promise.all([
+        this.mockAnomalies(this.anomalyArray),
+        this.mockEvidence(this.evidenceArray)
+        ])
+    })
+    // 5) Records
     await Promise.all([
     this.mockAffidavits(this.affidavitArray),
     this.mockAmendments(this.amendmentArray),
-    this.mockAnomalies(this.anomalyArray),
     this.mockContacts(this.contactArray),
-    this.mockDemographics(this.demographicsArray),
-    this.mockEvidence(this.evidenceArray),
-    this.mockOfficeVotes(this.officevoteArray),
-    this.mockVotes(this.voteArray),
     ]).then(() => console.log('All mock data created'))
   },
 
@@ -719,3 +753,9 @@ module.exports = MD;
 // user1: 5a3047c071b36b39cfce7700
 // user2: 5a3047c071b36b39cfce7711
 // user3: 5a3047c071b36b39cfce7722
+// officevote (c1): 5a3047c071b36b39cfce8800
+// officevote (c2): 5a3047c071b36b39cfce8811
+// officevote (s1): 5a3047c071b36b39cfce8822
+// vote1: 5a3047c071b36b39cfce9900
+// vote1: 5a3047c071b36b39cfce9911
+// vote1: 5a3047c071b36b39cfce9922

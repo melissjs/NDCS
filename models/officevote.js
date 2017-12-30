@@ -9,7 +9,9 @@ async function rankedRequired() {
       console.log('ERR', err)
       return false
     } else {
-      return result.mandatory;
+      // return result.mandatory;
+      console.log('RESULT', result)
+      return false;
     }
   })
 }

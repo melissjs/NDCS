@@ -94,7 +94,15 @@ app.use(function(err, req, res, next) {
 });
 
 // UNCOMMENT FOR DEVELOPMENT MOCK DATA
-MD.deleteMockData().then(() => {MD.mockUsers()})
+MD.deleteMockData()
+  .then(() => {MD.mockElections()})
+  .then(() => {MD.mockElectOffices()})
+  .then(() => {MD.mockPollingstations()})
+  .then(() => {MD.mockCandidates()})
+  .then(() => {MD.mockUsers()})
+  .then(() => {MD.mockVotesAndOfficeVotes()})
+  .then(() => console.log('done with this far'))
+
 // MD.deleteMockData();
 // MD.mockUsers();
 // MD.cleanMockData();
