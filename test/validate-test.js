@@ -58,7 +58,7 @@ describe('Validation tests', () => {
     });
   });
 
-  it.only('can validate enums', (done) => {
+  it('can validate enums', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.userRoles.push({
       role: 'tech',
@@ -72,7 +72,6 @@ describe('Validation tests', () => {
       }});
     thisVolunteer.save()
     .catch((validationResult) => {
-      console.log(validationResult.errors['userRoles.2.role'].message)
       const { message } = validationResult.errors['userRoles.2.role'];
       assert(message === 'Invalid role option');
       done();
