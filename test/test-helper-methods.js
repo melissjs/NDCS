@@ -135,7 +135,7 @@ const THM = {
       auth: {
         authenticatingUserId: '5a3047c071b36b39cfce6640',
         date: Date.now()
-      },
+      }
     }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',

@@ -419,7 +419,27 @@ const MD = {
     {
       username: 'uv1',
       password: 'thisPassword',
-      volunteerRoles: ['user', 'volunteer'],
+      userRoles: [{
+        role: 'user',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        },
+      }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }],
       firstName: 'Volunteer', 
       lastName: 'One',
       emailAddress: 'thisVolunteer1@Email.Address',
@@ -430,23 +450,57 @@ const MD = {
       partyAffiliation: 'Democratic',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6600',
-        shifts: [1,2,3]
-      }],
-      timeSheet: [{
-        roleInOrOut: 'in',
-        location: {
-          type: 'Point', 
-          coordinates: [111, 111]
-          },
-          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6611'
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3],
+        timeSheet: [{
+          roleInOrOut: 'in',
+          location: {
+            type: 'Point', 
+            coordinates: [111, 111]
+           },
+           date: Date.now(),
+           auth: {
+             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             date: Date.now()
+           },
+           electionId: '5a3047c071b36b39cfce6640'
+        }]
       }]
     },
     {
       username: 'ulv1',
       password: 'thisPassword',
-      volunteerRoles: ['user', 'volunteer', 'lead'],
+      userRoles: [{
+        role: 'user',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        },
+      }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }, {
+        role: 'lead',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }],
       firstName: 'Lead Volunteer', 
       lastName: 'One',
       emailAddress: 'thisVolunteer2@Email.Address',
@@ -457,23 +511,47 @@ const MD = {
       partyAffiliation: 'Republican',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6600',
-        shifts: [1,2,3]
-      }],
-      timeSheet: [{
-        roleInOrOut: 'in',
-        location: {
-          type: 'Point', 
-          coordinates: [111, 111]
-          },
-          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6611'
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3],
+        timeSheet: [{
+          roleInOrOut: 'in',
+          location: {
+            type: 'Point', 
+            coordinates: [111, 111]
+           },
+           date: Date.now(),
+           auth: {
+             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             date: Date.now()
+           },
+           electionId: '5a3047c071b36b39cfce6640'
+        }]
       }]
     },
     {
       username: 'uv2',
       password: 'thisPassword',
-      volunteerRoles: ['user', 'volunteer'],
+      userRoles: [{
+        role: 'user',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        },
+      }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }],
       firstName: 'Volunteer', 
       lastName: 'Two',
       emailAddress: 'thisVolunteer3@Email.Address',
@@ -484,31 +562,33 @@ const MD = {
       partyAffiliation: 'Green',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6611',
-        shifts: [1,2,3]
-      }],
-      timeSheet: [{
-        roleInOrOut: 'in',
-        location: {
-          type: 'Point', 
-          coordinates: [111, 111]
-          },
-          authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6611'
+        electionId: '5a3047c071b36b39cfce6640',
+        shifts: [1,2,3],
+        timeSheet: [{
+          roleInOrOut: 'in',
+          location: {
+            type: 'Point', 
+            coordinates: [111, 111]
+           },
+           date: Date.now(),
+           auth: {
+             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             date: Date.now()
+           },
+           electionId: '5a3047c071b36b39cfce6640'
+        }]
       }]
     }
   ],
 
-  mockUsers: function(arr) {
-    arr.forEach((el) => {
-      let EL = new User(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockUsers: async function(arr) {
+    let user1 = new User(this.userArray[0]);
+    user1.set('_id', '5a3047c071b36b39cfce7700');
+    let user2 = new User(this.userArray[1]);
+    user2.set('_id', '5a3047c071b36b39cfce7711');
+    let user3 = new User(this.userArray[2]);
+    user3.set('_id', '5a3047c071b36b39cfce7722');
+    await Promise.all([user1.save(), user2.save(), user3.save()])
   },
 
   // vote
@@ -640,4 +720,6 @@ module.exports = MD;
 // candidate (cc1): 5a3047c071b36b39cfce6677
 // candidate (cc2): 5a3047c071b36b39cfce6688
 // candidate (sc1): 5a3047c071b36b39cfce6699
-// user:
+// user1: 5a3047c071b36b39cfce7700
+// user1: 5a3047c071b36b39cfce7711
+// user1: 5a3047c071b36b39cfce7722
