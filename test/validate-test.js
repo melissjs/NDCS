@@ -58,13 +58,23 @@ describe('Validation tests', () => {
     });
   });
 
-  it('can validate enums', (done) => {
+  it.only('can validate enums', (done) => {
     const thisVolunteer = new User(THM.userObj);
-    thisVolunteer.volunteerRoles.push('tech');
+    thisVolunteer.userRoles.push({
+      role: 'tech',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }});
     thisVolunteer.save()
     .catch((validationResult) => {
-      const { message } = validationResult.errors.volunteerRoles;
-      assert(message === 'Role does not exist');
+      console.log(validationResult.errors['userRoles.2.role'].message)
+      const { message } = validationResult.errors['userRoles.2.role'];
+      assert(message === 'Invalid role option');
       done();
     });
   });

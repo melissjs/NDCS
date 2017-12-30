@@ -1,7 +1,3 @@
-// const User = require('../models/user');
-// const Election = require('../models/election');
-// const Pollingstation = require('../models/pollingstation');
-
 const THM = {
 
   // for creating records
@@ -120,7 +116,27 @@ const THM = {
    userObj: {
     username: 'thisUsername',
     password: 'thisPassword',
-    volunteerRoles: ['user', 'volunteer'],
+    userRoles: [{
+      role: 'user',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      },
+    }, {
+      role: 'volunteer',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      },
+    }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
     emailAddress: 'thisVolunteer@Email.Address',
@@ -132,16 +148,20 @@ const THM = {
     schedule: [{
       pollingStationId: '5a3047c071b36b39cfce6640',
       electionId: '5a3047c071b36b39cfce6640',
-      shifts: [1,2,3]
-    }],
-    timeSheet: [{
-      roleInOrOut: 'in',
-      location: {
-        type: 'Point', 
-        coordinates: [111, 111]
-       },
-       authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-       electionId: '5a3047c071b36b39cfce6640'
+      shifts: [1,2,3],
+      timeSheet: [{
+        roleInOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+         },
+         date: Date.now(),
+         auth: {
+           authenticatingUserId: '5a3047c071b36b39cfce6640',
+           date: Date.now()
+         },
+         electionId: '5a3047c071b36b39cfce6640'
+      }]
     }]
   },
 

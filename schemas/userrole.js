@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-let roles = ['user', 'volunteer', 'lead', 'admin'];
-function roleValidator(roleArray) {
-  return roleArray.every((role)=>{
-    return (roles.includes(role))  
-  })
-};
+const AuthSchema = require('./auth');
 
 const UserRoleSchema = new Schema({
-  role: { type: String, required: [true, 'PollingStationId required'], validate: {validator: roleValidator, message: 'Invalid role option' } },
+  role: { type: String, required: [true, 'Role required'], enum: {values:  ['user', 'volunteer', 'lead', 'admin'], message: 'Invalid role option' } },
+  active: { type: Boolean, required: [true, 'Active or inactive required'] },
   dateInitiated: { type: [Date], required: [true, 'Role initiation date required'] },
-  dateApproved: { type: [Date]},
-  dateRemoved: { type: [Date] }
+  dateActivated: { type: [Date]},
+  dateInactivated: { type: [Date] },
+  auth:  { type: AuthSchema, required: [function() { return this.roleInOrOut != 'User' }, 'AuthenticatingVolunteerId required for check in'] }
 });
 
 module.exports = UserRoleSchema;

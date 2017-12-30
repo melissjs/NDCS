@@ -7,7 +7,7 @@ const mongooseUniqueValidator = require('mongoose-unique-validator');
 const userSchema = new Schema({
   username: { type: String, required: [true, 'Username required'], unique: true, uniqueCaseInsensitive: true },
   password: { type: String, required: [true, 'Password required'] },
-  volunteerRoles: { type: [UserRoleSchema], required: [true, 'At least one role is required'], default: 'user'},
+  userRoles: { type: [UserRoleSchema], required: [true, 'At least one role is required']},
   firstName: { type: String, required: [true, 'First name required'], minlength: [2, 'First name must be at least two characters'] },
   lastName: { type: String, required: [true, 'Last name required'], minlength: [2, 'Last name must be at least two characters'] },
   emailAddress: { type: String, required: [true, 'Email required'], trim: true, lowercase: true, unique: true, uniqueCaseInsensitive: true },

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const TimesheetSchema = require('../timesheet');
+const TimesheetSchema = require('./timesheet');
 
 
 function ShiftValidator(shiftArray) {

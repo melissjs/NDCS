@@ -417,20 +417,20 @@ const MD = {
   userArray:
   [
     {
-      username: 'thisUsername1',
+      username: 'uv1',
       password: 'thisPassword',
       volunteerRoles: ['user', 'volunteer'],
-      firstName: 'thisVolunteerFirstName', 
-      lastName: 'thisVolunteerLastName',
+      firstName: 'Volunteer', 
+      lastName: 'One',
       emailAddress: 'thisVolunteer1@Email.Address',
       exposeEmail: 'thisVolunteerExposeEmail',
       phoneNumber: 1111111111,
       age: 22,
-      sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      sex: 'female',
+      partyAffiliation: 'Democratic',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6600',
         shifts: [1,2,3]
       }],
       timeSheet: [{
@@ -440,24 +440,24 @@ const MD = {
           coordinates: [111, 111]
           },
           authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6640'
+          electionId: '5a3047c071b36b39cfce6611'
       }]
     },
     {
-      username: 'thisUsername2',
+      username: 'ulv1',
       password: 'thisPassword',
-      volunteerRoles: ['user', 'volunteer'],
-      firstName: 'thisVolunteerFirstName', 
-      lastName: 'thisVolunteerLastName',
+      volunteerRoles: ['user', 'volunteer', 'lead'],
+      firstName: 'Lead Volunteer', 
+      lastName: 'One',
       emailAddress: 'thisVolunteer2@Email.Address',
       exposeEmail: 'thisVolunteerExposeEmail',
       phoneNumber: 2222222222,
       age: 22,
-      sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      sex: 'female',
+      partyAffiliation: 'Republican',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6600',
         shifts: [1,2,3]
       }],
       timeSheet: [{
@@ -467,24 +467,24 @@ const MD = {
           coordinates: [111, 111]
           },
           authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6640'
+          electionId: '5a3047c071b36b39cfce6611'
       }]
     },
     {
-      username: 'thisUsername3',
+      username: 'uv2',
       password: 'thisPassword',
       volunteerRoles: ['user', 'volunteer'],
-      firstName: 'thisVolunteerFirstName', 
-      lastName: 'thisVolunteerLastName',
+      firstName: 'Volunteer', 
+      lastName: 'Two',
       emailAddress: 'thisVolunteer3@Email.Address',
       exposeEmail: 'thisVolunteerExposeEmail',
       phoneNumber: 3333333333,
       age: 22,
-      sex: 'thisVolunteerSex',
-      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      sex: 'male',
+      partyAffiliation: 'Green',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3]
       }],
       timeSheet: [{
@@ -494,7 +494,7 @@ const MD = {
           coordinates: [111, 111]
           },
           authenticatingVolunteerId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6640'
+          electionId: '5a3047c071b36b39cfce6611'
       }]
     }
   ],
