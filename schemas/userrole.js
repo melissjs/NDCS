@@ -8,7 +8,7 @@ const UserRoleSchema = new Schema({
   dateInitiated: { type: [Date], required: [true, 'Role initiation date required'] },
   dateActivated: { type: [Date]},
   dateInactivated: { type: [Date] },
-  auth:  { type: AuthSchema, required: [function() { return this.roleInOrOut != 'User' }, 'AuthenticatingVolunteerId required for check in'] }
+  auth:  { type: AuthSchema, required: [function() { return this.role != 'user' }, 'AuthenticatingVolunteerId required for check in'] }
 });
 
 module.exports = UserRoleSchema;

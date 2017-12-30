@@ -94,7 +94,7 @@ app.use(function(err, req, res, next) {
 });
 
 // UNCOMMENT FOR DEVELOPMENT MOCK DATA
-
+MD.deleteMockData().then(() => {MD.mockUsers()})
 // MD.deleteMockData();
 // MD.mockUsers();
 // MD.cleanMockData();

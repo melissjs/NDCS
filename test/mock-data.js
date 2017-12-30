@@ -424,11 +424,7 @@ const MD = {
         active: true,
         dateInitiated: [Date.now()],
         dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
-          date: Date.now()
-        },
+        dateInactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
@@ -436,7 +432,7 @@ const MD = {
         dateActivated: [Date.now()],
         dateInactivated: [null],
         auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }
       }],
@@ -449,8 +445,8 @@ const MD = {
       sex: 'female',
       partyAffiliation: 'Democratic',
       schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        pollingStationId: '5a3047c071b36b39cfce6644',
+        electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3],
         timeSheet: [{
           roleInOrOut: 'in',
@@ -460,10 +456,10 @@ const MD = {
            },
            date: Date.now(),
            auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             authenticatingUserId: '5a3047c071b36b39cfce7711',
              date: Date.now()
            },
-           electionId: '5a3047c071b36b39cfce6640'
+           electionId: '5a3047c071b36b39cfce6611'
         }]
       }]
     },
@@ -721,5 +717,5 @@ module.exports = MD;
 // candidate (cc2): 5a3047c071b36b39cfce6688
 // candidate (sc1): 5a3047c071b36b39cfce6699
 // user1: 5a3047c071b36b39cfce7700
-// user1: 5a3047c071b36b39cfce7711
-// user1: 5a3047c071b36b39cfce7722
+// user2: 5a3047c071b36b39cfce7711
+// user3: 5a3047c071b36b39cfce7722
