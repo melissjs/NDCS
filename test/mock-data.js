@@ -617,8 +617,7 @@ const MD = {
         castBy: 'votingMachine',
       }],
       samePreviousVotePollingLocation: 'no',
-      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822'],
-      PreviousOfficeVotes: ['5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
+      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822', '5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
       volunteerId: '5a3047c071b36b39cfce7700',
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
@@ -632,7 +631,6 @@ const MD = {
       }],
       samePreviousVotePollingLocation: 'no',
       officeVotes: ['5a3047c071b36b39cfce8811', '5a3047c071b36b39cfce8822'],
-      // PreviousOfficeVotes: [],
       volunteerId: '5a3047c071b36b39cfce7711',
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
@@ -645,8 +643,7 @@ const MD = {
         castBy: 'votingMachine',
       }],
       samePreviousVotePollingLocation: 'no',
-      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822'],
-      PreviousOfficeVotes: ['5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
+      officeVotes: ['5a3047c071b36b39cfce8800', '5a3047c071b36b39cfce8822', '5a3047c071b36b39cfce0001', '5a3047c071b36b39cfce0000'],
       volunteerId: '5a3047c071b36b39cfce7722',
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()

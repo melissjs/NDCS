@@ -172,8 +172,7 @@ const THM = {
       castBy: 'votingMachine',
     }],
     samePreviousVotePollingLocation: 'no',
-    officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641'],
-    PreviousOfficeVotes: ['5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+    officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641', '5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
     volunteerId: '5a3047c071b36b39cfce6640',
     electionId: '5a3047c071b36b39cfce6640',
     timestamp: Date.now()
