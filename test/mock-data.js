@@ -62,15 +62,21 @@ const MD = {
       incorrectSelection: 'thisIncorrectSelection',
       correctSelection: 'thisCorrectSelection',
       volunteerId: '5a3047c071b36b39cfce7722',
-      authenticatingVolunteerId: '5a3047c071b36b39cfce6641',
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce7711',
+        date: Date.now()
+      },
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
       incorrectSelection: 'thisIncorrectSelection',
       correctSelection: 'thisCorrectSelection',
-      volunteerId: '5a3047c071b36b39cfce7722',
-      authenticatingVolunteerId: '5a3047c071b36b39cfce6641',
+      volunteerId: '5a3047c071b36b39cfce7700',
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce7711',
+        date: Date.now()
+      },
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
@@ -168,16 +174,15 @@ const MD = {
   contactArray:
   [
     {
+      userId: '5a3047c071b36b39cfce7700',
       firstName: 'thisContactFirstName',
       lastName: 'thisContactLastName',
-      phoneNumber: '1111111111',
       emailAddress: 'thisContact@email.address',
       timestamp: Date.now()
     },
     {
       firstName: 'thisContactFirstName',
       lastName: 'thisContactLastName',
-      phoneNumber: '1111111111',
       emailAddress: 'thisContact@email.address',
       timestamp: Date.now()
     }
@@ -670,40 +675,18 @@ const MD = {
   // FUNCTIONS
 
   createMockData: async function() {
-    // 1) election, electoffice
-    await Promise.all([
-      this.mockElections(),
-      this.mockElectOffices(),
-    ])
-    // 2 pollingstation
-    .then(() => {
-        this.mockPollingstations()
-    }) 
-    // 3) candidates, users
-    .then(() => {
-      Promise.all([
-        this.mockCandidates(),
-        this.mockUsers()
-      ])
-    }) 
-    // 4) Vote Records
-    .then(() => {
-      this.mockVotesAndOfficeVotes()
-      .then(() => this.mockDemographics(this.demographicsArray))
-    })
-    // 6) Anomaly Records
-    .then(() => {
-      Promise.all([
-        this.mockAnomalies(this.anomalyArray),
-        this.mockEvidence(this.evidenceArray)
-        ])
-    })
-    // 5) Records
-    await Promise.all([
-    this.mockAffidavits(this.affidavitArray),
-    this.mockAmendments(this.amendmentArray),
-    this.mockContacts(this.contactArray),
-    ]).then(() => console.log('All mock data created'))
+    await MD.mockElections()
+    .then(() => MD.mockElectOffices())
+    .then(() => MD.mockPollingstations())
+    .then(() => MD.mockCandidates())
+    .then(() => MD.mockUsers())
+    .then(() => MD.mockVotesAndOfficeVotes())
+    .then(() => MD.mockDemographics(MD.demographicsArray))
+    .then(() => MD.mockAnomaliesAndEvidence())
+    .then(() => MD.mockAffidavits(MD.affidavitArray))
+    .then(() => MD.mockAmendments(MD.amendmentArray))
+    .then(() => MD.mockContacts(MD.contactArray))
+    .then(() => console.log('Mock data created'))
   },
 
   deleteMockData: async function() {

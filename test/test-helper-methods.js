@@ -19,7 +19,10 @@ const THM = {
     incorrectSelection: 'thisIncorrectSelection',
     correctSelection: 'thisCorrectSelection',
     volunteerId: '5a3047c071b36b39cfce6640',
-    authenticatingVolunteerId: '5a3047c071b36b39cfce6641',
+    auth: {
+      authenticatingUserId: '5a3047c071b36b39cfce6641',
+      date: Date.now()
+    },
     electionId: '5a3047c071b36b39cfce6640',
     timestamp: Date.now()
   },
@@ -45,9 +48,9 @@ const THM = {
   },
 
   contactObj: {
+    userId: '5a3047c071b36b39cfce6640',
     firstName: 'thisContactFirstName',
     lastName: 'thisContactLastName',
-    phoneNumber: '1111111111',
     emailAddress: 'thisContact@email.address',
     timestamp: Date.now()
   },

@@ -124,7 +124,7 @@ describe('Creating records (user and volunteer, etc)', () => {
       });
   });
 
-  it.only('saves an officevote record', (done) => {
+  it('saves an officevote record', (done) => {
     thisElectOffice = new Electoffice(THM.electOfficeObj);
     thisElectOffice.save()
       .then(() => {
