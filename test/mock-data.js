@@ -466,7 +466,7 @@ const MD = {
         electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3],
         timeSheet: [{
-          roleInOrOut: 'in',
+          inOrOut: 'in',
           location: {
             type: 'Point', 
             coordinates: [111, 111]
@@ -475,8 +475,7 @@ const MD = {
            auth: {
              authenticatingUserId: '5a3047c071b36b39cfce7711',
              date: Date.now()
-           },
-           electionId: '5a3047c071b36b39cfce6611'
+           }
         }]
       }]
     },
@@ -527,7 +526,7 @@ const MD = {
         electionId: '5a3047c071b36b39cfce6640',
         shifts: [1,2,3],
         timeSheet: [{
-          roleInOrOut: 'in',
+          inOrOut: 'in',
           location: {
             type: 'Point', 
             coordinates: [111, 111]
@@ -536,8 +535,7 @@ const MD = {
            auth: {
              authenticatingUserId: '5a3047c071b36b39cfce6640',
              date: Date.now()
-           },
-           electionId: '5a3047c071b36b39cfce6640'
+           }
         }]
       }]
     },
@@ -575,20 +573,19 @@ const MD = {
       partyAffiliation: 'Green',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3],
         timeSheet: [{
-          roleInOrOut: 'in',
+          inOrOut: 'in',
           location: {
             type: 'Point', 
             coordinates: [111, 111]
            },
            date: Date.now(),
            auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             authenticatingUserId: '5a3047c071b36b39cfce7711',
              date: Date.now()
-           },
-           electionId: '5a3047c071b36b39cfce6640'
+           }
         }]
       }]
     }

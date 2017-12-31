@@ -124,11 +124,7 @@ const THM = {
       active: true,
       dateInitiated: [Date.now()],
       dateActivated: [Date.now()],
-      dateInactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
-        date: Date.now()
-      },
+      dateInactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
@@ -153,7 +149,7 @@ const THM = {
       electionId: '5a3047c071b36b39cfce6640',
       shifts: [1,2,3],
       timeSheet: [{
-        roleInOrOut: 'in',
+        inOrOut: 'in',
         location: {
           type: 'Point', 
           coordinates: [111, 111]
@@ -162,8 +158,8 @@ const THM = {
          auth: {
            authenticatingUserId: '5a3047c071b36b39cfce6640',
            date: Date.now()
-         },
-         electionId: '5a3047c071b36b39cfce6640'
+         }
+        //  electionId: '5a3047c071b36b39cfce6640'
       }]
     }]
   },
