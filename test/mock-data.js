@@ -362,13 +362,6 @@ const MD = {
       candidateId: '5a3047c071b36b39cfce6699',
       levelOfSupport: 'highly',
       rankedVotes: [],
-      // rankedVotes: [{ 
-      //   candidate: '5a3047c071b36b39cfce6688',
-      //   choice: 1,
-      //   }, { 
-      //   candidate: '5a3047c071b36b39cfce6677',
-      //   choice: 2,
-      //   }],
       voteId: '5a3047c071b36b39cfce9922'
     }
   ],
