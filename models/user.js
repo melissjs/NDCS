@@ -14,7 +14,7 @@ const userSchema = new Schema({
   exposeEmail: { type: Boolean, required: [true, 'exposeEmail required'] },
   phoneNumber: {  type: Number, minlength: [10, 'Phone number must be 10 characters'],  maxlength: [10, 'Phone number must be 10 characters'], required: [true, 'Phone number required'], unique: true },
   age: { type: Number, required: [true, 'Age required']},
-  sex: { type: String, required: [true, 'Sex required'] },
+  sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
   partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
   schedule: [ScheduleSchema]
 });

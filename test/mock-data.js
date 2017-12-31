@@ -459,7 +459,7 @@ const MD = {
       exposeEmail: 'thisVolunteerExposeEmail',
       phoneNumber: 1111111111,
       age: 22,
-      sex: 'female',
+      sex: 'noAnswer',
       partyAffiliation: 'Democratic',
       schedule: [{
         pollingStationId: '5a3047c071b36b39cfce6644',
