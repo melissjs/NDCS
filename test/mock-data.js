@@ -92,43 +92,46 @@ const MD = {
   anomalyArray:
   [
     {
-      nature: 'thisNature',
+      nature: 'Name not on voter role',
       firstName: 'thisVoterFirstName',
       lastName: 'thisVoterLastName',
       consentToContact: true,
       emailAddress: 'thisVoterEmailAddress',
       phoneNumber: '1111111111',
       comments: 'thisComment',
-      evidence: ['5a3047c071b36b39cfce6640'],
+      evidence: [],
       volunteerId: '5a3047c071b36b39cfce7722',
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     },
     {
-      nature: 'thisNature',
+      nature: 'Incorrect registration',
       firstName: 'thisVoterFirstName',
       lastName: 'thisVoterLastName',
       consentToContact: true,
       emailAddress: 'thisVoterEmailAddress',
       phoneNumber: '1111111111',
       comments: 'thisComment',
-      evidence: ['5a3047c071b36b39cfce6640'],
+      evidence: [],
       volunteerId: '5a3047c071b36b39cfce7722',
       electionId: '5a3047c071b36b39cfce6611',
       timestamp: Date.now()
     }
   ],
 
-  mockAnomalies: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Anomaly(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
+  mockAnomaliesAndEvidence: async function() {
+    let anomaly1 = new Anomaly(this.anomalyArray[0]);
+    let evidence1 = new Evidence(this.evidenceArray[0]);
+    let evidence2 = new Evidence(this.evidenceArray[1]);
+    anomaly1.evidence.push(evidence1);
+    anomaly1.evidence.push(evidence2);
+    let anomaly2 = new Anomaly(this.anomalyArray[1]);
+    let evidence3 = new Evidence(this.evidenceArray[2]);
+    anomaly2.evidence.push(evidence3);
+    evidence1.anomalyId = anomaly1._id;
+    evidence2.anomalyId = anomaly1._id;
+    evidence3.anomalyId = anomaly2._id;
+    await Promise.all([anomaly1.save(), anomaly2.save(), evidence1.save(), evidence2.save(), evidence3.save()]);
   },
 
   //candidate
@@ -205,8 +208,8 @@ const MD = {
       maritalStatus: 'unmarried',
       naturalizedCitizen: false,
       firstTimeVoter: false,
-      voteId: '5a3047c071b36b39cfce6640',
-      volunteerId: '5a3047c071b36b39cfce6640',
+      voteId: '5a3047c071b36b39cfce9900',
+      volunteerId: '5a3047c071b36b39cfce7700',
       timestamp: Date.now()
     },
     {
@@ -219,8 +222,8 @@ const MD = {
       maritalStatus: 'unmarried',
       naturalizedCitizen: false,
       firstTimeVoter: false,
-      voteId: '5a3047c071b36b39cfce6640',
-      volunteerId: '5a3047c071b36b39cfce6640',
+      voteId: '5a3047c071b36b39cfce9911',
+      volunteerId: '5a3047c071b36b39cfce7700',
       timestamp: Date.now()
     }
   ],
@@ -300,33 +303,34 @@ const MD = {
       kind: 'image',
       fileName: 'image.jpg',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      anomalyId:'5a3047c071b36b39cfce6640'
+      // anomalyId:'5a3047c071b36b39cfce6640'
     },
     {
       kind: 'video',
       fileName: 'image.mp3',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      anomalyId:'5a3047c071b36b39cfce6640'
+      // anomalyId:'5a3047c071b36b39cfce6640'
     },
     {
       kind: 'audio',
       fileName: 'image.wav',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      anomalyId:'5a3047c071b36b39cfce6640'
+      // anomalyId:'5a3047c071b36b39cfce6640'
     }
   ],
 
-  mockEvidence: function(arr) {
-    arr.forEach((el) => {
-      let EL = new Evidence(el);
-      EL.save()
-      .then(() => {
-      })
-      .catch((e) => {
-        console.log('Mock data error: ', e);
-      });
-    })
-  },
+  // moved to mockAnomaliesAndEvidence
+  // mockEvidence: function(arr) {
+  //   arr.forEach((el) => {
+  //     let EL = new Evidence(el);
+  //     EL.save()
+  //     .then(() => {
+  //     })
+  //     .catch((e) => {
+  //       console.log('Mock data error: ', e);
+  //     });
+  //   })
+  // },
 
   // officevote
   officevoteArray:
@@ -684,11 +688,8 @@ const MD = {
     }) 
     // 4) Vote Records
     .then(() => {
-      Promise.all([
-      this.mockVotesAndOfficeVotes(),
-      // this.mockOfficeVotes(),
-      this.mockDemographics(this.demographicsArray)
-      ])
+      this.mockVotesAndOfficeVotes()
+      .then(() => this.mockDemographics(this.demographicsArray))
     })
     // 6) Anomaly Records
     .then(() => {

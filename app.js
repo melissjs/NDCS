@@ -101,6 +101,8 @@ MD.deleteMockData()
   .then(() => {MD.mockCandidates()})
   .then(() => {MD.mockUsers()})
   .then(() => {MD.mockVotesAndOfficeVotes()})
+  .then(() => MD.mockDemographics(MD.demographicsArray))
+  .then(() => MD.mockAnomaliesAndEvidence())
   .then(() => console.log('done with this far'))
 
 // MD.deleteMockData();
