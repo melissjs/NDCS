@@ -6,7 +6,7 @@
     voteSuccessDetails: [VotesuccessSchema],
     samePreviousVotePollingLocation: { type: String, enum: { values: ['yes', 'no', 'dontRemember'], message: 'Invalid previous polling location option' } },
     officeVotes: { type: [Schema.Types.ObjectId], ref: 'Officevote' },
-    // PreviousOfficeVotes: { type: [Schema.Types.ObjectId], ref: 'Officevote' },
+    evidence: {type: [Schema.Types.ObjectId], ref: 'Evidence'},
     volunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'VolunteerId required'] },
     electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
     timestamp: { type: Date, default: Date.now, required: [true, 'Timestamp required'] }

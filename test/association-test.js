@@ -1,6 +1,9 @@
 const User = require('../models/user');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
+const Evidence = require('../models/evidence');
+const Anomaly = require('../models/anomaly');
+const Vote = require('../models/vote');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
@@ -45,6 +48,24 @@ describe('Associations', () => {
         assert(user.schedule[0].electionId.previousElection.electionTitle === 'thisPreviousElectionTitle');
         done();
       })
+  })
+
+  // create evidence and anom
+  // set anom obj id = 5a3047c071b36b39cfce1122
+  // check in fact anom
+
+  it('Saves a conditional reference', (done) => {
+    let anomEvidence = new Evidence(THM.evidenceObj);
+    let anomRecord = new Anomaly(THM.anomalyObj);
+    anomRecord.set('_id', '5a3047c071b36b39cfce1122');
+    Promise.all([anomRecord.save(), anomEvidence.save()]).then(() => {
+      Evidence.findOne({ _id: anomEvidence._id })
+      .populate('anomalyId')
+      .then((ev) => {
+        assert(ev.anomalyId.nature === 'thisNature');
+        done();
+      })
+    })
   })
 
 })

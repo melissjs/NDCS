@@ -117,6 +117,7 @@ describe('Creating records (user and volunteer, etc)', () => {
     thisEvidence.save()
       .then(() => {
         assert(!thisEvidence.isNew);
+        console.log
         done();
       })
       .catch((e) => {

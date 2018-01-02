@@ -86,10 +86,11 @@ const THM = {
   },
 
   evidenceObj: {
+    originRecord: 'Anomaly',
     kind: 'image',
     fileName: 'image.jpg',
     tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-    anomalyId:'5a3047c071b36b39cfce6640'
+    anomalyId: '5a3047c071b36b39cfce1122'
   },
 
   officeVoteObj: {
@@ -173,6 +174,7 @@ const THM = {
     }],
     samePreviousVotePollingLocation: 'no',
     officeVotes: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6641', '5a3047c071b36b39cfce6642', '5a3047c071b36b39cfce6643'],
+    evidence: ['5a3047c071b36b39cfce6640'],
     volunteerId: '5a3047c071b36b39cfce6640',
     electionId: '5a3047c071b36b39cfce6640',
     timestamp: Date.now()
