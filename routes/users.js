@@ -5,7 +5,9 @@ var jwt = require('jsonwebtoken');
 // Models
 var User = require('../models/user');
 
-/* GET users listing. */
+// ------------------- GET -------------------
+
+/* GET ALL USERS (IMPLEMENT AS ADMIN ONLY) */
 router.get('/', function(req, res, next) {
   User.find({})
     .exec(function(err, users) {
@@ -21,6 +23,12 @@ router.get('/', function(req, res, next) {
       });
     });
 });
+
+/* GET USERS IN TEAM */
+
+/* GET USERS WITH SPECIFIC ROLE */
+
+// ------------------- POST -------------------
 
 /* CREATE NEW USER */
 router.post('/add', function(req, res, next) {
@@ -41,6 +49,8 @@ router.post('/add', function(req, res, next) {
     });
   });
 });
+
+// ------------------- AUTH -------------------
 
 /* SIGN IN USER */
 router.post('/signin', function(req, res, next) {
