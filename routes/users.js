@@ -34,7 +34,17 @@ router.get('/', function(req, res, next) {
 router.post('/add', function(req, res, next) {
   let user = new User({
     username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 10)
+    password: bcrypt.hashSync(req.body.password, 10),
+    userRoles: req.body.userRoles,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    emailAddress: req.body.emailAddress,
+    exposeEmail: req.body.exposeEmail,
+    phoneNumber: req.body.phoneNumber,
+    age: req.body.age,
+    sex: req.body.sex,
+    partyAffiliation: req.body.partyAffiliation,
+    schedule: req.body.schedule
   });
   user.save(function(err, result){
     if (err) {
