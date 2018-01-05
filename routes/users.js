@@ -4,10 +4,77 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 
+// ------------------- AUTH -------------------
+
+/* SIGN IN USER */
+router.post('/signin', function(req, res, next) {
+  User.findOne({username: req.body.username}, function(err, user){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occured while signing in user',
+        error: err
+      });
+    }
+    if (!user) {
+      return res.status(401).json({
+        title: 'Login failed',
+        error: {message: 'Invalid login credentials'}
+      });
+    }
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({
+        title: 'Login failed',
+        error: {message: 'Invalid login credentials'}
+      });
+    }
+    let userSterilized = JSON.parse(JSON.stringify(user));
+    delete userSterilized.password;
+    var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
+    res.status(200).json({
+      message: 'Successfully logged in',
+      token: token,
+      userId: user._id
+    });
+  })
+})
+
+// ------------------- ROLE MIDDLEWARE -------------------
+
+/* VALIDATE AUTHORIZATION HEADER*/
+router.use('/', function(req, res, next) {
+  jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
+    if (err) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: err
+      });
+    }
+    req.authedUser = decoded.user;
+    next();
+  });
+});
+
+/* IS ADMIN */
+function isAdmin(req, res, next){
+  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'admin')
+  if (authedRole.length > 0) {
+    console.log("YES", authedRole)
+    next()
+  } else {
+    console.log('no')
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'Higher access level required'
+      }
+    });
+  }
+}
+
 // ------------------- GET -------------------
 
 /* GET ALL USERS (IMPLEMENT AS ADMIN ONLY) */
-router.get('/', function(req, res, next) {
+router.get('/', isAdmin, function(req, res, next) {
   User.find({})
     .exec(function(err, users) {
       if (err) {
@@ -59,36 +126,7 @@ router.post('/add', function(req, res, next) {
   });
 });
 
-// ------------------- AUTH -------------------
 
-/* SIGN IN USER */
-router.post('/signin', function(req, res, next) {
-  User.findOne({username: req.body.username}, function(err, user){
-    if (err) {
-      return res.status(500).json({
-        title: 'An error occured while signing in user',
-        error: err
-      });
-    }
-    if (!user) {
-      return res.status(401).json({
-        title: 'Login failed',
-        error: {message: 'Invalid login credentials'}
-      });
-    }
-    if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(401).json({
-        title: 'Login failed',
-        error: {message: 'Invalid login credentials'}
-      });
-    }
-    var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
-    res.status(200).json({
-      message: 'Successfully logged in',
-      token: token,
-      userId: user._id
-    });
-  })
-})
+
 
 module.exports = router;
