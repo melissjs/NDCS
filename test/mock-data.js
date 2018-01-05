@@ -11,6 +11,7 @@ const Officevote = require('../models/officevote')
 const Pollingstation = require('../models/pollingstation');
 const User = require('../models/user');
 const Vote = require('../models/vote');
+var bcrypt = require('bcryptjs');
 
 const MD = {
 
@@ -305,22 +306,25 @@ const MD = {
   evidenceArray:
   [
     {
+      originRecord: 'anomaly',
       kind: 'image',
       fileName: 'image.jpg',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      // anomalyId:'5a3047c071b36b39cfce6640'
+      anomalyId:'5a3047c071b36b39cfce6640'
     },
     {
+      originRecord: 'anomaly',
       kind: 'video',
       fileName: 'image.mp3',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      // anomalyId:'5a3047c071b36b39cfce6640'
+      anomalyId:'5a3047c071b36b39cfce6640'
     },
     {
+      originRecord: 'vote',
       kind: 'audio',
       fileName: 'image.wav',
       tags: ['givenIncorrectBallot', 'pollingStationProblem'],
-      // anomalyId:'5a3047c071b36b39cfce6640'
+      voteId:'5a3047c071b36b39cfce6640'
     }
   ],
 
@@ -435,7 +439,7 @@ const MD = {
   [
     {
       username: 'uv1',
-      password: 'thisPassword',
+      password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
         active: true,
@@ -444,6 +448,16 @@ const MD = {
         dateInactivated: [null]
       }, {
         role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
+          date: Date.now()
+        }
+      }, {
+        role: 'admin',
         active: true,
         dateInitiated: [Date.now()],
         dateActivated: [Date.now()],
@@ -481,7 +495,7 @@ const MD = {
     },
     {
       username: 'ulv1',
-      password: 'thisPassword',
+      password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
         active: true,
@@ -541,7 +555,7 @@ const MD = {
     },
     {
       username: 'uv2',
-      password: 'thisPassword',
+      password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
         active: true,

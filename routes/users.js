@@ -18,13 +18,13 @@ router.post('/signin', function(req, res, next) {
     if (!user) {
       return res.status(401).json({
         title: 'Login failed',
-        error: {message: 'Invalid login credentials'}
+        error: {message: 'Invalid login credentials NO USER'}
       });
     }
     if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(401).json({
         title: 'Login failed',
-        error: {message: 'Invalid login credentials'}
+        error: {message: 'Invalid login credentials PASSWORD'}
       });
     }
     let userSterilized = JSON.parse(JSON.stringify(user));
@@ -58,10 +58,38 @@ router.use('/', function(req, res, next) {
 function isAdmin(req, res, next){
   const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'admin')
   if (authedRole.length > 0) {
-    console.log("YES", authedRole)
     next()
   } else {
-    console.log('no')
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'Higher access level required'
+      }
+    });
+  }
+}
+
+/* IS VOLUNTEER */
+function isVolunteer(req, res, next){
+  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'volunteer')
+  if (authedRole.length > 0) {
+    next()
+  } else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'Higher access level required'
+      }
+    });
+  }
+}
+
+/* IS LEAD */
+function isLead(req, res, next){
+  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'lead')
+  if (authedRole.length > 0) {
+    next()
+  } else {
     return res.status(401).json({
       title: 'Not authenticated',
       error: {
