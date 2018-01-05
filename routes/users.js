@@ -251,11 +251,21 @@ router.route('/:userId')
 .all(function(req, res, next) {
     userId = req.params.userId;
     User.findById(userId, function(err, user) {
+      if (err) {
+        return status(500).json({
+          title: 'An error occured',
+          error: err
+        })
+      }
       paramUser = user;
       next();
     })
 }).get(function(req, res) {
-    res.send('Get for paramUser ' + userId + paramUser.firstName   );
+    // res.send('Get for paramUser ' + userId + paramUser.firstName   );
+    res.status(201).json({
+      message: 'User found',
+      obj: paramUser
+    });
 }).post(function(req, res) {
     res.send('Post for paramUser ' + userId);
 }).put(function(req, res) {
