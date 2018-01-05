@@ -438,7 +438,7 @@ const MD = {
   userArray:
   [
     {
-      username: 'uv1',
+      username: 'uva1',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -470,7 +470,7 @@ const MD = {
       firstName: 'Volunteer', 
       lastName: 'One',
       emailAddress: 'thisVolunteer1@Email.Address',
-      exposeEmail: 'thisVolunteerExposeEmail',
+      exposeEmail: true,
       phoneNumber: 1111111111,
       age: 22,
       sex: 'noAnswer',
@@ -530,7 +530,7 @@ const MD = {
       firstName: 'Lead Volunteer', 
       lastName: 'One',
       emailAddress: 'thisVolunteer2@Email.Address',
-      exposeEmail: 'thisVolunteerExposeEmail',
+      exposeEmail: true,
       phoneNumber: 2222222222,
       age: 22,
       sex: 'female',
@@ -580,13 +580,13 @@ const MD = {
       firstName: 'Volunteer', 
       lastName: 'Two',
       emailAddress: 'thisVolunteer3@Email.Address',
-      exposeEmail: 'thisVolunteerExposeEmail',
+      exposeEmail: false,
       phoneNumber: 3333333333,
       age: 22,
       sex: 'male',
       partyAffiliation: 'Green',
       schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6640',
+        pollingStationId: '5a3047c071b36b39cfce6644',
         electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3],
         timeSheet: [{

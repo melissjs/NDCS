@@ -101,7 +101,7 @@ function isLead(req, res, next){
 
 // ------------------- GET -------------------
 
-/* GET ALL USERS (IMPLEMENT AS ADMIN ONLY) */
+/* GET ALL USERS AS ADMIN */
 router.get('/', isAdmin, function(req, res, next) {
   User.find({})
     .exec(function(err, users) {
@@ -118,10 +118,9 @@ router.get('/', isAdmin, function(req, res, next) {
     });
 });
 
-/* GET USERS IN TEAM */
-// get user, find pollingstation, find all users for station with expose on
-router.get('/team', isVolunteer, function(req, res, next) {
-  User.find({ 'userRoles.role': 'volunteer'})
+/* GET USERS WITH VOLUNTEER ROLE AS ADMIN */
+router.get('/volunteers', isAdmin, function(req, res, next) {
+  User.find({ 'userRoles.role': 'volunteer' })
     .exec(function(err, users) {
       if (err) {
         return res.status(500).json({
@@ -136,7 +135,82 @@ router.get('/team', isVolunteer, function(req, res, next) {
     });
 });
 
-/* GET USERS WITH SPECIFIC ROLE */
+/* GET USERS WITH LEAD ROLE AS ADMIN */
+router.get('/leads', isAdmin, function(req, res, next) {
+  User.find({ 'userRoles.role': 'lead' })
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
+
+/* GET USERS WITH ADMIN ROLE AS ADMIN */
+router.get('/admins', isAdmin, function(req, res, next) {
+  User.find({ 'userRoles.role': 'admin' })
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
+
+/* GET USERS IN TEAM AS VOLUNTEER */
+router.get('/volunteer', isVolunteer, function(req, res, next) {
+  User.find({ 
+    'userRoles.role': 'volunteer',
+    'schedule.electionId': req.authedUser.schedule[req.authedUser.schedule.length-1].electionId,
+    'schedule.pollingStationId': req.authedUser.schedule[req.authedUser.schedule.length-1].pollingStationId,
+    exposeEmail: true
+  })
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
+
+/* GET USERS IN TEAM AS LEAD */
+router.get('/lead', isLead, function(req, res, next) {
+  User.find({ 
+    'userRoles.role': 'volunteer',
+    'schedule.electionId': req.authedUser.schedule[req.authedUser.schedule.length-1].electionId,
+    'schedule.pollingStationId': req.authedUser.schedule[req.authedUser.schedule.length-1].pollingStationId
+  })
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
 
 // ------------------- POST -------------------
 
