@@ -119,6 +119,22 @@ router.get('/', isAdmin, function(req, res, next) {
 });
 
 /* GET USERS IN TEAM */
+// get user, find pollingstation, find all users for station with expose on
+router.get('/team', isVolunteer, function(req, res, next) {
+  User.find({ 'userRoles.role': 'volunteer'})
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
 
 /* GET USERS WITH SPECIFIC ROLE */
 
