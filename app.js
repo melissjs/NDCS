@@ -12,7 +12,6 @@ var MD = require('./test/mock-data');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-// var volunteers = require('./routes/volunteers');
 var records = require('./routes/records');
 var elections = require('./routes/elections');
 
@@ -71,7 +70,6 @@ app.use(cors());
 
 app.use('/', index);
 app.use('/users', users);
-// app.use('/volunteers', volunteers);
 app.use('/records', records);
 app.use('/elections', elections);
 

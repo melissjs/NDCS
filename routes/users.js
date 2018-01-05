@@ -244,7 +244,24 @@ router.post('/add', function(req, res, next) {
   });
 });
 
+// ------------------- ALL (GET POST PUT DELETE) -------------------
 
-
+/* ALL with volunteer_id listing. */
+router.route('/:userId') 
+.all(function(req, res, next) {
+    userId = req.params.userId;
+    User.findById(userId, function(err, user) {
+      paramUser = user;
+      next();
+    })
+}).get(function(req, res) {
+    res.send('Get for paramUser ' + userId + paramUser.firstName   );
+}).post(function(req, res) {
+    res.send('Post for paramUser ' + userId);
+}).put(function(req, res) {
+  res.send('Put for paramUser ' + userId);
+}).delete(function(req, res) {
+  res.send('Delete for paramUser ' + userId);
+});
 
 module.exports = router;
