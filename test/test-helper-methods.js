@@ -108,7 +108,7 @@ const THM = {
   },
 
   pollingstationObj: {
-    electionId: '5a3047c071b36b39cfce6640',
+    electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
     precinctNumber: 'thisPrecinctNumber',
     locationName: 'thisLocationName',
     streetAddress: 'thisStreetAddress',
@@ -231,6 +231,101 @@ const THM = {
     electionType: 'primary',
     ocdDivisionId: 'thisOcdDivisionId',
     previousElection: '5a3047c071b36b39cfce6640',
+  },
+
+   // for virtual pollingstation team
+   userObj1: {
+    username: 'thisusername1',
+    password: 'thisPassword',
+    userRoles: [{
+      role: 'user',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null]
+    }, {
+      role: 'volunteer',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    }],
+    firstName: 'thisVolunteerFirstName', 
+    lastName: 'thisVolunteerLastName',
+    emailAddress: 'thisVolunteer1@Email.Address',
+    exposeEmail: 'thisVolunteerExposeEmail',
+    phoneNumber: 1111111111,
+    age: 22,
+    sex: 'female',
+    partyAffiliation: 'thisVolunteerPartyAffiliation',
+    schedule: [{
+      pollingStationId: '5a3047c071b36b39cfce6600',
+      electionId: '5a3047c071b36b39cfce6611',
+      shifts: [1,2,3],
+      timeSheet: [{
+        inOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+         },
+         date: Date.now(),
+         auth: {
+           authenticatingUserId: '5a3047c071b36b39cfce6640',
+           date: Date.now()
+         }
+      }]
+    }]
+  },
+
+  userObj2: {
+    username: 'thisusername2',
+    password: 'thisPassword',
+    userRoles: [{
+      role: 'user',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null]
+    }, {
+      role: 'volunteer',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    }],
+    firstName: 'thisVolunteerFirstName', 
+    lastName: 'thisVolunteerLastName',
+    emailAddress: 'thisVolunteer2@Email.Address',
+    exposeEmail: 'thisVolunteerExposeEmail',
+    phoneNumber: 1111111112,
+    age: 22,
+    sex: 'female',
+    partyAffiliation: 'thisVolunteerPartyAffiliation',
+    schedule: [{
+      pollingStationId: '5a3047c071b36b39cfce6600',
+      electionId: '5a3047c071b36b39cfce6611',
+      shifts: [1,2,3],
+      timeSheet: [{
+        inOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+         },
+         date: Date.now(),
+         auth: {
+           authenticatingUserId: '5a3047c071b36b39cfce6640',
+           date: Date.now()
+         }
+      }]
+    }]
   },
 
 }

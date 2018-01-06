@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Officevote = require('../models/officevote');
 const Electoffice = require('../models/electoffice');
+const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
@@ -56,6 +57,36 @@ describe('Virtual types (records calculated but not saved in db)', () => {
           assert(await thisElectOffice.totalVotes === 2)
           done();
         })
+    });
+  });
+
+  it('pollingstation currentElection returns true if used in current election', (done) => {
+    const thisPollingstation = new Pollingstation(THM.pollingstationObj);
+    thisPollingstation.save()
+    .then(() => {
+      Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
+      .then((ps) => {
+        assert(ps.currentElection === true);
+        done();
+      })
+    });
+  });
+
+  it.only('pollingstation currentTeam returns pollingstation team for current election', (done) => {
+    const thisPollingstation = new Pollingstation(THM.pollingstationObj);
+    const thisUser1 = new User(THM.userObj1);
+    const thisUser2 = new User(THM.userObj2);
+    thisPollingstation.set( '_id', '5a3047c071b36b39cfce6600')
+    Promise.all([thisPollingstation.save(), thisUser1.save(), thisUser2.save()])
+    .then(() => {
+      Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
+      .then(async (ps) => {
+        // const team = await ps.currentTeam;
+        console.log('PS', ps);
+        console.log('TEAM', await ps.currentTeam);
+        // assert(team.length === 2);
+        done();
+      })
     });
   });
 
