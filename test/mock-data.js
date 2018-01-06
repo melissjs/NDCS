@@ -437,6 +437,7 @@ const MD = {
   // user
   userArray:
   [
+    // uva1
     {
       username: 'uva1',
       password: bcrypt.hashSync('thisPassword', 10),
@@ -493,8 +494,9 @@ const MD = {
         }]
       }]
     },
+    // uvl1Westwood2018
     {
-      username: 'ulv1',
+      username: 'uvl1Westwood2018',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -536,8 +538,71 @@ const MD = {
       sex: 'female',
       partyAffiliation: 'Republican',
       schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6640',
-        electionId: '5a3047c071b36b39cfce6640',
+        pollingStationId: '5a3047c071b36b39cfce6666',
+        electionId: '5a3047c071b36b39cfce6611',
+        shifts: [1,2,3],
+        timeSheet: [{
+          inOrOut: 'in',
+          location: {
+            type: 'Point', 
+            coordinates: [111, 111]
+           },
+           date: Date.now(),
+           auth: {
+             authenticatingUserId: '5a3047c071b36b39cfce6640',
+             date: Date.now()
+           }
+        }]
+      }]
+    }, 
+    // uv2Westwood2018
+    {
+      username: 'uv2Westwood2018',
+      password: bcrypt.hashSync('thisPassword', 10),
+      userRoles: [{
+        role: 'user',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        },
+      }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }
+      // , {
+      //   role: 'lead',
+      //   active: true,
+      //   dateInitiated: [Date.now()],
+      //   dateActivated: [Date.now()],
+      //   dateInactivated: [null],
+      //   auth: {
+      //     authenticatingUserId: '5a3047c071b36b39cfce6640',
+      //     date: Date.now()
+      //   }
+      // }
+    ],
+      firstName: 'Volunteer', 
+      lastName: 'One',
+      emailAddress: 'thisVolunteerw2@Email.Address',
+      exposeEmail: true,
+      phoneNumber: 2222222223,
+      age: 22,
+      sex: 'female',
+      partyAffiliation: 'Republican',
+      schedule: [{
+        pollingStationId: '5a3047c071b36b39cfce6666',
+        electionId: '5a3047c071b36b39cfce6611',
         shifts: [1,2,3],
         timeSheet: [{
           inOrOut: 'in',
@@ -553,6 +618,7 @@ const MD = {
         }]
       }]
     },
+    // uv2
     {
       username: 'uv2',
       password: bcrypt.hashSync('thisPassword', 10),
@@ -611,8 +677,10 @@ const MD = {
     let user2 = new User(this.userArray[1]);
     user2.set('_id', '5a3047c071b36b39cfce7711');
     let user3 = new User(this.userArray[2]);
-    user3.set('_id', '5a3047c071b36b39cfce7722');
-    await Promise.all([user1.save(), user2.save(), user3.save()])
+    user3.set('_id', '5a3047c071b36b39cfce7712');
+    let user4 = new User(this.userArray[3]);
+    user4.set('_id', '5a3047c071b36b39cfce7722');
+    await Promise.all([user1.save(), user2.save(), user3.save(), user4.save()])
   },
 
   // vote
@@ -737,7 +805,8 @@ module.exports = MD;
 // candidate (sc1): 5a3047c071b36b39cfce6699
 // user1: 5a3047c071b36b39cfce7700
 // user2: 5a3047c071b36b39cfce7711
-// user3: 5a3047c071b36b39cfce7722
+// user3: uv2Westwood2018: 5a3047c071b36b39cfce7712
+// user4: 5a3047c071b36b39cfce7722
 // officevote (c1): 5a3047c071b36b39cfce8800
 // officevote (c2): 5a3047c071b36b39cfce8811
 // officevote (s1): 5a3047c071b36b39cfce8822

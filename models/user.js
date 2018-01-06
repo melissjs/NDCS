@@ -23,6 +23,14 @@ userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 });
 
+userSchema.virtual('activeRoles').get(function() {
+  let activeRoles = [];
+  this.userRoles.forEach((ur) => {
+    ur.active ? activeRoles.push(ur.role) : null;
+  });
+  return activeRoles;
+});
+
 userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });
 
 module.exports = mongoose.model('User', userSchema);
