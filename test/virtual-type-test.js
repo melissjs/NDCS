@@ -37,6 +37,7 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
+        console.log(volunteer.activeRoles)
         assert(volunteer.activeRoles.length === 3);
         assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
         done();
