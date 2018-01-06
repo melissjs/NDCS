@@ -437,9 +437,9 @@ const MD = {
   // user
   userArray:
   [
-    // uva1
+    ////////////////////// uaDan
     {
-      username: 'uva1',
+      username: 'uaDan',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -447,16 +447,6 @@ const MD = {
         dateInitiated: [Date.now()],
         dateActivated: [Date.now()],
         dateInactivated: [null]
-      }, {
-        role: 'volunteer',
-        active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce7711',
-          date: Date.now()
-        }
       }, {
         role: 'admin',
         active: true,
@@ -468,35 +458,35 @@ const MD = {
           date: Date.now()
         }
       }],
-      firstName: 'Volunteer', 
-      lastName: 'One',
+      firstName: 'Dan', 
+      lastName: 'Wolf',
       emailAddress: 'thisVolunteer1@Email.Address',
       exposeEmail: true,
       phoneNumber: 1111111111,
       age: 22,
       sex: 'noAnswer',
       partyAffiliation: 'Democratic',
-      schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6644',
-        electionId: '5a3047c071b36b39cfce6611',
-        shifts: [1,2,3],
-        timeSheet: [{
-          inOrOut: 'in',
-          location: {
-            type: 'Point', 
-            coordinates: [111, 111]
-           },
-           date: Date.now(),
-           auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce7711',
-             date: Date.now()
-           }
-        }]
-      }]
+      // schedule: [{
+      //   pollingStationId: '5a3047c071b36b39cfce6644',
+      //   electionId: '5a3047c071b36b39cfce6611',
+      //   shifts: [1,2,3],
+      //   timeSheet: [{
+      //     inOrOut: 'in',
+      //     location: {
+      //       type: 'Point', 
+      //       coordinates: [111, 111]
+      //      },
+      //      date: Date.now(),
+      //      auth: {
+      //        authenticatingUserId: '5a3047c071b36b39cfce7711',
+      //        date: Date.now()
+      //      }
+      //   }]
+      // }]
     },
-    // uvl1Westwood2018
+    ////////////////////// uvdl1Westwood2018
     {
-      username: 'uvl1Westwood2018',
+      username: 'uvdl1Westwood2018',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -510,6 +500,16 @@ const MD = {
         },
       }, {
         role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }, {
+        role: 'auditor',
         active: true,
         dateInitiated: [Date.now()],
         dateActivated: [Date.now()],
@@ -555,9 +555,9 @@ const MD = {
         }]
       }]
     }, 
-    // uv2Westwood2018
+    ////////////////////// uvd2Westwood2018
     {
-      username: 'uv2Westwood2018',
+      username: 'uvd2Westwood2018',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -579,18 +579,17 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce6640',
           date: Date.now()
         }
+      }, {
+        role: 'auditor',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
       }
-      // , {
-      //   role: 'lead',
-      //   active: true,
-      //   dateInitiated: [Date.now()],
-      //   dateActivated: [Date.now()],
-      //   dateInactivated: [null],
-      //   auth: {
-      //     authenticatingUserId: '5a3047c071b36b39cfce6640',
-      //     date: Date.now()
-      //   }
-      // }
     ],
       firstName: 'Volunteer', 
       lastName: 'One',
@@ -618,9 +617,9 @@ const MD = {
         }]
       }]
     },
-    // uv2
+    ////////////////////// uvd2Federal2018
     {
-      username: 'uv2',
+      username: 'uvd2Federal2018',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -642,7 +641,18 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce6640',
           date: Date.now()
         }
-      }],
+      }, {
+        role: 'auditor',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }
+    ],
       firstName: 'Volunteer', 
       lastName: 'Two',
       emailAddress: 'thisVolunteer3@Email.Address',
@@ -803,10 +813,10 @@ module.exports = MD;
 // candidate (cc1): 5a3047c071b36b39cfce6677
 // candidate (cc2): 5a3047c071b36b39cfce6688
 // candidate (sc1): 5a3047c071b36b39cfce6699
-// user1: 5a3047c071b36b39cfce7700
-// user2: 5a3047c071b36b39cfce7711
-// user3: uv2Westwood2018: 5a3047c071b36b39cfce7712
-// user4: 5a3047c071b36b39cfce7722
+// user1: uaDan               5a3047c071b36b39cfce7700
+// user2: uvdl1Westwood2018   5a3047c071b36b39cfce7711
+// user3: uvd2Westwood2018:   5a3047c071b36b39cfce7712
+// user4: uvd2Federal2018     5a3047c071b36b39cfce7722
 // officevote (c1): 5a3047c071b36b39cfce8800
 // officevote (c2): 5a3047c071b36b39cfce8811
 // officevote (s1): 5a3047c071b36b39cfce8822
