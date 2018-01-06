@@ -17,6 +17,9 @@ const userSchema = new Schema({
   sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
   partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
   schedule: [ScheduleSchema]
+}, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 });
 
 userSchema.virtual('scheduleCount').get(function() {
