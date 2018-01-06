@@ -50,8 +50,6 @@ router.use('/', function(req, res, next) {
       });
     }
     req.authedUser = decoded.user;
-    // req.activeRoles = decoded.user.activeRoles;
-    // console.log(req.authedUser.activeRoles)
     next();
   });
 });
@@ -74,8 +72,21 @@ function isAdmin(req, res, next){
 
 /* IS VOLUNTEER */
 function isVolunteer(req, res, next){
-  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'volunteer')
-  if (authedRole.length > 0) {
+  if (req.authedUser.activeRoles.includes('volunteer')) {
+    next()
+  } else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'Higher access level required'
+      }
+    });
+  }
+}
+
+/* IS AUDITOR */
+function isAuditor(req, res, next){
+  if (req.authedUser.activeRoles.includes('auditor')) {
     next()
   } else {
     return res.status(401).json({
@@ -89,8 +100,7 @@ function isVolunteer(req, res, next){
 
 /* IS LEAD */
 function isLead(req, res, next){
-  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'lead')
-  if (authedRole.length > 0) {
+  if (req.authedUser.activeRoles.includes('lead')) {
     next()
   } else {
     return res.status(401).json({
@@ -173,8 +183,8 @@ router.get('/admins', isAdmin, function(req, res, next) {
 });
 
 
-/* GET USERS IN TEAM AS VOLUNTEER */
-router.get('/volunteer', isVolunteer, function(req, res, next) {
+/* GET USERS IN TEAM AS AUDITOR */
+router.get('/volunteer', isAuditor, function(req, res, next) {
   User.find({ 
     userRoles: { 
       $elemMatch: {
