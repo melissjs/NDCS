@@ -169,11 +169,16 @@ router.get('/admins', isAdmin, function(req, res, next) {
     });
 });
 
+
 /* GET USERS IN TEAM AS VOLUNTEER */
 router.get('/volunteer', isVolunteer, function(req, res, next) {
   User.find({ 
-    // activeRoles: { $in: ['volunteer'] },
-    // activeRoles: 'volunteer',
+    userRoles: { 
+      $elemMatch: {
+          role: 'volunteer',
+          active: true
+      }
+    },
     'schedule.electionId': req.authedUser.schedule[req.authedUser.schedule.length-1].electionId,
     'schedule.pollingStationId': req.authedUser.schedule[req.authedUser.schedule.length-1].pollingStationId,
     exposeEmail: true

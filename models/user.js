@@ -15,12 +15,13 @@ const userSchema = new Schema({
   phoneNumber: {  type: Number, minlength: [10, 'Phone number must be 10 characters'],  maxlength: [10, 'Phone number must be 10 characters'], required: [true, 'Phone number required'], unique: true },
   age: { type: Number, required: [true, 'Age required']},
   sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
-  partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
-  schedule: [ScheduleSchema]
-}, {
-  toObject: { virtuals: true },
-  toJSON: { virtuals: true }
-});
+  partyAffiliation: { type: String, required: [true, 'Party affiliation required'] }, 
+  schedule: [ScheduleSchema] }
+  // , {
+  // toObject: { virtuals: true }, 
+  // toJSON: { virtuals: true } 
+  // }
+);
 
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
