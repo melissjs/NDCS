@@ -86,7 +86,7 @@ const THM = {
   },
 
   evidenceObj: {
-    originRecord: 'Anomaly',
+    originRecord: 'anomaly',
     kind: 'image',
     fileName: 'image.jpg',
     tags: ['givenIncorrectBallot', 'pollingStationProblem'],

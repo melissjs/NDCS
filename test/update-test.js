@@ -17,7 +17,7 @@ describe('Updating records', () => {
       User.find({})
         .then((users) => {
           assert(users.length === 1);
-          assert(users[0].username === 'thisOtherUsername');
+          assert(users[0].username === 'thisotherusername');
           done();
         })
     })
@@ -29,19 +29,19 @@ describe('Updating records', () => {
   });
 
   it('Model instance update', (done) => {
-    assertName(thisUser.update({ username: 'thisOtherUsername' }), done);
+    assertName(thisUser.update({ username: 'thisotherusername' }), done);
   })
 
   it('Class update', (done) => {
-    assertName(User.update({ username: 'thisUsername' }, { username: 'thisOtherUsername' }), done);
+    assertName(User.update({ username: 'thisusername' }, { username: 'thisotherusername' }), done);
   })
 
   it('Class update findOneAndUpdate', (done) => {
-    assertName(User.findOneAndUpdate({ username: 'thisUsername' }, { username: 'thisOtherUsername' }), done);
+    assertName(User.findOneAndUpdate({ username: 'thisusername' }, { username: 'thisotherusername' }), done);
   })
 
   it('Class update findByIdAndUpdate', (done) => {
-    assertName(User.findByIdAndUpdate(thisUser._id, {username: 'thisOtherUsername'}), done);
+    assertName(User.findByIdAndUpdate(thisUser._id, {username: 'thisotherusername'}), done);
   })
 
 })

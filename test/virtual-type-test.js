@@ -21,6 +21,28 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       })
   });
 
+  it('users activeRoles returns active roles', (done) => {
+    const thisVolunteer = new User(THM.userObj);
+    thisVolunteer.userRoles.push({
+      role: 'admin',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    })
+    thisVolunteer.save()
+      .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
+      .then((volunteer) => {
+        assert(volunteer.activeRoles.length === 3);
+        assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
+        done();
+      })
+  });
+
   it('officeVote totalVotes returns number of total votes for electOffice', (done) => {
     const thisElectOffice = new Electoffice(THM.electOfficeObj);
     thisElectOffice.save().then(() => {

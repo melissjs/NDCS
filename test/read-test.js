@@ -14,7 +14,7 @@ describe('Reading records', () => {
   });
 
   it('Reads all users named thisUsername', (done) => {
-    User.find({ username: 'thisUsername' })
+    User.find({ username: 'thisusername' })
     .then((users) => {
       assert(users[0]._id.toString() === thisUser._id.toString());
       done();
@@ -24,7 +24,7 @@ describe('Reading records', () => {
   it('finds a user with _id', (done) => {
     User.findOne({ _id: thisUser._id })
     .then((user) => {
-      assert(user.username === 'thisUsername');
+      assert(user.username === 'thisusername');
       done();
     });
   })

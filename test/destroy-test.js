@@ -14,7 +14,7 @@ describe('Deleting records', () => {
   it('model instance remove', (done) => {
     thisUser.remove()
       .then(() => {
-        User.findOne({ username: 'thisUsername' })
+        User.findOne({ username: 'thisusername' })
           .then((user) => {
             assert(user === null);
             done();
@@ -24,9 +24,9 @@ describe('Deleting records', () => {
 
   it('class method remove', (done) => {
     // removes many with given criteria
-    User.remove({ username: 'thisUsername' })
+    User.remove({ username: 'thisusername' })
       .then(() => {
-        User.findOne({ username: 'thisUsername' })
+        User.findOne({ username: 'thisusername' })
           .then((user) => {
             assert(user === null);
             done();
@@ -35,9 +35,9 @@ describe('Deleting records', () => {
   })
 
   it('class method findOneAndRemove', (done) => {
-    User.findOneAndRemove({ username: 'thisUsername' })
+    User.findOneAndRemove({ username: 'thisusername' })
     .then(() => {
-      User.findOne({ username: 'thisUsername' })
+      User.findOne({ username: 'thisusername' })
         .then((user) => {
           assert(user === null);
           done();
@@ -48,7 +48,7 @@ describe('Deleting records', () => {
   it('class method findByIdAndRemove', (done) => {
     User.findByIdAndRemove(thisUser._id)
     .then(() => {
-      User.findOne({ username: 'thisUsername' })
+      User.findOne({ username: 'thisusername' })
         .then((user) => {
           assert(user === null);
           done();
