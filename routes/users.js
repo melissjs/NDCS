@@ -38,9 +38,9 @@ router.post('/signin', function(req, res, next) {
   })
 })
 
-// ------------------- ROLE MIDDLEWARE -------------------
+// ------------------- AUTH WITH JWT -------------------
 
-/* VALIDATE AUTHORIZATION HEADER*/
+/* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
 router.use('/', function(req, res, next) {
   jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
     if (err) {
@@ -50,14 +50,17 @@ router.use('/', function(req, res, next) {
       });
     }
     req.authedUser = decoded.user;
+    // req.activeRoles = decoded.user.activeRoles;
+    // console.log(req.authedUser.activeRoles)
     next();
   });
 });
 
+// ------------------- ROLE MIDDLEWARE -------------------
+
 /* IS ADMIN */
 function isAdmin(req, res, next){
-  const authedRole = req.authedUser.userRoles.filter((roleObj) => roleObj.role === 'admin')
-  if (authedRole.length > 0) {
+  if (req.authedUser.activeRoles.includes('admin')) {
     next()
   } else {
     return res.status(401).json({
@@ -65,7 +68,7 @@ function isAdmin(req, res, next){
       error: {
         message: 'Higher access level required'
       }
-    });
+    })
   }
 }
 
