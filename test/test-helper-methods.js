@@ -328,6 +328,53 @@ const THM = {
     }]
   },
 
+  userObj3: {
+    username: 'thisusername3',
+    password: 'thisPassword',
+    userRoles: [{
+      role: 'user',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null]
+    }, {
+      role: 'volunteer',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    }],
+    firstName: 'thisVolunteerFirstName', 
+    lastName: 'thisVolunteerLastName',
+    emailAddress: 'thisVolunteer3@Email.Address',
+    exposeEmail: 'thisVolunteerExposeEmail',
+    phoneNumber: 1111111113,
+    age: 22,
+    sex: 'female',
+    partyAffiliation: 'thisVolunteerPartyAffiliation',
+    schedule: [{
+      pollingStationId: '5a3047c071b36b39cfce6600',
+      electionId: '5a3047c071b36b39cfce6600',
+      shifts: [1,2,3],
+      timeSheet: [{
+        inOrOut: 'in',
+        location: {
+          type: 'Point', 
+          coordinates: [111, 111]
+         },
+         date: Date.now(),
+         auth: {
+           authenticatingUserId: '5a3047c071b36b39cfce6640',
+           date: Date.now()
+         }
+      }]
+    }]
+  },
+
 }
 
 module.exports = THM;

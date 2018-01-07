@@ -76,15 +76,16 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     const thisPollingstation = new Pollingstation(THM.pollingstationObj);
     const thisUser1 = new User(THM.userObj1);
     const thisUser2 = new User(THM.userObj2);
+    const thisUser3 = new User(THM.userObj3);
     thisPollingstation.set( '_id', '5a3047c071b36b39cfce6600')
-    Promise.all([thisPollingstation.save(), thisUser1.save(), thisUser2.save()])
+    Promise.all([thisPollingstation.save(), thisUser1.save(), thisUser2.save(), thisUser3.save()])
     .then(() => {
       Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
       .then(async (ps) => {
-        // const team = await ps.currentTeam;
-        console.log('PS', ps);
-        console.log('TEAM', await ps.currentTeam);
-        // assert(team.length === 2);
+        const team = await ps.currentTeam;
+        // console.log('PS', ps);
+        // console.log('TEAM', await ps.currentTeam);
+        assert(team.length === 2);
         done();
       })
     });

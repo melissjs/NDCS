@@ -31,16 +31,34 @@ pollingstationSchema.virtual('currentElection').get(function() {
 
 // // finds team of users for current election
 pollingstationSchema.virtual('currentTeam').get(async function() {
-  return await User.find({ 
-    schedule: {
-      $in: [{
-        $eleMatch: {
-          electionId: globals.CURRENT_ELECTION,
-          pollingStationId: this._id
-        }
-      }]
-    }
+  try {
+    console.log(this._id)
+  const team = await User.find({ 
+    // schedule: {
+    //   $in: [{
+    //     $eleMatch: {
+    //       pollingStationId: this._id,
+    //       electionId: globals.CURRENT_ELECTION
+    //     }
+    //   }]
+    // }
+
+    // schedule: {$in: [{ pollingStationId: '5a3047c071b36b39cfce6600' }]}
+    // schedule: { pollingStationId: mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
+    // schedule: { 'pollingStationId':  mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
+    $and: [
+    {'schedule.pollingStationId': this._id},
+    {'schedule.electionId': globals.CURRENT_ELECTION}
+    ]
   })
+  return team;
+  }
+  catch(e) {
+    return e;
+  }
 })
 
 module.exports = mongoose.model('Pollingstation', pollingstationSchema);
+
+// .then((r) => {console.log('RRRRRRRR', r); return r})
+//   .catch((e) => {console.log('EEEEEEEE', e); return e});
