@@ -83,8 +83,8 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
       .then(async (ps) => {
         const team = await ps.currentTeam;
-        // console.log('PS', ps);
-        // console.log('TEAM', await ps.currentTeam);
+        console.log('PS', ps);
+        console.log('TEAM', await ps.currentTeam);
         assert(team.length === 2);
         done();
       })
