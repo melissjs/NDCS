@@ -18,10 +18,10 @@ const pollingstationSchema = new Schema({
     pollingHours: String,
     notes: String
   },
-  // {
-  //   toObject: { virtuals: true }, 
-  //   toJSON: { virtuals: true } 
-  // }
+  {
+    toObject: { virtuals: true }, 
+    toJSON: { virtuals: true } 
+  }
 );
 
 // returns true or false if this station is known to be used in current election
@@ -35,12 +35,13 @@ pollingstationSchema.virtual('currentTeam').get(async function() {
     // console.log(this._id)
   const team = await User.find({ 
     schedule: {
-      $in: [{
+      // $in: [{
         $eleMatch: {
+          shifts: [1,2,3],
           pollingStationId: this._id,
           // electionId: globals.CURRENT_ELECTION
         }
-      }]
+      // }]
     }
     // schedule: { pollingStationId: mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
     // schedule: { 'pollingStationId':  mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
@@ -49,7 +50,7 @@ pollingstationSchema.virtual('currentTeam').get(async function() {
     // {'schedule.electionId': globals.CURRENT_ELECTION}
     // ]
   })
-  // console.log(team)
+  console.log(team)
   return team;
   }
   catch(e) {
