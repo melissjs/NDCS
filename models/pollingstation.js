@@ -32,25 +32,14 @@ pollingstationSchema.virtual('currentElection').get(function() {
 // // finds team of users for current election
 pollingstationSchema.virtual('currentTeam').get(async function() {
   try {
-    // console.log(this._id)
   const team = await User.find({ 
     schedule: {
-      // $in: [{
-        $eleMatch: {
-          shifts: [1,2,3],
-          pollingStationId: this._id,
-          // electionId: globals.CURRENT_ELECTION
-        }
-      // }]
+      $elemMatch: {
+        pollingStationId: this._id,
+        electionId: globals.CURRENT_ELECTION
+      }
     }
-    // schedule: { pollingStationId: mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
-    // schedule: { 'pollingStationId':  mongoose.Types.ObjectId('5a3047c071b36b39cfce6600') }
-    // $and: [
-    // {'schedule.pollingStationId': this._id},
-    // {'schedule.electionId': globals.CURRENT_ELECTION}
-    // ]
   })
-  console.log(team)
   return team;
   }
   catch(e) {

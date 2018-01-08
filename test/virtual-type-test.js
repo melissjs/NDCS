@@ -38,7 +38,6 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        console.log(volunteer.activeRoles)
         assert(volunteer.activeRoles.length === 3);
         assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
         done();
@@ -72,7 +71,7 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     });
   });
 
-  it.only('pollingstation currentTeam returns pollingstation team for current election', (done) => {
+  it('pollingstation currentTeam returns pollingstation team for current election', (done) => {
     const thisPollingstation = new Pollingstation(THM.pollingstationObj);
     const thisUser1 = new User(THM.userObj1);
     const thisUser2 = new User(THM.userObj2);
@@ -83,8 +82,6 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
       .then(async (ps) => {
         const team = await ps.currentTeam;
-        console.log('PS', ps);
-        console.log('TEAM', await ps.currentTeam);
         assert(team.length === 2);
         done();
       })
