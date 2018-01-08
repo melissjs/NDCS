@@ -184,11 +184,13 @@ router.get('/admins', isAdmin, function(req, res, next) {
 
 
 /* GET USERS IN TEAM AS AUDITOR */
-router.get('/volunteer', isAuditor, function(req, res, next) {
+// return all users but without contact info for exposeEmail: no - also elemmatch election
+//combine volunter and lead into this one route that checks role
+router.get('/team', isAuditor, function(req, res, next) {
   User.find({ 
     userRoles: { 
       $elemMatch: {
-          role: 'volunteer',
+          role: 'auditor',
           active: true
       }
     },
