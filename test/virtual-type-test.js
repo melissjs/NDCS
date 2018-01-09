@@ -89,7 +89,7 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     });
   });
 
-  it.only('election active returns false if election is in the past', (done) => {
+  it('election active returns false if election is in the past', (done) => {
     const thisElection = new Election(THM.electionObj);
     thisElection.save()
     .then(() => {
