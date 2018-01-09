@@ -10,8 +10,8 @@ const electionSchema = new Schema({
   previousElection: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'PreviousElection required'] },
 });
 
-userSchema.virtual('active').get(function() {
-  // electionday < date.now ? false : true
+electionSchema.virtual('active').get(function() {
+  return ((Date.parse(this.electionDay) + 86400000) < Date.now()) ? false : true
 });
 
 module.exports = mongoose.model('Election', electionSchema);

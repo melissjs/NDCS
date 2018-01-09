@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Officevote = require('../models/officevote');
+const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
 const Pollingstation = require('../models/pollingstation');
 const assert = require('assert');
@@ -86,6 +87,21 @@ describe('Virtual types (records calculated but not saved in db)', () => {
         done();
       })
     });
+  });
+
+  it.only('election active returns false if election is in the past', (done) => {
+    const thisElection = new Election(THM.electionObj);
+    thisElection.save()
+    .then(() => {
+      Election.findById(thisElection._id)
+      .then((election) => {
+        console.log('ACTIVE', election.active)
+        console.log('DateNow', Date.now())
+        console.log('ED', election.electionDay)
+        assert(election.active === true);
+        done();
+      })
+    })
   });
 
 })
