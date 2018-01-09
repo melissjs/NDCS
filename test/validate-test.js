@@ -21,18 +21,39 @@ describe('Validation tests', () => {
   it('Requires a first name', () => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.firstName = undefined;
-   const validationResult = thisVolunteer.validateSync();
-   const { message } = validationResult.errors.firstName;
-   assert(message === 'First name required')
+    const validationResult = thisVolunteer.validateSync();
+    const { message } = validationResult.errors.firstName;
+    assert(message === 'First name required')
   });
 
   it('Requires a last name with at least two characters', () => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.lastName = 'T';
-   const validationResult = thisVolunteer.validateSync();
-   const { message } = validationResult.errors.lastName;
-   assert(message === 'Last name must be at least two characters')
+    const validationResult = thisVolunteer.validateSync();
+    const { message } = validationResult.errors.lastName;
+    assert(message === 'Last name must be at least two characters')
   });
+
+  it.only('Requires user with auditor role to have schedule', () => {
+    const thisVolunteer = new User(THM.userObj);
+    thisVolunteer.userRoles.push({
+      role: 'auditor',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    });
+    thisVolunteer.save()
+    .then((res) => { console.log('SAVE', res)})
+    .catch((validationResult) => { 
+      const { message } = validationResult.errors.schedule;
+      console.log('MESSAGE', message)
+      assert(message === 'Schedule is required for auditors')})
+  })
 
   it('Disallows invalid records to be saved', () => {
     const thisVolunteer = new User(THM.userObj);

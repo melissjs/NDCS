@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ScheduleSchema = require('../schemas/schedule');
 const UserRoleSchema = require('../schemas/userrole');
 const mongooseUniqueValidator = require('mongoose-unique-validator');
+
+function isAuditor(){
+  return this.activeRoles.includes('auditor');
+}
 
 const userSchema = new Schema({
     username: { type: String, required: [true, 'Username required'], unique: true, uniqueCaseInsensitive: true, lowercase: true },
@@ -16,7 +19,7 @@ const userSchema = new Schema({
     age: { type: Number, required: [true, 'Age required']},
     sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] }, 
-    schedule: { type: [ScheduleSchema] }
+    schedule: { type: [Schema.Types.ObjectId], ref: 'Schedule', required: [isAuditor, 'Schedule is required for auditors'] },
   },
   {
     toObject: { virtuals: true }, 

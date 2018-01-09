@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('../models/user');
-const ScheduleSchema = require('../schemas/schedule');
+// const ScheduleSchema = require('../schemas/schedule');
 const globals = require('../globals') ;
 
 const pollingstationSchema = new Schema({

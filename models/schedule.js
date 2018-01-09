@@ -16,4 +16,5 @@ const ScheduleSchema = new Schema({
   timeSheet: { type: [TimesheetSchema] }
 });
 
-module.exports = ScheduleSchema;
+module.exports = mongoose.model('Schedule', ScheduleSchema);
+
