@@ -9,13 +9,15 @@ const Electoffice = require('../models/electoffice');
 const Evidence = require('../models/evidence');
 const Officevote = require('../models/officevote')
 const Pollingstation = require('../models/pollingstation');
+const Schedule = require('../models/schedule');
 const User = require('../models/user');
 const Vote = require('../models/vote');
 var bcrypt = require('bcryptjs');
 
 const MD = {
 
-  // affidavits
+  //////////////////////// AFFIDAVIT ////////////////////////
+
   affidavitArray:
   [
     {
@@ -56,7 +58,8 @@ const MD = {
     })
   },
 
-  // amendments
+  //////////////////////// AMENDMENT ////////////////////////
+
   amendmentArray:
   [
     {
@@ -95,7 +98,8 @@ const MD = {
     })
   },
 
-  //anomaly
+  //////////////////////// ANOMALY ////////////////////////
+
   anomalyArray:
   [
     {
@@ -141,7 +145,8 @@ const MD = {
     await Promise.all([anomaly1.save(), anomaly2.save(), evidence1.save(), evidence2.save(), evidence3.save()]);
   },
 
-  //candidate
+  //////////////////////// CANDIDATE ////////////////////////
+
   candidateArray:
   [
     {
@@ -171,7 +176,8 @@ const MD = {
     await Promise.all([cC1.save(), cC2.save(), sC1.save()])
   },
 
-  // contact
+  //////////////////////// CONTACT ////////////////////////
+
   contactArray:
   [
     {
@@ -201,7 +207,8 @@ const MD = {
     })
   },
 
-  // demographics
+  //////////////////////// DEMOGRAPHICS ////////////////////////
+
   demographicsArray:
   [
     {
@@ -246,7 +253,8 @@ const MD = {
     })
   },
 
-  // election
+  //////////////////////// ELECTION ////////////////////////
+
   electionArray:
   [
     {
@@ -279,7 +287,8 @@ const MD = {
   },
 
 
-  // electoffice
+  //////////////////////// ELECTOFFICE ////////////////////////
+
   electofficeArray:
   [
     {
@@ -302,7 +311,8 @@ const MD = {
     await Promise.all([congress2018.save(), senate2018.save()]);
   },
 
-  // evidence
+  //////////////////////// EVIDENCE ////////////////////////
+
   evidenceArray:
   [
     {
@@ -341,7 +351,8 @@ const MD = {
   //   })
   // },
 
-  // officevote
+  //////////////////////// OFFICEVOTE ////////////////////////
+
   officevoteArray:
   [
     { 
@@ -392,7 +403,8 @@ const MD = {
   //   })
   // },
 
-  // pollingstation
+  //////////////////////// POLLINGSTATION ////////////////////////
+
   pollingstationArray:
   [
     {
@@ -434,7 +446,110 @@ const MD = {
     await Promise.all([federalStation.save(), angelesStation.save(), westwoodStation.save()]);
   },
 
-  // user
+  //////////////////////// SCHEDULE ////////////////////////
+
+  //////scheduleObj1
+  scheduleObj1: {
+    userId: '5a3047c071b36b39cfce7700',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  //////scheduleObj2
+  scheduleObj2: {
+    userId: '5a3047c071b36b39cfce7711',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  //////scheduleObj3
+  scheduleObj3: {
+    userId: '5a3047c071b36b39cfce7712',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  //////scheduleObj4 user4
+  scheduleObj4: {
+    userId: '5a3047c071b36b39cfce7722',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  //////scheduleObj5 user4
+  scheduleObj5: {
+    userId: '5a3047c071b36b39cfce7722',
+    pollingStationId: '5a3047c071b36b39cfce6611',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  //////////////////////// USER ////////////////////////
+
   userArray:
   [
     ////////////////////// uaDan
@@ -681,6 +796,7 @@ const MD = {
     }
   ],
 
+  // create users with scheduleIds set inside
   mockUsers: async function() {
     let user1 = new User(this.userArray[0]);
     user1.set('_id', '5a3047c071b36b39cfce7700');
@@ -813,6 +929,7 @@ module.exports = MD;
 // candidate (cc1): 5a3047c071b36b39cfce6677
 // candidate (cc2): 5a3047c071b36b39cfce6688
 // candidate (sc1): 5a3047c071b36b39cfce6699
+// schedule
 // user1: uaDan               5a3047c071b36b39cfce7700
 // user2: uvdl1Westwood2018   5a3047c071b36b39cfce7711
 // user3: uvd2Westwood2018:   5a3047c071b36b39cfce7712
