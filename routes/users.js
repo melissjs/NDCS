@@ -3,6 +3,7 @@ var router = express.Router();
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
+var Schedule = require('../models/schedule');
 
 // ------------------- AUTH -------------------
 
@@ -112,6 +113,35 @@ function isLead(req, res, next){
   }
 }
 
+/* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
+// populate users schedule, see if electionID and pollingStationId pair is in schedule array
+function authedForTeam(req, res, next){
+  let ans = false;
+  req.authedUser.schedule.forEach((scheduleId) => {
+    Schedule.findById(scheduleId)
+    .then((schedule) => {
+      if (schedule.electionId.toString() === req.params.electionId && schedule.pollingStationId.toString() === req.params.pollingStationId) {
+        ans =(ans || true);
+        console.log(ans)
+      } else {
+        null
+      }
+    })
+    .then(() => {
+      if (ans) {
+        next()
+      } else {
+        return res.status(401).json({
+          title: 'Not authenticated',
+          error: {
+            message: 'Team inaccessible'
+          }
+        });
+      }
+    })
+  })
+}
+
 // ------------------- GET -------------------
 
 /* GET ALL USERS AS ADMIN */
@@ -186,17 +216,10 @@ router.get('/admins', isAdmin, function(req, res, next) {
 /* GET USERS IN TEAM AS AUDITOR */
 // return all users but without contact info for exposeEmail: no - also elemmatch election
 //combine volunter and lead into this one route that checks role
-router.get('/team', isAuditor, function(req, res, next) {
-  User.find({ 
-    userRoles: { 
-      $elemMatch: {
-          role: 'auditor',
-          active: true
-      }
-    },
-    'schedule.electionId': req.authedUser.schedule[req.authedUser.schedule.length-1].electionId,
-    'schedule.pollingStationId': req.authedUser.schedule[req.authedUser.schedule.length-1].pollingStationId,
-    exposeEmail: true
+router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, function(req, res, next) {
+  Schedule.find({
+    pollingStationId: req.params.pollingStationId,
+    electionId: req.params.electionId
   })
     .exec(function(err, users) {
       if (err) {

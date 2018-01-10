@@ -451,7 +451,7 @@ const MD = {
   //////scheduleObj1
   scheduleObj1: {
     userId: '5a3047c071b36b39cfce7700',
-    pollingStationId: '5a3047c071b36b39cfce6600',
+    pollingStationId: '5a3047c071b36b39cfce6666',
     electionId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
@@ -471,7 +471,7 @@ const MD = {
   //////scheduleObj2
   scheduleObj2: {
     userId: '5a3047c071b36b39cfce7711',
-    pollingStationId: '5a3047c071b36b39cfce6600',
+    pollingStationId: '5a3047c071b36b39cfce6666',
     electionId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
@@ -491,7 +491,7 @@ const MD = {
   //////scheduleObj3
   scheduleObj3: {
     userId: '5a3047c071b36b39cfce7712',
-    pollingStationId: '5a3047c071b36b39cfce6600',
+    pollingStationId: '5a3047c071b36b39cfce6666',
     electionId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
@@ -511,7 +511,7 @@ const MD = {
   //////scheduleObj4 user4
   scheduleObj4: {
     userId: '5a3047c071b36b39cfce7722',
-    pollingStationId: '5a3047c071b36b39cfce6600',
+    pollingStationId: '5a3047c071b36b39cfce6644',
     electionId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
@@ -532,7 +532,7 @@ const MD = {
   scheduleObj5: {
     userId: '5a3047c071b36b39cfce7722',
     pollingStationId: '5a3047c071b36b39cfce6611',
-    electionId: '5a3047c071b36b39cfce6611',
+    electionId: '5a3047c071b36b39cfce6600',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -548,13 +548,27 @@ const MD = {
     }]
   },
 
+  mockSchedules: async function() {
+    let schedule1 = new Schedule(this.scheduleObj1);
+    schedule1.set('_id', '5a3047c071b36b39cfce0111');
+    let schedule2 = new Schedule(this.scheduleObj2);
+    schedule2.set('_id', '5a3047c071b36b39cfce0222');
+    let schedule3 = new Schedule(this.scheduleObj3);
+    schedule3.set('_id', '5a3047c071b36b39cfce0333');
+    let schedule4 = new Schedule(this.scheduleObj4);
+    schedule4.set('_id', '5a3047c071b36b39cfce0444');
+    let schedule5 = new Schedule(this.scheduleObj5);
+    schedule5.set('_id', '5a3047c071b36b39cfce0555');
+    await Promise.all([schedule1.save(), schedule2.save(), schedule3.save(), schedule4.save(), schedule5.save()])
+  },
+
   //////////////////////// USER ////////////////////////
 
   userArray:
   [
-    ////////////////////// uaDan
+    ////////////////////// uvdaWestwood2018
     {
-      username: 'uaDan',
+      username: 'uvdaWestwood2018',
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
@@ -563,6 +577,26 @@ const MD = {
         dateActivated: [Date.now()],
         dateInactivated: [null]
       }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
+          date: Date.now()
+        }
+      },{
+        role: 'auditor',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
+          date: Date.now()
+        }
+      },{
         role: 'admin',
         active: true,
         dateInitiated: [Date.now()],
@@ -581,23 +615,7 @@ const MD = {
       age: 22,
       sex: 'noAnswer',
       partyAffiliation: 'Democratic',
-      // schedule: [{
-      //   pollingStationId: '5a3047c071b36b39cfce6644',
-      //   electionId: '5a3047c071b36b39cfce6611',
-      //   shifts: [1,2,3],
-      //   timeSheet: [{
-      //     inOrOut: 'in',
-      //     location: {
-      //       type: 'Point', 
-      //       coordinates: [111, 111]
-      //      },
-      //      date: Date.now(),
-      //      auth: {
-      //        authenticatingUserId: '5a3047c071b36b39cfce7711',
-      //        date: Date.now()
-      //      }
-      //   }]
-      // }]
+      schedule: ['5a3047c071b36b39cfce0111']
     },
     ////////////////////// uvdl1Westwood2018
     {
@@ -652,23 +670,7 @@ const MD = {
       age: 22,
       sex: 'female',
       partyAffiliation: 'Republican',
-      schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6666',
-        electionId: '5a3047c071b36b39cfce6611',
-        shifts: [1,2,3],
-        timeSheet: [{
-          inOrOut: 'in',
-          location: {
-            type: 'Point', 
-            coordinates: [111, 111]
-           },
-           date: Date.now(),
-           auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce6640',
-             date: Date.now()
-           }
-        }]
-      }]
+      schedule: ['5a3047c071b36b39cfce0222']
     }, 
     ////////////////////// uvd2Westwood2018
     {
@@ -714,23 +716,7 @@ const MD = {
       age: 22,
       sex: 'female',
       partyAffiliation: 'Republican',
-      schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6666',
-        electionId: '5a3047c071b36b39cfce6611',
-        shifts: [1,2,3],
-        timeSheet: [{
-          inOrOut: 'in',
-          location: {
-            type: 'Point', 
-            coordinates: [111, 111]
-           },
-           date: Date.now(),
-           auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce6640',
-             date: Date.now()
-           }
-        }]
-      }]
+      schedule: ['5a3047c071b36b39cfce0333']
     },
     ////////////////////// uvd2Federal2018
     {
@@ -776,23 +762,7 @@ const MD = {
       age: 22,
       sex: 'male',
       partyAffiliation: 'Green',
-      schedule: [{
-        pollingStationId: '5a3047c071b36b39cfce6644',
-        electionId: '5a3047c071b36b39cfce6611',
-        shifts: [1,2,3],
-        timeSheet: [{
-          inOrOut: 'in',
-          location: {
-            type: 'Point', 
-            coordinates: [111, 111]
-           },
-           date: Date.now(),
-           auth: {
-             authenticatingUserId: '5a3047c071b36b39cfce7711',
-             date: Date.now()
-           }
-        }]
-      }]
+      schedule: ['5a3047c071b36b39cfce0444', '5a3047c071b36b39cfce0555']
     }
   ],
 
@@ -881,6 +851,7 @@ const MD = {
     .then(() => MD.mockElectOffices())
     .then(() => MD.mockPollingstations())
     .then(() => MD.mockCandidates())
+    .then(() => MD.mockSchedules())
     .then(() => MD.mockUsers())
     .then(() => MD.mockVotesAndOfficeVotes())
     .then(() => MD.mockDemographics(MD.demographicsArray))
@@ -897,6 +868,7 @@ const MD = {
       Amendment.remove({}), 
       Anomaly.remove({}), 
       Candidate.remove({}),
+      Schedule.remove({}),
       Contact.remove({}),
       Demographics.remove({}),
       Election.remove({}),
@@ -929,8 +901,12 @@ module.exports = MD;
 // candidate (cc1): 5a3047c071b36b39cfce6677
 // candidate (cc2): 5a3047c071b36b39cfce6688
 // candidate (sc1): 5a3047c071b36b39cfce6699
-// schedule
-// user1: uaDan               5a3047c071b36b39cfce7700
+// schedule1: 5a3047c071b36b39cfce0111
+// schedule2: 5a3047c071b36b39cfce0222
+// schedule3: 5a3047c071b36b39cfce0333
+// schedule4: 5a3047c071b36b39cfce0444
+// schedule5: 5a3047c071b36b39cfce0555
+// user1: uvdaWestwood2018    5a3047c071b36b39cfce7700
 // user2: uvdl1Westwood2018   5a3047c071b36b39cfce7711
 // user3: uvd2Westwood2018:   5a3047c071b36b39cfce7712
 // user4: uvd2Federal2018     5a3047c071b36b39cfce7722
