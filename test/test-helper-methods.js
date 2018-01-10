@@ -117,6 +117,25 @@ const THM = {
     zip: 11111
   },
 
+  scheduleObj: {
+    userId: '5a3047c071b36b39cfce6612',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
    userObj: {
     username: 'thisUsername',
     password: 'thisPassword',
@@ -145,27 +164,7 @@ const THM = {
     age: 22,
     sex: 'female',
     partyAffiliation: 'thisVolunteerPartyAffiliation',
-  //   schedule: [
-  //   //   {
-  //   //   pollingStationId: '5a3047c071b36b39cfce6640',
-  //   //   electionId: '5a3047c071b36b39cfce6640',
-  //   //   shifts: [1,2,3],
-  //   //   timeSheet: [{
-  //   //     inOrOut: 'in',
-  //   //     location: {
-  //   //       type: 'Point', 
-  //   //       coordinates: [111, 111]
-  //   //      },
-  //   //      date: Date.now(),
-  //   //      auth: {
-  //   //        authenticatingUserId: '5a3047c071b36b39cfce6640',
-  //   //        date: Date.now()
-  //   //      }
-  //   //     //  electionId: '5a3047c071b36b39cfce6640'
-  //   //   }]
-  //   // }
-  //   '5a3047c071b36b39cfce6640'
-  // ]
+    schedule: []
   },
 
   voteObj: {
@@ -265,27 +264,7 @@ const THM = {
     age: 22,
     sex: 'female',
     partyAffiliation: 'thisVolunteerPartyAffiliation',
-    schedule: [
-    //   {
-    //   pollingStationId: '5a3047c071b36b39cfce6600',
-    //   electionId: '5a3047c071b36b39cfce6611',
-    //   shifts: [1,2,3],
-    //   timeSheet: [{
-    //     inOrOut: 'in',
-    //     location: {
-    //       type: 'Point', 
-    //       coordinates: [111, 111]
-    //      },
-    //      date: Date.now(),
-    //      auth: {
-    //        authenticatingUserId: '5a3047c071b36b39cfce6640',
-    //        date: Date.now()
-    //      }
-    //   }]
-    // }
-  
-    '5a3047c071b36b39cfce6640'
-  ]
+    schedule: []
   },
 
   userObj2: {
@@ -316,26 +295,7 @@ const THM = {
     age: 22,
     sex: 'female',
     partyAffiliation: 'thisVolunteerPartyAffiliation',
-    schedule: [
-    //   {
-    //   pollingStationId: '5a3047c071b36b39cfce6600',
-    //   electionId: '5a3047c071b36b39cfce6611',
-    //   shifts: [1,2,3],
-    //   timeSheet: [{
-    //     inOrOut: 'in',
-    //     location: {
-    //       type: 'Point', 
-    //       coordinates: [111, 111]
-    //      },
-    //      date: Date.now(),
-    //      auth: {
-    //        authenticatingUserId: '5a3047c071b36b39cfce6640',
-    //        date: Date.now()
-    //      }
-    //   }]
-    // }
-    '5a3047c071b36b39cfce6640'
-  ]
+    schedule: []
   },
 
   userObj3: {
@@ -367,42 +327,66 @@ const THM = {
     sex: 'female',
     partyAffiliation: 'thisVolunteerPartyAffiliation',
     schedule: [
-    //   {
-    //   pollingStationId: '5a3047c071b36b39cfce6600',
-    //   electionId: '5a3047c071b36b39cfce6600',
-    //   shifts: [1,2,3],
-    //   timeSheet: [{
-    //     inOrOut: 'in',
-    //     location: {
-    //       type: 'Point', 
-    //       coordinates: [111, 111]
-    //      },
-    //      date: Date.now(),
-    //      auth: {
-    //        authenticatingUserId: '5a3047c071b36b39cfce6640',
-    //        date: Date.now()
-    //      }
-    //   }]
-    // },
-    // {
-    //   pollingStationId: '5a3047c071b36b39cfce6622',
-    //   electionId: '5a3047c071b36b39cfce6611',
-    //   shifts: [1,2,3],
-    //   timeSheet: [{
-    //     inOrOut: 'in',
-    //     location: {
-    //       type: 'Point', 
-    //       coordinates: [111, 111]
-    //      },
-    //      date: Date.now(),
-    //      auth: {
-    //        authenticatingUserId: '5a3047c071b36b39cfce6640',
-    //        date: Date.now()
-    //      }
-    //   }]
-    // }
-    '5a3047c071b36b39cfce6640'
+    '5a3047c071b36b39cfce3333',
+    '5a3047c071b36b39cfce4444'
   ]
+  },
+
+  scheduleObj1: {
+    userId: '5a3047c071b36b39cfce6611',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  scheduleObj2: {
+    userId: '5a3047c071b36b39cfce6612',
+    pollingStationId: '5a3047c071b36b39cfce6600',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
+  },
+
+  scheduleObj3: {
+    userId: '5a3047c071b36b39cfce6613',
+    pollingStationId: '5a3047c071b36b39cfce6699',
+    electionId: '5a3047c071b36b39cfce6611',
+    shifts: [1,2,3],
+    timeSheet: [{
+      inOrOut: 'in',
+      location: {
+        type: 'Point', 
+        coordinates: [111, 111]
+        },
+        date: Date.now(),
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+    }]
   },
 
 }

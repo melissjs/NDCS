@@ -13,9 +13,10 @@ before((done) => {
   });
 
 beforeEach((done) => {
-  const { users, pollingstations, elections, officevotes, electoffices, evidences, anomalies } =  mongoose.connection.collections; 
+  const { users, pollingstations, elections, officevotes, electoffices, evidences, anomalies, schedules } =  mongoose.connection.collections; 
   users.remove({})
   .then(pollingstations.remove({}))
+  .then(schedules.remove({}))
   .then(elections.remove({}))
   .then(officevotes.remove({}))
   .then(electoffices.remove({}))

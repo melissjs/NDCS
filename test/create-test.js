@@ -9,6 +9,7 @@ const Electoffice = require('../models/electoffice');
 const Evidence = require('../models/evidence');
 const Officevote = require('../models/officevote');
 const Pollingstation = require('../models/pollingstation');
+const Schedule = require('../models/schedule');
 const User = require('../models/user');
 const Vote = require('../models/vote');
 const assert = require('assert');
@@ -152,6 +153,18 @@ describe('Creating records (user and volunteer, etc)', () => {
     .catch((e) => {
       done(e);
     });
+  });
+
+  it('saves a schedule', (done) => {
+    const thisSchedule = new Schedule(THM.scheduleObj);
+    thisSchedule.save()
+      .then(() => {
+        assert(!thisSchedule.isNew);
+        done();
+      })
+      .catch((e) => {
+        done(e);
+      });
   });
 
   it('saves a user', (done) => {

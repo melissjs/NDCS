@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('../models/user');
-// const ScheduleSchema = require('../schemas/schedule');
+const Schedule = require('../models/schedule');
 const globals = require('../globals') ;
 
 const pollingstationSchema = new Schema({
@@ -31,14 +31,14 @@ pollingstationSchema.virtual('currentElection').get(function() {
 
 // // finds team of users for current election
 pollingstationSchema.virtual('currentTeam').get(async function() {
+  const team = [];
   try {
-  const team = await User.find({ 
-    schedule: {
-      $elemMatch: {
-        pollingStationId: this._id,
-        electionId: globals.CURRENT_ELECTION
-      }
-    }
+  const teamSchedules = await Schedule.find({ 
+    pollingStationId: this._id,
+    electionId: globals.CURRENT_ELECTION
+  })
+  teamSchedules.forEach((sched) => {
+    team.push(sched.userId);
   })
   return team;
   }
@@ -48,6 +48,3 @@ pollingstationSchema.virtual('currentTeam').get(async function() {
 })
 
 module.exports = mongoose.model('Pollingstation', pollingstationSchema);
-
-// .then((r) => {console.log('RRRRRRRR', r); return r})
-//   .catch((e) => {console.log('EEEEEEEE', e); return e});

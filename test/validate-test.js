@@ -34,7 +34,7 @@ describe('Validation tests', () => {
     assert(message === 'Last name must be at least two characters')
   });
 
-  it.only('Requires user with auditor role to have schedule', () => {
+  it('Requires user with auditor role to have schedule', () => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.userRoles.push({
       role: 'auditor',
@@ -48,10 +48,9 @@ describe('Validation tests', () => {
       }
     });
     thisVolunteer.save()
-    .then((res) => { console.log('SAVE', res)})
+    .then((res) => {})
     .catch((validationResult) => { 
       const { message } = validationResult.errors.schedule;
-      console.log('MESSAGE', message)
       assert(message === 'Schedule is required for auditors')})
   })
 
@@ -68,16 +67,16 @@ describe('Validation tests', () => {
     });
   });
 
-  it('can validate schedule sub schema (shifts custom validation)', (done) => {
-    const thisVolunteer = new User(THM.userObj);
-    thisVolunteer.schedule[0].shifts.push(9);
-    thisVolunteer.save()
-    .catch((validationResult) => {
-      const { message } = validationResult.errors['schedule.0.shifts'];
-      assert(message === 'Invalid shift options');
-      done();
-    });
-  });
+  // it('can validate schedule sub schema (shifts custom validation)', (done) => {
+  //   const thisVolunteer = new User(THM.userObj);
+  //   thisVolunteer.schedule[0].shifts.push(9);
+  //   thisVolunteer.save()
+  //   .catch((validationResult) => {
+  //     const { message } = validationResult.errors['schedule.0.shifts'];
+  //     assert(message === 'Invalid shift options');
+  //     done();
+  //   });
+  // });
 
   it('can validate enums', (done) => {
     const thisVolunteer = new User(THM.userObj);
@@ -99,16 +98,16 @@ describe('Validation tests', () => {
     });
   });
 
-  it('can validate schedule sub schema (electionId required)', (done) => {
-    const thisVolunteer = new User(THM.userObj);
-    thisVolunteer.schedule[0].electionId = undefined;
-    thisVolunteer.save()
-    .catch((validationResult) => {
-      const { message } = validationResult.errors['schedule.0.electionId'];
-      assert(message === 'ElectionId required');
-      done();
-    });
-  });
+  // it('can validate schedule sub schema (electionId required)', (done) => {
+  //   const thisVolunteer = new User(THM.userObj);
+  //   thisVolunteer.schedule[0].electionId = undefined;
+  //   thisVolunteer.save()
+  //   .catch((validationResult) => {
+  //     const { message } = validationResult.errors['schedule.0.electionId'];
+  //     assert(message === 'ElectionId required');
+  //     done();
+  //   });
+  // });
 
 })
 

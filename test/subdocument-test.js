@@ -2,48 +2,54 @@ const User = require('../models/user');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe('Creating, adding and deleting Sub Schemas (volunteer schedule)', () => {
+describe('Creating, adding and deleting Sub Schemas (volunteer userRoles)', () => {
 
-  it('can create volunteer with schedule sub schema', (done) => {
+  it('can create volunteer with userRoles sub schema', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        assert(volunteer.schedule[0].shifts[0] === 1);
+        assert(volunteer.userRoles[0].role === 'user');
         done();
       })
   })
 
-  it('can create subsequent schedule array items to existing volunteer', (done) => {
+  it('can create subsequent userRoles array item to existing volunteer', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        volunteer.schedule.push({
-          pollingStationId: '5a3047c071b36b39cfce6640',
-          electionId: '5a3047c071b36b39cfce6640',
-          shifts: [4,5,6]
+        volunteer.userRoles.push({
+          role: 'auditor',
+          active: true,
+          dateInitiated: [Date.now()],
+          dateActivated: [Date.now()],
+          dateInactivated: [null],
+          auth: {
+            authenticatingUserId: '5a3047c071b36b39cfce6640',
+            date: Date.now()
+          }
         });
-        return volunteer.save();
-      })
-      .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
-      .then((volunteer) => {
-        assert(volunteer.schedule[1].shifts[0] === 4);
-        done();
+        volunteer.save()
+        .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
+        .then((volunteer) => {
+          assert(volunteer.userRoles[2].role === 'auditor');
+          done();
+        });
       });
-  });
+  })
 
-  it('can create delete schedule array item from existing volunteer', (done) => {
+  it('can create delete userRoles array item from existing volunteer', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        volunteer.schedule[0].remove()
+        volunteer.userRoles[1].remove()
         return volunteer.save();
       })
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        assert(volunteer.schedule.length === 0);
+        assert(volunteer.userRoles.length === 1);
         done();
       });
   });

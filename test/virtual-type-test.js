@@ -3,6 +3,7 @@ const Officevote = require('../models/officevote');
 const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
 const Pollingstation = require('../models/pollingstation');
+const Schedule = require('../models/schedule');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
@@ -10,15 +11,11 @@ describe('Virtual types (records calculated but not saved in db)', () => {
 
   it('users scheduleCount returns number of scheduled audits', (done) => {
     const thisVolunteer = new User(THM.userObj);
-    thisVolunteer.schedule.push({
-      pollingStationId: '5a3047c071b36b39cfce6640',
-      electionId: '5a3047c071b36b39cfce6640',
-      shifts: [1,2,3]
-    })
+    thisVolunteer.schedule.push(...['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6640']);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
       .then((volunteer) => {
-        assert(volunteer.scheduleCount === 2)
+        assert(volunteer.scheduleCount === 3)
         done();
       })
   });
@@ -74,11 +71,24 @@ describe('Virtual types (records calculated but not saved in db)', () => {
 
   it('pollingstation currentTeam returns pollingstation team for current election', (done) => {
     const thisPollingstation = new Pollingstation(THM.pollingstationObj);
-    const thisUser1 = new User(THM.userObj1);
-    const thisUser2 = new User(THM.userObj2);
-    const thisUser3 = new User(THM.userObj3);
     thisPollingstation.set( '_id', '5a3047c071b36b39cfce6600')
-    Promise.all([thisPollingstation.save(), thisUser1.save(), thisUser2.save(), thisUser3.save()])
+    const thisUser1 = new User(THM.userObj1);
+    thisUser1.set('_id', '5a3047c071b36b39cfce6611');
+    const thisSchedule1 = new Schedule(THM.scheduleObj1);
+    thisSchedule1.set('_id', '5a3047c071b36b39cfce1111');
+    thisUser1.schedule.push(thisSchedule1);
+    const thisUser2 = new User(THM.userObj2);
+    thisUser2.set('_id', '5a3047c071b36b39cfce6612');
+    const thisSchedule2 = new Schedule(THM.scheduleObj2);
+    thisSchedule2.set('_id', '5a3047c071b36b39cfce2222');
+    thisUser2.schedule.push(thisSchedule2);
+    const thisUser3 = new User(THM.userObj3);
+    thisUser3.set('_id', '5a3047c071b36b39cfce6613');
+    const thisSchedule3 = new Schedule(THM.scheduleObj3);
+    thisSchedule3.set('_id', '5a3047c071b36b39cfce3333');
+    thisUser3.schedule.push(thisSchedule3);
+    
+    Promise.all([thisPollingstation.save(), thisUser1.save(), thisSchedule1.save(), thisUser2.save(), thisSchedule2.save(), thisUser3.save(), thisSchedule3.save(),])
     .then(() => {
       Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
       .then(async (ps) => {
@@ -95,9 +105,6 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     .then(() => {
       Election.findById(thisElection._id)
       .then((election) => {
-        console.log('ACTIVE', election.active)
-        console.log('DateNow', Date.now())
-        console.log('ED', election.electionDay)
         assert(election.active === true);
         done();
       })
