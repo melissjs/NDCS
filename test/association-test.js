@@ -8,7 +8,7 @@ const Vote = require('../models/vote');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe.only('Associations', () => {
+describe('Associations', () => {
   let thisUser, thisVolunteer, thisElection, thisPollingStation;
 
   beforeEach((done) => {
@@ -20,15 +20,13 @@ describe.only('Associations', () => {
     thisSchedule = new Schedule(THM.scheduleObj);
     thisSchedule.pollingStationId = thisPollingStation;
     thisSchedule.electionId = thisElection;
-    // console.log('SCEHDHHDHD', thisSchedule)
     thisSchedule.shifts = [1, 2];
     thisUser.schedule.push(thisSchedule);
-    // console.log(thisUser)
     Promise.all([thisUser.save(), thisPollingStation.save(), thisElection.save(), thisPreviousElection.save(), thisSchedule.save()])
     .then(() => done());
   });
 
-  it.only('Saves relation between user and schedule', (done) => {
+  it('Saves relation between user and schedule', (done) => {
     User.findOne({ firstName: 'thisVolunteerFirstName' })
     .populate('schedule')
     .then((user) => {
@@ -39,13 +37,24 @@ describe.only('Associations', () => {
 
   it('Saves a full relation graph', (done) => {
     User.findOne({ firstName: 'thisVolunteerFirstName' })
-      .populate('schedule.pollingStationId')
       .populate({
-        path: 'schedule.electionId',
-        model: 'Election',
+        path: 'schedule',
+        model: 'Schedule',
         populate: { 
-          path: 'previousElection',
-          model: 'Election'
+          path: 'electionId',
+          model: 'Election',
+          populate: { 
+            path: 'previousElection',
+            model: 'Election'
+          }
+        }
+      })
+      .populate({
+        path: 'schedule',
+        model: 'Schedule',
+        populate: { 
+          path: 'pollingStationId',
+          model: 'Pollingstation'
         }
       })
       .then((user) => {
@@ -54,10 +63,6 @@ describe.only('Associations', () => {
         done();
       })
   })
-
-  // create evidence and anom
-  // set anom obj id = 5a3047c071b36b39cfce1122
-  // check in fact anom
 
   it('Saves a conditional reference', (done) => {
     let anomEvidence = new Evidence(THM.evidenceObj);

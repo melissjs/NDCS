@@ -164,7 +164,7 @@ const THM = {
     age: 22,
     sex: 'female',
     partyAffiliation: 'thisVolunteerPartyAffiliation',
-    schedule: []
+    schedule: ['5a3047c071b36b39cfce6640']
   },
 
   voteObj: {
