@@ -121,7 +121,7 @@ const THM = {
     userId: '5a3047c071b36b39cfce6612',
     pollingStationId: '5a3047c071b36b39cfce6600',
     electionId: '5a3047c071b36b39cfce6611',
-    shifts: [1,2,3],
+    shifts: [1, 2, 3],
     timeSheet: [{
       inOrOut: 'in',
       location: {

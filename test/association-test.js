@@ -28,20 +28,13 @@ describe.only('Associations', () => {
     .then(() => done());
   });
 
-  it.only('Saves relation between user and pollingstation', (done) => {
+  it.only('Saves relation between user and schedule', (done) => {
     User.findOne({ firstName: 'thisVolunteerFirstName' })
     .populate('schedule')
-    // .populate({
-    //   path: 'schedule.pollingStationId',
-    //   model: 'Pollingstation'
-    // })
     .then((user) => {
-      console.log(user)
+      assert(user.schedule[0].shifts.length  === 2)
+      done();
     })
-    // .then((user) => {
-    //   assert(user.schedule[0].pollingStationId.zip === 11111);
-    //   done();
-    // });
   })
 
   it('Saves a full relation graph', (done) => {
