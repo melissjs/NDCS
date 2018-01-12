@@ -14,15 +14,19 @@ const ScheduleSchema = new Schema({
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] }
+},
+{
+  toObject: { virtuals: true }, 
+  toJSON: { virtuals: true } 
 });
 
-// finds team of users for schedule onject
-ScheduleSchema.virtual('currentTeam').get(async function() {
+// finds team of users for schedule object
+ScheduleSchema.statics.currentTeam = async function(electionId, pollingStationId) {
   const team = [];
   try {
-    const teamSchedules = await Schedule.find({ 
-      pollingStationId: this.pollingStationId,
-      electionId: this.electionId
+    const teamSchedules = await this.find({ 
+      pollingStationId: pollingStationId,
+      electionId: electionId
     })
     teamSchedules.forEach((sched) => {
       team.push(sched.userId);
@@ -32,7 +36,7 @@ ScheduleSchema.virtual('currentTeam').get(async function() {
   catch(e) {
     return e;
   }
-})
+}
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
 

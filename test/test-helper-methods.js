@@ -118,7 +118,7 @@ const THM = {
   },
 
   scheduleObj: {
-    userId: '5a3047c071b36b39cfce6612',
+    userId: '5a3047c071b36b39cfce6610',
     pollingStationId: '5a3047c071b36b39cfce6600',
     electionId: '5a3047c071b36b39cfce6611',
     shifts: [1, 2, 3],
