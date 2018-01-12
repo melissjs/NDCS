@@ -144,37 +144,47 @@ function authedForTeam(req, res, next){
 
 // ------------------- HELPER FUNCTIONS -------------------
 
-function isSelfFN(passedUserId) { // pass in authed user -these cant use req
-  return (passedUserId === req.authedUser._id) ? true : false;
+function isSelfFN(passedUserId, authedUserID) { // pass in authed user -these cant use req
+  return (passedUserId === authedUserID) ? true : false;
 }
 
-function isAdminFN() {
-  return (req.authedUser.activeRoles.includes('admin')) ? true : false;
+function isAdminFN(rolesArr) {
+  return (rolesArr.includes('admin')) ? true : false;
 }
 
-function isAuditorFN() {
-  return (req.authedUser.activeRoles.includes('auditor')) ? true : false;
+function isAuditorFN(rolesArr) {
+  return (rolesArr.includes('auditor')) ? true : false;
 }
 
-function isLeadFN() {
-  return (req.authedUser.activeRoles.includes('lead')) ? true : false;
+function isLeadFN(rolesArr) {
+  return (rolesArr.includes('lead')) ? true : false;
 }
 
 // true if userId is in any of authedUsers schedule teams
-function authedForUserFN(userId) {
+async function authedForUserFN(passedUserId, authedUserSchedule) {
   let ans = false;
-  req.authedUser.schedule.forEach((scheduleObj) => {
-    let currTeam = Schedule.currentTeam(scheduleObj.electionId, scheduleObj.pollingStationId);
-    ans = ans || currTeam.includes(userId)
-  })
-  return ans;
+  let thisAns =  await authedUserSchedule.forEach((scheduleId) => {
+    Schedule.findById(scheduleId)
+    .then(async (scheduleObj) => {
+      let currTeam = await Schedule.currentTeam
+      (scheduleObj.electionId, scheduleObj.pollingStationId);
+      console.log(currTeam);
+      console.log(passedUserId);
+      ans = ans || currTeam.some((uId) => { return uId.equals(passedUserId) })
+      // console.log(ans)
+      // return ans;
+    })
+  });
+  console.log('ans from bottom', thisAns);
+
+  return thisAns;
 }
 
 // true if user is in specific team
-function authedForTeamFN(electionId, pollingStationId) {
+function authedForTeamFN(userId, electionId, pollingStationId) {
   let ans = false;
   let currTeam = Schedule.currentTeam(electionId, pollingStationId);
-  ans = ans || currTeam.includes(req.authedUser._id)
+  ans = ans || currTeam.includes(userId)
   return ans;
 }
 
@@ -330,9 +340,9 @@ router.post('/add', function(req, res, next) {
 
 /* ALL with volunteer_id listing. */
 router.route('/:userId') 
-.all(function(req, res, next) {
-  if (isSelfFN() || isAdminFN || authedForUserFN) {
-    userId = req.params.userId;
+.all(async function(req, res, next) {
+  userId = req.params.userId;
+  if (isSelfFN(userId, req.authedUser._id) || isAdminFN(req.authedUser.activeRoles) || await authedForUserFN(userId, req.authedUser.schedule)) {
     User.findById(userId, function(err, user) {
       if (err) {
         return status(500).json({

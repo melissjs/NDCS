@@ -32,7 +32,7 @@ describe('Methods and statistics on models', () => {
     const thisSchedule3 = new Schedule(THM.scheduleObj3);
     Promise.all([thisSchedule.save(), thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save()])
     .then(async () => {
-      const teamArr = await Schedule.currentTeam(thisSchedule.electionId, thisSchedule.pollingStationId)
+      const teamArr = await Schedule.currentTeam(thisSchedule.electionId, thisSchedule.pollingStationId);
       assert(teamArr.length === 3)
       done();
     })
