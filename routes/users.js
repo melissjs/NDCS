@@ -142,6 +142,34 @@ function authedForTeam(req, res, next){
   })
 }
 
+// ------------------- HELPER FUNCTIONS -------------------
+
+function isSelf(passedUserId) {
+  return (passedUserId === req.authedUser._id) ? true : false;
+}
+
+function isAdmin() {
+  return (req.authedUser.activeRoles.includes('admin')) ? true : false;
+}
+
+function isAuditor() {
+  return (req.authedUser.activeRoles.includes('auditor')) ? true : false;
+}
+
+function isLead() {
+  return (req.authedUser.activeRoles.includes('lead')) ? true : false;
+}
+
+function authedForUser(passedUserId) {
+  let aggregatedTeamMembers = [];
+  req.authedUser.schedule.forEach((scheduleObj) => {
+    Pollingstation.findById(scheduleObj.pollingStationId)
+    .then((station) => {
+      station.current
+    })
+  })
+}
+
 // ------------------- GET -------------------
 
 /* GET ALL USERS AS ADMIN */
@@ -309,7 +337,7 @@ router.route('/:userId')
 }).get(function(req, res) {
     // res.send('Get for paramUser ' + userId + paramUser.firstName   );
     res.status(201).json({
-      message: 'User found',
+      message: 'Success',
       obj: paramUser
     });
 }).post(function(req, res) {

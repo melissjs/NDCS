@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const TimesheetSchema = require('../schemas/timesheet');
 
-
 function ShiftValidator(shiftArray) {
 	return shiftArray.every((shift)=>{
     return (shift>0 && shift<7)  
@@ -16,6 +15,24 @@ const ScheduleSchema = new Schema({
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] }
 });
+
+// finds team of users for schedule onject
+ScheduleSchema.virtual('currentTeam').get(async function() {
+  const team = [];
+  try {
+    const teamSchedules = await Schedule.find({ 
+      pollingStationId: this.pollingStationId,
+      electionId: this.electionId
+    })
+    teamSchedules.forEach((sched) => {
+      team.push(sched.userId);
+    })
+    return team;
+  }
+  catch(e) {
+    return e;
+  }
+})
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
 
