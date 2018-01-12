@@ -160,14 +160,22 @@ function isLead() {
   return (req.authedUser.activeRoles.includes('lead')) ? true : false;
 }
 
-function authedForUser(passedUserId) {
-  let aggregatedTeamMembers = [];
+// true if userId is in any of authedUsers schedule teams
+function authedForUser(userId) {
+  let ans = false;
   req.authedUser.schedule.forEach((scheduleObj) => {
-    Pollingstation.findById(scheduleObj.pollingStationId)
-    .then((station) => {
-      station.current
-    })
+    let currTeam = Schedule.currentTeam(scheduleObj.electionId, scheduleObj.pollingStationId);
+    ans = ans || currTeam.includes(userId)
   })
+  return ans;
+}
+
+// true if user is in specific team
+function authedForTeam(electionId, pollingStationId) {
+  let ans = false;
+  let currTeam = Schedule.currentTeam(electionId, pollingStationId);
+  ans = ans || currTeam.includes(req.authedUser._id)
+  return ans;
 }
 
 // ------------------- GET -------------------
