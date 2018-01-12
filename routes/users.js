@@ -221,17 +221,41 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
     pollingStationId: req.params.pollingStationId,
     electionId: req.params.electionId
   })
+    .populate({
+      path: 'userId',
+      model: 'User'
+    })
     .exec(function(err, users) {
+      let userArr = [];
+      users.forEach((u) => {
+        userArr.push(u.userId);
+      });
+      let userArrSterilized = JSON.parse(JSON.stringify(userArr));
+      userArrSterilized.forEach((us) => {
+        delete us.password;
+      });
       if (err) {
         return res.status(500).json({
           title: 'An error occurred',
           error: err
         });
       }
-      res.status(200).json({
-        message: 'Success',
-        obj: users
-      });
+      if (req.authedUser.activeRoles.includes('lead')) {
+        res.status(200).json({
+          message: 'Success',
+          obj: userArrSterilized
+        });
+      }
+      else {
+        userArrSterilized.forEach((us) => {
+          if (!us.exposeEmail){ delete us.emailAddress };
+          if (!us.exposePhoneNumber){ delete us.phoneNumber };
+        })
+        res.status(200).json({
+          message: 'Success',
+          obj: userArrSterilized
+        });
+      }
     });
 });
 
