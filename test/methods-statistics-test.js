@@ -25,7 +25,7 @@ describe('Methods and statistics on models', () => {
   })
 
 
-  it.only('schedule currentTeam returns team associated with election/station', (done) => {
+  it('schedule currentTeam returns team associated with election/station', (done) => {
     const thisSchedule = new Schedule(THM.scheduleObj);
     const thisSchedule1 = new Schedule(THM.scheduleObj1);
     const thisSchedule2 = new Schedule(THM.scheduleObj2);

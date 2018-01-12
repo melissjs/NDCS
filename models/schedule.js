@@ -15,10 +15,11 @@ const ScheduleSchema = new Schema({
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] }
 },
-{
-  toObject: { virtuals: true }, 
-  toJSON: { virtuals: true } 
-});
+// {
+//   toObject: { virtuals: true }, 
+//   toJSON: { virtuals: true } 
+// }
+);
 
 // finds team of users for schedule object
 ScheduleSchema.statics.currentTeam = async function(electionId, pollingStationId) {

@@ -30,21 +30,21 @@ pollingstationSchema.virtual('currentElection').get(function() {
 });
 
 // // finds team of users for current election
-pollingstationSchema.virtual('currentTeam').get(async function() {
-  const team = [];
-  try {
-  const teamSchedules = await Schedule.find({ 
-    pollingStationId: this._id,
-    electionId: globals.CURRENT_ELECTION
-  })
-  teamSchedules.forEach((sched) => {
-    team.push(sched.userId);
-  })
-  return team;
-  }
-  catch(e) {
-    return e;
-  }
-})
+// pollingstationSchema.virtual('currentTeam').get(async function() {
+//   const team = [];
+//   try {
+//   const teamSchedules = await Schedule.find({ 
+//     pollingStationId: this._id,
+//     electionId: globals.CURRENT_ELECTION
+//   })
+//   teamSchedules.forEach((sched) => {
+//     team.push(sched.userId);
+//   })
+//   return team;
+//   }
+//   catch(e) {
+//     return e;
+//   }
+// })
 
 module.exports = mongoose.model('Pollingstation', pollingstationSchema);
