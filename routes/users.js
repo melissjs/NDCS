@@ -213,9 +213,7 @@ router.get('/admins', isAdmin, function(req, res, next) {
 });
 
 
-/* GET USERS IN TEAM AS AUDITOR */
-// return all users but without contact info for exposeEmail: no - also elemmatch election
-//combine volunter and lead into this one route that checks role
+/* GET USERS IN TEAM AS AUDITOR OR LEAD */
 router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, function(req, res, next) {
   Schedule.find({
     pollingStationId: req.params.pollingStationId,
@@ -259,32 +257,6 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
     });
 });
 
-/* GET USERS IN TEAM AS LEAD */
-router.get('/lead', isLead, function(req, res, next) {
-  User.find({ 
-      userRoles: { 
-        $elemMatch: {
-            role: 'volunteer',
-            active: true
-        }
-      },
-      'schedule.electionId': req.authedUser.schedule[req.authedUser.schedule.length-1].electionId,
-      'schedule.pollingStationId': req.authedUser.schedule[req.authedUser.schedule.length-1].pollingStationId
-  })
-    .exec(function(err, users) {
-      if (err) {
-        return res.status(500).json({
-          title: 'An error occurred',
-          error: err
-        });
-      }
-      res.status(200).json({
-        message: 'Success',
-        obj: users
-      });
-    });
-});
-
 // ------------------- POST -------------------
 
 /* CREATE NEW USER */
@@ -296,8 +268,9 @@ router.post('/add', function(req, res, next) {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     emailAddress: req.body.emailAddress,
-    exposeEmail: req.body.exposeEmail,
     phoneNumber: req.body.phoneNumber,
+    exposeEmail: req.body.exposeEmail,
+    exposePhoneNumber: req.body.exposePhoneNumber,
     age: req.body.age,
     sex: req.body.sex,
     partyAffiliation: req.body.partyAffiliation,
