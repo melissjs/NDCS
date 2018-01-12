@@ -144,24 +144,24 @@ function authedForTeam(req, res, next){
 
 // ------------------- HELPER FUNCTIONS -------------------
 
-function isSelf(passedUserId) {
+function isSelfFN(passedUserId) { // pass in authed user -these cant use req
   return (passedUserId === req.authedUser._id) ? true : false;
 }
 
-function isAdmin() {
+function isAdminFN() {
   return (req.authedUser.activeRoles.includes('admin')) ? true : false;
 }
 
-function isAuditor() {
+function isAuditorFN() {
   return (req.authedUser.activeRoles.includes('auditor')) ? true : false;
 }
 
-function isLead() {
+function isLeadFN() {
   return (req.authedUser.activeRoles.includes('lead')) ? true : false;
 }
 
 // true if userId is in any of authedUsers schedule teams
-function authedForUser(userId) {
+function authedForUserFN(userId) {
   let ans = false;
   req.authedUser.schedule.forEach((scheduleObj) => {
     let currTeam = Schedule.currentTeam(scheduleObj.electionId, scheduleObj.pollingStationId);
@@ -171,7 +171,7 @@ function authedForUser(userId) {
 }
 
 // true if user is in specific team
-function authedForTeam(electionId, pollingStationId) {
+function authedForTeamFN(electionId, pollingStationId) {
   let ans = false;
   let currTeam = Schedule.currentTeam(electionId, pollingStationId);
   ans = ans || currTeam.includes(req.authedUser._id)
@@ -331,6 +331,7 @@ router.post('/add', function(req, res, next) {
 /* ALL with volunteer_id listing. */
 router.route('/:userId') 
 .all(function(req, res, next) {
+  if (isSelfFN() || isAdminFN || authedForUserFN) {
     userId = req.params.userId;
     User.findById(userId, function(err, user) {
       if (err) {
@@ -342,6 +343,15 @@ router.route('/:userId')
       paramUser = user;
       next();
     })
+  } else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'No access to user'
+      }
+    });
+  }
+
 }).get(function(req, res) {
     // res.send('Get for paramUser ' + userId + paramUser.firstName   );
     res.status(201).json({
