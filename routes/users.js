@@ -179,24 +179,25 @@ function isLeadFN(rolesArr) {
 //////////////// try async await
 async function authedForUserFN(passedUserId, authedUserSchedule) {
   let schedules;
-
+  const teams = [];
   try {
     schedules = await Schedule.find({ '_id': authedUserSchedule})
   } catch (e) {
     console.error('could not find schedule:', e)
     return false;
   }//                                               \/[ [ promise, promise ], [ promise, promise ]]
-  const aggTeam = [].concat( ...await Promise.all( schedules.map((sched) => {
+  schedules.forEach((sched) => {
     try {
       currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
       // const currTeam = [];
       // currTeam.lengt > 0 ? aggTeam.push(...currTeam);
-      return currTeam;
+      teams.push(currTeam);
     } catch (e) {
       console.error('could not find team:',e)
       return false;
     }
-  })));
+  })
+  const aggTeam = [].concat( ...await Promise.all(teams ));
   return aggTeam.some((uId) => uId.equals(passedUserId))
 }
 
