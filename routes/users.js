@@ -185,19 +185,17 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
   } catch (e) {
     console.error('could not find schedule:', e)
     return false;
-  }//                                               \/[ [ promise, promise ], [ promise, promise ]]
+  }
   schedules.forEach((sched) => {
     try {
       currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
-      // const currTeam = [];
-      // currTeam.lengt > 0 ? aggTeam.push(...currTeam);
       teams.push(currTeam);
     } catch (e) {
-      console.error('could not find team:',e)
+      console.error('could not find team:', e)
       return false;
     }
   })
-  const aggTeam = [].concat( ...await Promise.all(teams ));
+  const aggTeam = [].concat( ...await Promise.all(teams));
   return aggTeam.some((uId) => uId.equals(passedUserId))
 }
 
