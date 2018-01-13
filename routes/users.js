@@ -182,23 +182,23 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
   let ans = false;
   let aggTeam = [];
   
-  let schedObjArr = await Schedule.find({ '_id': authedUserSchedule})
-  .then((docs) => {return docs});
-  console.log('2', schedObjArr);
- 
-  return schedObjArr.forEach(async (schedObj) => {
-    let currTeam = await Schedule.currentTeam(schedObj.electionId, schedObj.pollingStationId)
-    .then((currTeam) => {
-      aggTeam.push(...currTeam);
-      // console.log('aggTeam', aggTeam);
-      // return aggTeam
-    }).then(() => {
-      ans = ans || aggTeam.some((uId) => { return uId.equals(passedUserId) })
-      console.log(ans);
-      return ans;
+  let blah = await Schedule.find({ '_id': authedUserSchedule})
+  .then((schedObjArr) => {
+    schedObjArr.forEach(async (schedObj) => {
+      let currTeam = await Schedule.currentTeam(schedObj.electionId, schedObj.pollingStationId)
+      .then((currTeam) => {
+        aggTeam.push(...currTeam);
+        // console.log('aggTeam', aggTeam);
+        // return aggTeam
+      }).then(() => {
+        ans = ans || aggTeam.some((uId) => { return uId.equals(passedUserId) })
+        console.log(ans);
+        return ans;
+      })
     })
   })
-
+console.log('BBBB', blah)
+return blah;
 }
 
 // true if user is in specific team
@@ -363,8 +363,7 @@ router.post('/add', function(req, res, next) {
 router.route('/:userId') 
 .all(async function(req, res, next) {
   userId = req.params.userId;
-  if (isSelfFN(userId, req.authedUser._id) || isAdminFN(req.authedUser.activeRoles) || true) {
-    console.log('THISSS', authedForUserFN(userId, req.authedUser.schedule))
+  if (isSelfFN(userId, req.authedUser._id) || isAdminFN(req.authedUser.activeRoles) || await authedForUserFN(userId, req.authedUser.schedule)) {
     User.findById(userId, function(err, user) {
       if (err) {
         return status(500).json({
