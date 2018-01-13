@@ -178,27 +178,26 @@ function isLeadFN(rolesArr) {
 
 //////////////// try async await
 async function authedForUserFN(passedUserId, authedUserSchedule) {
-  // console.log('1', authedUserSchedule)
-  let ans = false;
-  let aggTeam = [];
-  
-  let blah = await Schedule.find({ '_id': authedUserSchedule})
-  .then((schedObjArr) => {
-    schedObjArr.forEach(async (schedObj) => {
-      let currTeam = await Schedule.currentTeam(schedObj.electionId, schedObj.pollingStationId)
-      .then((currTeam) => {
-        aggTeam.push(...currTeam);
-        // console.log('aggTeam', aggTeam);
-        // return aggTeam
-      }).then(() => {
-        ans = ans || aggTeam.some((uId) => { return uId.equals(passedUserId) })
-        console.log(ans);
-        return ans;
-      })
-    })
-  })
-console.log('BBBB', blah)
-return blah;
+  let schedules;
+
+  try {
+    schedules = await Schedule.find({ '_id': authedUserSchedule})
+  } catch (e) {
+    console.error('could not find schedule:', e)
+    return false;
+  }//                                               \/[ [ promise, promise ], [ promise, promise ]]
+  const aggTeam = [].concat( ...await Promise.all( schedules.map((sched) => {
+    try {
+      currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
+      // const currTeam = [];
+      // currTeam.lengt > 0 ? aggTeam.push(...currTeam);
+      return currTeam;
+    } catch (e) {
+      console.error('could not find team:',e)
+      return false;
+    }
+  })));
+  return aggTeam.some((uId) => uId.equals(passedUserId))
 }
 
 // true if user is in specific team
