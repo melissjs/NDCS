@@ -3,6 +3,7 @@ const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
 const Evidence = require('../models/evidence');
 const Anomaly = require('../models/anomaly');
+const Audit = require('../models/audit');
 const Schedule = require('../models/schedule')
 const Vote = require('../models/vote');
 const assert = require('assert');
@@ -14,15 +15,19 @@ describe('Associations', () => {
   beforeEach((done) => {
     thisUser = new User(THM.userObj);
     thisElection = new Election(THM.electionObj);
+    thisAudit = new Audit(THM.auditObj);
     thisPreviousElection = new Election(THM.previousElectionObj);
     thisPollingStation = new Pollingstation(THM.pollingstationObj)
     thisElection.previousElection = thisPreviousElection;
+    thisAudit.electionId = thisElection;
+    thisAudit.pollingStationId = thisPollingStation;
     thisSchedule = new Schedule(THM.scheduleObj);
-    thisSchedule.pollingStationId = thisPollingStation;
-    thisSchedule.electionId = thisElection;
+    thisSchedule.auditId = thisAudit;
+    // thisSchedule.pollingStationId = thisPollingStation;
+    // thisSchedule.electionId = thisElection;
     thisSchedule.shifts = [1, 2];
     thisUser.schedule.push(thisSchedule);
-    Promise.all([thisUser.save(), thisPollingStation.save(), thisElection.save(), thisPreviousElection.save(), thisSchedule.save()])
+    Promise.all([thisUser.save(), thisPollingStation.save(), thisElection.save(), thisPreviousElection.save(), thisSchedule.save(), thisAudit.save()])
     .then(() => done());
   });
 
@@ -35,34 +40,42 @@ describe('Associations', () => {
     })
   })
 
-  // it.only('Saves a full relation graph', (done) => {
-  //   User.findOne({ firstName: 'thisVolunteerFirstName' })
-  //     .populate({
-  //       path: 'schedule',
-  //       model: 'Schedule',
-  //       populate: { 
-  //         path: 'electionId',
-  //         model: 'Election',
-  //         populate: { 
-  //           path: 'previousElection',
-  //           model: 'Election'
-  //         }
-  //       }
-  //     })
-  //     .populate({
-  //       path: 'schedule',
-  //       model: 'Schedule',
-  //       populate: { 
-  //         path: 'pollingStationId',
-  //         model: 'Pollingstation'
-  //       }
-  //     })
-  //     .then((user) => {
-  //       assert(user.schedule[0].pollingStationId.zip === 11111);
-  //       assert(user.schedule[0].electionId.previousElection.electionTitle === 'thisPreviousElectionTitle');
-  //       done();
-  //     })
-  // })
+  it('Saves a full relation graph', (done) => {
+    User.findOne({ firstName: 'thisVolunteerFirstName' })
+      .populate({
+        path: 'schedule',
+        model: 'Schedule',
+        populate: { 
+          path: 'auditId',
+          model: 'Audit',
+          populate: { 
+            path: 'electionId',
+            model: 'Election',
+            populate: { 
+              path: 'previousElection',
+              model: 'Election'
+            }
+          }
+        }
+      })
+      .populate({
+        path: 'schedule',
+        model: 'Schedule',
+        populate: { 
+          path: 'auditId',
+          model: 'Audit',
+          populate: { 
+            path: 'pollingStationId',
+            model: 'Pollingstation'
+          }
+        }
+      })
+      .then((user) => {
+        assert(user.schedule[0].auditId.pollingStationId.zip === 11111);
+        assert(user.schedule[0].auditId.electionId.previousElection.electionTitle === 'thisPreviousElectionTitle');
+        done();
+      })
+  })
 
   it('Saves a conditional reference', (done) => {
     let anomEvidence = new Evidence(THM.evidenceObj);
