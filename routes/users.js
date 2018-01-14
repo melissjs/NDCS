@@ -114,23 +114,61 @@ function isLead(req, res, next){
   }
 }
 
+// /* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
+// function authedForTeam(req, res, next){
+//   Audit.findOne({
+//     'electionId': req.params.electionId,
+//     'pollingStationId': req.params.pollingStationId
+//   })
+//   .then(async (audit) => {
+//     let team = await audit.team;
+//     if (team.some((uId) => uId.equals(req.authedUser._id))) {
+//       next()
+//     } else {
+//       return res.status(401).json({
+//           title: 'Not authenticated',
+//           error: {
+//             message: 'Team inaccessible'
+//           }
+//         });
+//     }
+//   })
+// }
+
 /* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
 function authedForTeam(req, res, next){
   Audit.findOne({
     'electionId': req.params.electionId,
     'pollingStationId': req.params.pollingStationId
   })
-  .then(async (audit) => {
-    let team = await audit.team;
-    if (team.some((uId) => uId.equals(req.authedUser._id))) {
-      next()
-    } else {
+  .exec(async (err, audit) => {
+    if (audit === null) {
       return res.status(401).json({
-          title: 'Not authenticated',
-          error: {
-            message: 'Team inaccessible'
-          }
-        });
+        title: 'Not authenticated',
+        error: {
+          message: 'Audit inaccessible'
+        }
+      });
+    }
+    else if (err) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: err
+      });
+    } 
+    else {    
+      let team = await audit.team;
+      if (team.some((uId) => uId.equals(req.authedUser._id))) {
+        next()
+      } 
+      else {
+        return res.status(401).json({
+            title: 'Not authenticated',
+            error: {
+              message: 'Team inaccessible'
+            }
+          });
+      }
     }
   })
 }
