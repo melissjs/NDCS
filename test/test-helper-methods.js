@@ -41,6 +41,11 @@ const THM = {
     timestamp: Date.now()
   },
 
+  auditObj: {
+    electionId: '5a3047c071b36b39cfce6611',
+    pollingStationId: '5a3047c071b36b39cfce6666'
+  },
+
   candidateObj: {
     name: 'thisCandidateName',
     party: 'thisCandidateParty',
@@ -119,8 +124,7 @@ const THM = {
 
   scheduleObj: {
     userId: '5a3047c071b36b39cfce6610',
-    pollingStationId: '5a3047c071b36b39cfce6600',
-    electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce6643',
     shifts: [1, 2, 3],
     timeSheet: [{
       inOrOut: 'in',

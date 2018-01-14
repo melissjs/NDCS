@@ -1,6 +1,7 @@
 const Affidavit = require('../models/affidavit');
 const Amendment = require('../models/amendment');
 const Anomaly = require('../models/anomaly');
+const Audit = require('../models/audit');
 const Candidate = require('../models/candidate');
 const Contact = require('../models/contact');
 const Demographics = require('../models/demographics');
@@ -51,6 +52,18 @@ describe('Creating records (user and volunteer, etc)', () => {
     .catch((e) => {
       done(e);
     });
+  });
+
+  it('saves an audit', (done) => {
+    const thisAudit = new Audit(THM.auditObj);
+    thisAudit.save()
+      .then(() => {
+        assert(!thisAudit.isNew);
+        done();
+      })
+      .catch((e) => {
+        done(e);
+      });
   });
 
   it('saves an candidate', (done) => {

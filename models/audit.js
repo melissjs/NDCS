@@ -12,8 +12,8 @@ const AuditSchema = new Schema({
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
 });
 
-// finds team of users for schedule object
-AuditSchema.statics.team = async function(electionId, pollingStationId) {
+// finds total votes for this election/office
+AuditSchema.virtual('team').get(async function() {
   const Schedule = require('./schedule');
   const team = [];
   try {
@@ -28,7 +28,7 @@ AuditSchema.statics.team = async function(electionId, pollingStationId) {
   catch(e) {
     return e;
   }
-}
+})
 
-module.exports = mongoose.model('Schedule', AuditSchema);
+module.exports = mongoose.model('Audit', AuditSchema);
 

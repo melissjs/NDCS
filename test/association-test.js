@@ -35,34 +35,34 @@ describe('Associations', () => {
     })
   })
 
-  it('Saves a full relation graph', (done) => {
-    User.findOne({ firstName: 'thisVolunteerFirstName' })
-      .populate({
-        path: 'schedule',
-        model: 'Schedule',
-        populate: { 
-          path: 'electionId',
-          model: 'Election',
-          populate: { 
-            path: 'previousElection',
-            model: 'Election'
-          }
-        }
-      })
-      .populate({
-        path: 'schedule',
-        model: 'Schedule',
-        populate: { 
-          path: 'pollingStationId',
-          model: 'Pollingstation'
-        }
-      })
-      .then((user) => {
-        assert(user.schedule[0].pollingStationId.zip === 11111);
-        assert(user.schedule[0].electionId.previousElection.electionTitle === 'thisPreviousElectionTitle');
-        done();
-      })
-  })
+  // it.only('Saves a full relation graph', (done) => {
+  //   User.findOne({ firstName: 'thisVolunteerFirstName' })
+  //     .populate({
+  //       path: 'schedule',
+  //       model: 'Schedule',
+  //       populate: { 
+  //         path: 'electionId',
+  //         model: 'Election',
+  //         populate: { 
+  //           path: 'previousElection',
+  //           model: 'Election'
+  //         }
+  //       }
+  //     })
+  //     .populate({
+  //       path: 'schedule',
+  //       model: 'Schedule',
+  //       populate: { 
+  //         path: 'pollingStationId',
+  //         model: 'Pollingstation'
+  //       }
+  //     })
+  //     .then((user) => {
+  //       assert(user.schedule[0].pollingStationId.zip === 11111);
+  //       assert(user.schedule[0].electionId.previousElection.electionTitle === 'thisPreviousElectionTitle');
+  //       done();
+  //     })
+  // })
 
   it('Saves a conditional reference', (done) => {
     let anomEvidence = new Evidence(THM.evidenceObj);
