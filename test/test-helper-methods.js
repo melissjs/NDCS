@@ -342,8 +342,9 @@ const THM = {
 
   scheduleObj1: {
     userId: '5a3047c071b36b39cfce6611',
-    pollingStationId: '5a3047c071b36b39cfce6600',
-    electionId: '5a3047c071b36b39cfce6611',
+    // pollingStationId: '5a3047c071b36b39cfce6600',
+    // electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -361,8 +362,9 @@ const THM = {
 
   scheduleObj2: {
     userId: '5a3047c071b36b39cfce6612',
-    pollingStationId: '5a3047c071b36b39cfce6600',
-    electionId: '5a3047c071b36b39cfce6611',
+    // pollingStationId: '5a3047c071b36b39cfce6600',
+    // electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -380,8 +382,9 @@ const THM = {
 
   scheduleObj3: {
     userId: '5a3047c071b36b39cfce6613',
-    pollingStationId: '5a3047c071b36b39cfce6699',
-    electionId: '5a3047c071b36b39cfce6611',
+    // pollingStationId: '5a3047c071b36b39cfce6699',
+    // electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce6611',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',

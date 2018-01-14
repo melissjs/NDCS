@@ -1,6 +1,7 @@
 const Affidavit = require('../models/affidavit');
 const Amendment = require('../models/amendment');
 const Anomaly = require('../models/anomaly');
+const Audit = require('../models/audit');
 const Candidate = require('../models/candidate');
 const Contact = require('../models/contact');
 const Demographics = require('../models/demographics');
@@ -143,6 +144,34 @@ const MD = {
     evidence2.anomalyId = anomaly1._id;
     evidence3.anomalyId = anomaly2._id;
     await Promise.all([anomaly1.save(), anomaly2.save(), evidence1.save(), evidence2.save(), evidence3.save()]);
+  },
+
+    //////////////////////// AUDIT ////////////////////////
+
+  auditArray:
+  [
+    { // 2018 westwood
+      electionId: '5a3047c071b36b39cfce6611',
+      pollingStationId: '5a3047c071b36b39cfce6666'
+    },
+    { // 2018 federal
+      electionId: '5a3047c071b36b39cfce6611',
+      pollingStationId: '5a3047c071b36b39cfce6644'
+    },
+    { // 2016 angeles
+      electionId: '5a3047c071b36b39cfce6600',
+      pollingStationId: '5a3047c071b36b39cfce6655'
+    }
+  ],
+
+  mockAudits: async function() {
+    let audit1 = new Audit(this.auditArray[0]);
+    audit1.set('_id', '5a3047c071b36b39cfce1111');
+    let audit2 = new Audit(this.auditArray[1]);
+    audit2.set('_id', '5a3047c071b36b39cfce1122');
+    let audit3 = new Audit(this.auditArray[2]);
+    audit3.set('_id', '5a3047c071b36b39cfce1133');
+    await Promise.all([audit1.save(), audit2.save(), audit3.save()]);
   },
 
   //////////////////////// CANDIDATE ////////////////////////
@@ -451,8 +480,7 @@ const MD = {
   //////scheduleObj1
   scheduleObj1: {
     userId: '5a3047c071b36b39cfce7700',
-    pollingStationId: '5a3047c071b36b39cfce6666',
-    electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce1111',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -471,8 +499,7 @@ const MD = {
   //////scheduleObj2
   scheduleObj2: {
     userId: '5a3047c071b36b39cfce7711',
-    pollingStationId: '5a3047c071b36b39cfce6666',
-    electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce1111',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -491,8 +518,7 @@ const MD = {
   //////scheduleObj3
   scheduleObj3: {
     userId: '5a3047c071b36b39cfce7712',
-    pollingStationId: '5a3047c071b36b39cfce6666',
-    electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce1111',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -511,8 +537,7 @@ const MD = {
   //////scheduleObj4 user4
   scheduleObj4: {
     userId: '5a3047c071b36b39cfce7722',
-    pollingStationId: '5a3047c071b36b39cfce6644',
-    electionId: '5a3047c071b36b39cfce6611',
+    auditId: '5a3047c071b36b39cfce1122',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -531,8 +556,7 @@ const MD = {
   //////scheduleObj5 user4
   scheduleObj5: {
     userId: '5a3047c071b36b39cfce7722',
-    pollingStationId: '5a3047c071b36b39cfce6611',
-    electionId: '5a3047c071b36b39cfce6600',
+    auditId: '5a3047c071b36b39cfce1133',
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -607,8 +631,8 @@ const MD = {
           date: Date.now()
         }
       }],
-      firstName: 'Dan', 
-      lastName: 'Wolf',
+      firstName: 'Admin', 
+      lastName: 'One',
       emailAddress: 'thisVolunteer1@Email.Address',
       phoneNumber: 1111111111,
       exposeEmail: true,
@@ -855,6 +879,7 @@ const MD = {
     .then(() => MD.mockElectOffices())
     .then(() => MD.mockPollingstations())
     .then(() => MD.mockCandidates())
+    .then(() => MD.mockAudits())
     .then(() => MD.mockSchedules())
     .then(() => MD.mockUsers())
     .then(() => MD.mockVotesAndOfficeVotes())
@@ -872,6 +897,7 @@ const MD = {
       Amendment.remove({}), 
       Anomaly.remove({}), 
       Candidate.remove({}),
+      Audit.remove({}),
       Schedule.remove({}),
       Contact.remove({}),
       Demographics.remove({}),
@@ -897,6 +923,9 @@ module.exports = MD;
 // mock data _id keys
 // previousElection: 5a3047c071b36b39cfce6600
 // currentElection: 5a3047c071b36b39cfce6611
+// audit1: (westwood) 5a3047c071b36b39cfce1111,
+// audit2: (federal) 5a3047c071b36b39cfce1122,
+// audit3: (old westood) 5a3047c071b36b39cfce1133,
 // electOffice (congress): 5a3047c071b36b39cfce6622
 // electOffice (senate): 5a3047c071b36b39cfce6633
 // pollingStation (federal): 5a3047c071b36b39cfce6644
