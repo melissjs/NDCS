@@ -401,8 +401,18 @@ router.route('/:userId')
           error: err
         })
       }
-      paramUser = user;
-      next();
+      else if (user === null) {
+        return status(500).json({
+          title: 'Not authenticated',
+          error: {
+            message: 'No access to user'
+          }
+        })
+      }
+      else {
+        paramUser = user;
+        next();
+      }
     })
   } else {
     return res.status(401).json({
@@ -412,7 +422,6 @@ router.route('/:userId')
       }
     });
   }
-
 }).get(function(req, res) {
     // res.send('Get for paramUser ' + userId + paramUser.firstName   );
     res.status(201).json({
