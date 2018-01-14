@@ -271,47 +271,57 @@ router.get('/admins', isAdmin, function(req, res, next) {
 
 /* GET USERS IN TEAM AS AUDITOR OR LEAD */
 router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, function(req, res, next) {
-  Schedule.find({
-    pollingStationId: req.params.pollingStationId,
-    electionId: req.params.electionId
+  // let team;
+  Audit.findOne({
+    electionId: req.params.electionId,
+    pollingStationId: req.params.pollingStationId
   })
-    .populate({
-      path: 'userId',
-      model: 'User'
+    .then(async (audit) => {
+      let team = await audit.team;
+      console.log('TTT', team)
+      //  await User.findById({
+      //   '_id': team
+      // })
+      return team
     })
-    .exec(function(err, users) {
-      let userArr = [];
-      users.forEach((u) => {
-        userArr.push(u.userId);
-      });
-      let userArrSterilized = JSON.parse(JSON.stringify(userArr));
-      userArrSterilized.forEach((us) => {
-        delete us.password;
-      });
-      if (err) {
-        return res.status(500).json({
-          title: 'An error occurred',
-          error: err
-        });
-      }
-      if (req.authedUser.activeRoles.includes('lead')) {
-        res.status(200).json({
-          message: 'Success',
-          obj: userArrSterilized
-        });
-      }
-      else {
-        userArrSterilized.forEach((us) => {
-          if (!us.exposeEmail){ delete us.emailAddress };
-          if (!us.exposePhoneNumber){ delete us.phoneNumber };
-        })
-        res.status(200).json({
-          message: 'Success',
-          obj: userArrSterilized
-        });
-      }
-    });
-});
+    .then((team) => {
+      console.log('TTT', team)
+    })
+  })
+//       .exec(function(err, users) {
+//         let userArr = [];
+//         users.forEach((u) => {
+//           userArr.push(u.userId);
+//         });
+//         let userArrSterilized = JSON.parse(JSON.stringify(userArr));
+//         userArrSterilized.forEach((us) => {
+//           delete us.password;
+//         });
+//         if (err) {
+//           return res.status(500).json({
+//             title: 'An error occurred',
+//             error: err
+//           });
+//         }
+//         if (req.authedUser.activeRoles.includes('lead')) {
+//           res.status(200).json({
+//             message: 'Success',
+//             obj: userArrSterilized
+//           });
+//         }
+//         else {
+//           userArrSterilized.forEach((us) => {
+//             if (!us.exposeEmail){ delete us.emailAddress };
+//             if (!us.exposePhoneNumber){ delete us.phoneNumber };
+//           })
+//           res.status(200).json({
+//             message: 'Success',
+//             obj: userArrSterilized
+//           });
+//         }
+//       });
+//     })
+// });
 
 // ------------------- POST -------------------
 
