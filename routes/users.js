@@ -208,8 +208,31 @@ function isLeadFN(rolesArr) {
 // }
 
 //////////////// try async await
+// async function authedForUserFN(passedUserId, authedUserSchedule) {
+//   let schedules;
+//   const teams = [];
+//   try {
+//     schedules = await Schedule.find({ '_id': authedUserSchedule})
+//   } catch (e) {
+//     console.error('could not find schedule:', e)
+//     return false;
+//   }
+//   schedules.forEach((sched) => {
+//     try {
+//       currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
+//       teams.push(currTeam);
+//     } catch (e) {
+//       console.error('could not find team:', e)
+//       return false;
+//     }
+//   })
+//   const aggTeam = [].concat( ...await Promise.all(teams));
+//   return aggTeam.some((uId) => uId.equals(passedUserId))
+// }
+
 async function authedForUserFN(passedUserId, authedUserSchedule) {
   let schedules;
+  let auditArr = [];
   const teams = [];
   try {
     schedules = await Schedule.find({ '_id': authedUserSchedule})
@@ -219,11 +242,24 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
   }
   schedules.forEach((sched) => {
     try {
-      currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
-      teams.push(currTeam);
+      audit = sched.auditId;
+      auditArr.push(audit);
     } catch (e) {
-      console.error('could not find team:', e)
+      console.error('could not find audit:', e)
       return false;
+    }
+  })
+  Audit.find({ '_id': auditArr})
+  .exec((err, audits) => {
+    if (err) {
+      console.error('could not find audit(s):', err)
+    }
+    else if (audits === null) {
+      console.error('no audit(s):')
+    }
+    else {
+      // aggregate teams from all audits then check if user is in arr
+      
     }
   })
   const aggTeam = [].concat( ...await Promise.all(teams));
