@@ -10,8 +10,7 @@ function ShiftValidator(shiftArray) {
 
 const ScheduleSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
-  pollingStationId: { type: Schema.Types.ObjectId, ref: 'Pollingstation', required: [true, 'PollingStationId required'] },
-  electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
+  auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] }
 },
@@ -22,22 +21,22 @@ const ScheduleSchema = new Schema({
 );
 
 // finds team of users for schedule object
-ScheduleSchema.statics.currentTeam = async function(electionId, pollingStationId) {
-  const team = [];
-  try {
-    const teamSchedules = await this.find({ 
-      pollingStationId: pollingStationId,
-      electionId: electionId
-    })
-    teamSchedules.forEach((sched) => {
-      team.push(sched.userId);
-    })
-    return team;
-  }
-  catch(e) {
-    return e;
-  }
-}
+// ScheduleSchema.statics.currentTeam = async function(electionId, pollingStationId) {
+//   const team = [];
+//   try {
+//     const teamSchedules = await this.find({ 
+//       pollingStationId: pollingStationId,
+//       electionId: electionId
+//     })
+//     teamSchedules.forEach((sched) => {
+//       team.push(sched.userId);
+//     })
+//     return team;
+//   }
+//   catch(e) {
+//     return e;
+//   }
+// }
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
 

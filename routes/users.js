@@ -200,11 +200,9 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
 }
 
 // true if user is in specific team
-function authedForTeamFN(userId, electionId, pollingStationId) {
-  let ans = false;
-  let currTeam = Schedule.currentTeam(electionId, pollingStationId);
-  ans = ans || currTeam.includes(userId)
-  return ans;
+async function authedForTeamFN(userId, electionId, pollingStationId) {
+  let currTeam = await Schedule.currentTeam(electionId, pollingStationId);
+  return currTeam.some((uId) => uId.equals(userId))
 }
 
 // ------------------- GET -------------------
