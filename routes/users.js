@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var Schedule = require('../models/schedule');
+var Audit = require('../models/audit');
 
 // ------------------- AUTH -------------------
 
@@ -114,31 +115,23 @@ function isLead(req, res, next){
 }
 
 /* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
-// populate users schedule, see if electionID and pollingStationId pair is in schedule array
 function authedForTeam(req, res, next){
-  let ans = false;
-  req.authedUser.schedule.forEach((scheduleId) => {
-    Schedule.findById(scheduleId)
-    .then((schedule) => {
-      if (schedule.electionId.toString() === req.params.electionId && schedule.pollingStationId.toString() === req.params.pollingStationId) {
-        ans =(ans || true);
-        console.log(ans)
-      } else {
-        null
-      }
-    })
-    .then(() => {
-      if (ans) {
-        next()
-      } else {
-        return res.status(401).json({
+  Audit.findOne({
+    'electionId': req.params.electionId,
+    'pollingStationId': req.params.pollingStationId
+  })
+  .then(async (audit) => {
+    let team = await audit.team;
+    if (team.some((uId) => uId.equals(req.authedUser._id))) {
+      next()
+    } else {
+      return res.status(401).json({
           title: 'Not authenticated',
           error: {
             message: 'Team inaccessible'
           }
         });
-      }
-    })
+    }
   })
 }
 
