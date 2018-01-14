@@ -284,11 +284,6 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
         '_id': team
       })      
       .exec(function(err, UsersInTeam) {
-        // console.log('hiIIIIIIiiIIi', UsersInTeam);
-        // let userArr = [];
-        // UsersInTeam.forEach((u) => {
-        //   userArr.push(u.userId);
-        // });
         let userArrSterilized = JSON.parse(JSON.stringify(UsersInTeam));
         userArrSterilized.forEach((us) => {
           delete us.password;
@@ -316,11 +311,8 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
           });
         }
       });
-      // console.log('TTT', UsersInTeam)
-      // return UsersInTeam;
     })
-
-    })
+})
 
 
 
