@@ -191,45 +191,6 @@ function isLeadFN(rolesArr) {
   return (rolesArr.includes('lead')) ? true : false;
 }
 
-// true if userId is in any of authedUsers schedule teams
-// function authedForUserFN(passedUserId, authedUserSchedule) {
-//   let ans = false;
-//   return authedUserSchedule.forEach((scheduleId) => {
-//     return Schedule.findById(scheduleId)
-//     .then((scheduleObj) => {
-//       return Schedule.currentTeam(scheduleObj.electionId, scheduleObj.pollingStationId)
-//       .then((currTeam) => {
-//         ans = ans || currTeam.some((uId) => { return uId.equals(passedUserId) })
-//         console.log('inner', ans);
-//         return ans;
-//       })
-//     })
-//   })
-// }
-
-//////////////// try async await
-// async function authedForUserFN(passedUserId, authedUserSchedule) {
-//   let schedules;
-//   const teams = [];
-//   try {
-//     schedules = await Schedule.find({ '_id': authedUserSchedule})
-//   } catch (e) {
-//     console.error('could not find schedule:', e)
-//     return false;
-//   }
-//   schedules.forEach((sched) => {
-//     try {
-//       currTeam = Schedule.currentTeam(sched.electionId, sched.pollingStationId);
-//       teams.push(currTeam);
-//     } catch (e) {
-//       console.error('could not find team:', e)
-//       return false;
-//     }
-//   })
-//   const aggTeam = [].concat( ...await Promise.all(teams));
-//   return aggTeam.some((uId) => uId.equals(passedUserId))
-// }
-
 ///////////////////////// refactore with audit
 async function authedForUserFN(passedUserId, authedUserSchedule) {
   let schedules;
@@ -267,22 +228,10 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
       let team = audit.team;
       teams.push(team);
     })
-    console.log(...await Promise.all(teams))
     const aggTeam = [].concat( ...await Promise.all(teams));
-    console.log('AGG', aggTeam)
     return aggTeam.some((uId) => uId.equals(passedUserId));
   }
 }
-
-
-      // console.log('promise', ...await Promise.all(teams))
-      // const aggTeam = [].concat( ...await Promise.all(teams));
-      // console.log('AGG', aggTeam)
-      // console.log('teams', await teams)
-      // const aggTeam = await Promise.all(teams)
-      // console.log('aggkkk', aggTeam)
-      // return aggTeam.some((uId) => uId.equals(passedUserId));
-
 
 // true if user is in specific team
 async function authedForTeamFN(userId, electionId, pollingStationId) {
