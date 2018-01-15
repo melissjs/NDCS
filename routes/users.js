@@ -235,12 +235,23 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
 }
 
 // true if user is in specific team
-async function authedForTeamFN(userId, electionId, pollingStationId) {
+// async function authedForTeamFN(userId, auditId) {
+async function returnTeamFN(userId, auditId) {
+    let audit;
   try {
-    let currTeam = await Schedule.currentTeam(electionId, pollingStationId);
+    audit = await Audit.findById('_id', auditId);
   }
   catch(e) {
-    console.error('no team:', e);
+    console.error('An error occured:', e);
+    return false;
+  }
+  try {
+    let team = await audit.team;
+    console.log('authedFOrTeam', team.some((uId) => uId.equals(userId)))
+    return team;
+  }
+  catch(e) {
+    console.error('An error occured:', e);
     return false;
   }
   return currTeam.some((uId) => uId.equals(userId))
@@ -316,6 +327,16 @@ router.get('/admins', isAdmin, function(req, res, next) {
     });
 });
 
+/* GET USERS IN TEAM AS AUDITOR OR LEAD */
+router.get('/team/:auditId', isAuditor, authedForTeam, async function(req, res, next) {
+  try {
+    let team = await returnTeamFN(userId, auditId);
+    console.log(team)
+  }
+  catch(e) {
+    console.error('no team', e)
+  }
+})
 
 /* GET USERS IN TEAM AS AUDITOR OR LEAD */
 router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, function(req, res, next) {
