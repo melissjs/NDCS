@@ -291,9 +291,30 @@ async function returnTeamFN(userId, auditId) {
   }
 }
 
-///////////////////////// returnTeamFN
-async function returnSterilizedUsers(userIdArr) {
-
+///////////////////////// returnSterilizedUsers
+async function returnSterilizedUsers(userIdArr, activeRoles) {
+  let users;
+  try {
+    users = await User.find({ '_id': userIdArr })
+  }
+  catch(e) {
+    console.log('Error occured', e);
+    return null;
+  }
+  let userArrSterilized = JSON.parse(JSON.stringify(users));
+  userArrSterilized.forEach((us) => {
+    delete us.password;
+  });
+  if (activeRoles.includes('lead')) {
+    return userArrSterilized;
+  }
+  else {
+    userArrSterilized.forEach((us) => {
+      if (!us.exposeEmail){ delete us.emailAddress };
+      if (!us.exposePhoneNumber){ delete us.phoneNumber };
+    })
+    return userArrSterilized;
+  }
 }
 
 // ------------------- GET -------------------
@@ -366,20 +387,21 @@ router.get('/admins', isAdmin, function(req, res, next) {
     });
 });
 
-/* GET USERS IN TEAM AS AUDITOR OR LEAD */
+/* GET USERS IN TEAM AS AUDITOR OR LEAD */ //now
 router.get('/team/:auditId', isAuditor, authedForTeamWithAuditId, async function(req, res, next) {
   try {
     let team = await returnTeamFN(req.authedUser._id, req.params.auditId);
+    let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
+    console.log('users', users)
     res.status(200).json({
       message: 'Success',
-      obj: team
+      obj: users
     });
   }
   catch(e) {
-    console.error('no team', e);
     return res.status(500).json({
       title: 'An error occurred',
-      error: err
+      error: e
     });
   }
 })
