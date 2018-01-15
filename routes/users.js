@@ -230,10 +230,12 @@ function isLeadFN(rolesArr) {
 //   return aggTeam.some((uId) => uId.equals(passedUserId))
 // }
 
+///////////////////////// refactore with audit
 async function authedForUserFN(passedUserId, authedUserSchedule) {
   let schedules;
+  let audits = [];
   let auditArr = [];
-  const teams = [];
+  let teams = [];
   try {
     schedules = await Schedule.find({ '_id': authedUserSchedule})
   } catch (e) {
@@ -249,22 +251,38 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
       return false;
     }
   })
-  Audit.find({ '_id': auditArr})
-  .exec((err, audits) => {
-    if (err) {
-      console.error('could not find audit(s):', err)
-    }
-    else if (audits === null) {
-      console.error('no audit(s):')
-    }
-    else {
-      // aggregate teams from all audits then check if user is in arr
-      
-    }
-  })
-  const aggTeam = [].concat( ...await Promise.all(teams));
-  return aggTeam.some((uId) => uId.equals(passedUserId))
+  try {
+    audits = await Audit.find({ '_id': auditArr});
+  }
+  catch(e) {
+    console.error('could not find audits:', e)
+    return false;
+  }
+  if (audits === null) {
+      console.error('no audit(s)');
+      return false;
+  }
+  else {
+    audits.forEach((audit) => {
+      let team = audit.team;
+      teams.push(team);
+    })
+    console.log(...await Promise.all(teams))
+    const aggTeam = [].concat( ...await Promise.all(teams));
+    console.log('AGG', aggTeam)
+    return aggTeam.some((uId) => uId.equals(passedUserId));
+  }
 }
+
+
+      // console.log('promise', ...await Promise.all(teams))
+      // const aggTeam = [].concat( ...await Promise.all(teams));
+      // console.log('AGG', aggTeam)
+      // console.log('teams', await teams)
+      // const aggTeam = await Promise.all(teams)
+      // console.log('aggkkk', aggTeam)
+      // return aggTeam.some((uId) => uId.equals(passedUserId));
+
 
 // true if user is in specific team
 async function authedForTeamFN(userId, electionId, pollingStationId) {
