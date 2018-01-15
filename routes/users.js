@@ -291,7 +291,7 @@ async function returnTeamFN(userId, auditId) {
   }
 }
 
-///////////////////////// returnSterilizedUsers
+///////////////////////// returnSterilizedUsers for lead or auditor
 async function returnSterilizedUsers(userIdArr, activeRoles) {
   let users;
   try {
@@ -387,7 +387,7 @@ router.get('/admins', isAdmin, function(req, res, next) {
     });
 });
 
-/* GET USERS IN TEAM AS AUDITOR OR LEAD */ //now
+/* GET USERS IN TEAM AS AUDITOR OR LEAD */
 router.get('/team/:auditId', isAuditor, authedForTeamWithAuditId, async function(req, res, next) {
   try {
     let team = await returnTeamFN(req.authedUser._id, req.params.auditId);
@@ -416,38 +416,51 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
       let team = await audit.team;
       return team
     })
-    .then((team) => {
-      User.find({
-        '_id': team
-      })      
-      .exec(function(err, UsersInTeam) {
-        let userArrSterilized = JSON.parse(JSON.stringify(UsersInTeam));
-        userArrSterilized.forEach((us) => {
-          delete us.password;
+    .then(async (team) => {
+      try {
+        let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
+        res.status(200).json({
+          message: 'Success',
+          obj: users
         });
-        if (err) {
-          return res.status(500).json({
-            title: 'An error occurred',
-            error: err
-          });
-        }
-        if (req.authedUser.activeRoles.includes('lead')) {
-          res.status(200).json({
-            message: 'Success',
-            obj: userArrSterilized
-          });
-        }
-        else {
-          userArrSterilized.forEach((us) => {
-            if (!us.exposeEmail){ delete us.emailAddress };
-            if (!us.exposePhoneNumber){ delete us.phoneNumber };
-          })
-          res.status(200).json({
-            message: 'Success',
-            obj: userArrSterilized
-          });
-        }
-      });
+      }
+      catch(e) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: e
+        });
+      }
+      // User.find({
+      //   '_id': team
+      // })      
+      // .exec(function(err, UsersInTeam) {
+      //   let userArrSterilized = JSON.parse(JSON.stringify(UsersInTeam));
+      //   userArrSterilized.forEach((us) => {
+      //     delete us.password;
+      //   });
+      //   if (err) {
+      //     return res.status(500).json({
+      //       title: 'An error occurred',
+      //       error: err
+      //     });
+      //   }
+      //   if (req.authedUser.activeRoles.includes('lead')) {
+      //     res.status(200).json({
+      //       message: 'Success',
+      //       obj: userArrSterilized
+      //     });
+      //   }
+      //   else {
+      //     userArrSterilized.forEach((us) => {
+      //       if (!us.exposeEmail){ delete us.emailAddress };
+      //       if (!us.exposePhoneNumber){ delete us.phoneNumber };
+      //     })
+      //     res.status(200).json({
+      //       message: 'Success',
+      //       obj: userArrSterilized
+      //     });
+      //   }
+      // });
     })
 })
 
