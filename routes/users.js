@@ -207,7 +207,8 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
     try {
       audit = sched.auditId;
       auditArr.push(audit);
-    } catch (e) {
+    } 
+    catch (e) {
       console.error('could not find audit:', e)
       return false;
     }
@@ -235,7 +236,13 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
 
 // true if user is in specific team
 async function authedForTeamFN(userId, electionId, pollingStationId) {
-  let currTeam = await Schedule.currentTeam(electionId, pollingStationId);
+  try {
+    let currTeam = await Schedule.currentTeam(electionId, pollingStationId);
+  }
+  catch(e) {
+    console.error('no team:', e);
+    return false;
+  }
   return currTeam.some((uId) => uId.equals(userId))
 }
 
