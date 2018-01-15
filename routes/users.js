@@ -35,7 +35,6 @@ router.post('/signin', function(req, res, next) {
         error: {message: 'Would you like to reactivate your account?'}
       });
     }
-    // if user is inactive 
     let userSterilized = JSON.parse(JSON.stringify(user));
     delete userSterilized.password;
     var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
@@ -478,6 +477,8 @@ router.post('/add', function(req, res, next) {
     });
   });
 });
+
+// ------------------- PUT (REACTIVATE) -------------------
 
 // ------------------- DELETE (MIGRATE TO NONUSER) -------------------
 
