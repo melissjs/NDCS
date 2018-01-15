@@ -412,56 +412,25 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
     electionId: req.params.electionId,
     pollingStationId: req.params.pollingStationId
   })
-    .then(async (audit) => {
-      let team = await audit.team;
-      return team
-    })
-    .then(async (team) => {
-      try {
-        let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
-        res.status(200).json({
-          message: 'Success',
-          obj: users
-        });
-      }
-      catch(e) {
-        return res.status(500).json({
-          title: 'An error occurred',
-          error: e
-        });
-      }
-      // User.find({
-      //   '_id': team
-      // })      
-      // .exec(function(err, UsersInTeam) {
-      //   let userArrSterilized = JSON.parse(JSON.stringify(UsersInTeam));
-      //   userArrSterilized.forEach((us) => {
-      //     delete us.password;
-      //   });
-      //   if (err) {
-      //     return res.status(500).json({
-      //       title: 'An error occurred',
-      //       error: err
-      //     });
-      //   }
-      //   if (req.authedUser.activeRoles.includes('lead')) {
-      //     res.status(200).json({
-      //       message: 'Success',
-      //       obj: userArrSterilized
-      //     });
-      //   }
-      //   else {
-      //     userArrSterilized.forEach((us) => {
-      //       if (!us.exposeEmail){ delete us.emailAddress };
-      //       if (!us.exposePhoneNumber){ delete us.phoneNumber };
-      //     })
-      //     res.status(200).json({
-      //       message: 'Success',
-      //       obj: userArrSterilized
-      //     });
-      //   }
-      // });
-    })
+  .then(async (audit) => {
+    let team = await audit.team;
+    return team
+  })
+  .then(async (team) => {
+    try {
+      let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
+      return res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    }
+    catch(e) {
+      return res.status(500).json({
+        title: 'An error occurred',
+        error: e
+      });
+    }
+  })
 })
 
 
