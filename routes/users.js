@@ -135,12 +135,49 @@ function isLead(req, res, next){
 //   })
 // }
 
-/* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
+/* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE WITH ELECTIONID AND POLLINGSTATIONID */
 function authedForTeam(req, res, next){
   Audit.findOne({
     'electionId': req.params.electionId,
     'pollingStationId': req.params.pollingStationId
   })
+  .exec(async (err, audit) => {
+    if (audit === null) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: {
+          message: 'Audit inaccessible'
+        }
+      });
+    }
+    else if (err) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: err
+      });
+    } 
+    else {    
+      let team = await audit.team;
+      if (team.some((uId) => uId.equals(req.authedUser._id))) {
+        next()
+      } 
+      else {
+        return res.status(401).json({
+            title: 'Not authenticated',
+            error: {
+              message: 'Team inaccessible'
+            }
+          });
+      }
+    }
+  })
+}
+
+/* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE WITH AUDITID */
+function authedForTeamWithAuditId(req, res, next){
+  Audit.findOne({
+    '_id': req.params.auditId
+    })
   .exec(async (err, audit) => {
     if (audit === null) {
       return res.status(401).json({
@@ -191,7 +228,7 @@ function isLeadFN(rolesArr) {
   return (rolesArr.includes('lead')) ? true : false;
 }
 
-///////////////////////// refactore with audit
+///////////////////////// authedForUserFN
 async function authedForUserFN(passedUserId, authedUserSchedule) {
   let schedules;
   let audits = [];
@@ -234,27 +271,29 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
   }
 }
 
-// true if user is in specific team
-// async function authedForTeamFN(userId, auditId) {
+///////////////////////// returnTeamFN
 async function returnTeamFN(userId, auditId) {
     let audit;
   try {
-    audit = await Audit.findById('_id', auditId);
+    audit = await Audit.findById(auditId);
   }
   catch(e) {
     console.error('An error occured:', e);
-    return false;
+    return null;
   }
   try {
     let team = await audit.team;
-    console.log('authedFOrTeam', team.some((uId) => uId.equals(userId)))
     return team;
   }
   catch(e) {
     console.error('An error occured:', e);
-    return false;
+    return null;
   }
-  return currTeam.some((uId) => uId.equals(userId))
+}
+
+///////////////////////// returnTeamFN
+async function returnSterilizedUsers(userIdArr) {
+
 }
 
 // ------------------- GET -------------------
@@ -328,13 +367,20 @@ router.get('/admins', isAdmin, function(req, res, next) {
 });
 
 /* GET USERS IN TEAM AS AUDITOR OR LEAD */
-router.get('/team/:auditId', isAuditor, authedForTeam, async function(req, res, next) {
+router.get('/team/:auditId', isAuditor, authedForTeamWithAuditId, async function(req, res, next) {
   try {
-    let team = await returnTeamFN(userId, auditId);
-    console.log(team)
+    let team = await returnTeamFN(req.authedUser._id, req.params.auditId);
+    res.status(200).json({
+      message: 'Success',
+      obj: team
+    });
   }
   catch(e) {
-    console.error('no team', e)
+    console.error('no team', e);
+    return res.status(500).json({
+      title: 'An error occurred',
+      error: err
+    });
   }
 })
 
