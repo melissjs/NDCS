@@ -29,6 +29,13 @@ router.post('/signin', function(req, res, next) {
         error: {message: 'Invalid login credentials PASSWORD'}
       });
     }
+    if (!isUserFN(user.activeRoles)) {
+      return res.status(401).json({
+        title: 'Login failed',
+        error: {message: 'Invalid login credentials USER'}
+      });
+    }
+    // if user is inactive 
     let userSterilized = JSON.parse(JSON.stringify(user));
     delete userSterilized.password;
     var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
@@ -218,6 +225,10 @@ function isSelfFN(passedUserId, authedUserID) { // pass in authed user -these ca
 
 function isAdminFN(rolesArr) {
   return (rolesArr.includes('admin')) ? true : false;
+}
+
+function isUserFN(rolesArr) {
+  return (rolesArr.includes('user')) ? true : false;
 }
 
 function isAuditorFN(rolesArr) {
@@ -467,6 +478,12 @@ router.post('/add', function(req, res, next) {
     });
   });
 });
+
+// ------------------- DELETE (MIGRATE TO NONUSER) -------------------
+
+
+// ------------------- PUT (DEACTIVATE) -------------------
+
 
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
