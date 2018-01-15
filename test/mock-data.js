@@ -751,7 +751,7 @@ const MD = {
       password: bcrypt.hashSync('thisPassword', 10),
       userRoles: [{
         role: 'user',
-        active: true,
+        active: false,
         dateInitiated: [Date.now()],
         dateActivated: [Date.now()],
         dateInactivated: [null],

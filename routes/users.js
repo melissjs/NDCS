@@ -31,8 +31,8 @@ router.post('/signin', function(req, res, next) {
     }
     if (!isUserFN(user.activeRoles)) {
       return res.status(401).json({
-        title: 'Login failed',
-        error: {message: 'Invalid login credentials USER'}
+        title: 'Inactive account',
+        error: {message: 'Would you like to reactivate your account?'}
       });
     }
     // if user is inactive 
