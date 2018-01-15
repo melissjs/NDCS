@@ -504,7 +504,6 @@ router.route('/:userId')
     });
   }
 }).get(function(req, res) {
-    // res.send('Get for paramUser ' + userId + paramUser.firstName   );
     res.status(201).json({
       message: 'Success',
       obj: paramUser
