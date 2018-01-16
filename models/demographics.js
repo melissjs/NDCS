@@ -16,7 +16,7 @@ const demographicsSchema = new Schema({
   partyAffiliation: { type: String, enum: { values: ['independent', 'noPartyPreference', 'democraticParty', 'greenParty', 'republicanParty', 'otherParty'], message: 'Party does not exist' } },
   writeInOtherParty: String,
   annualIncome: { type: String, enum: { values: ['25k-', '25k-50k', '50k-100k', '100k-250k', '250k-500k', '500k-1M', '1M+'], message: 'Income range does not exist' } },
-  education: { type: String, enum: { values: ['highSchool', 'underGraduateSchool', 'graduateSchool', 'postGraduateSchool'], message: 'Sex does not exist' } },
+  education: { type: String, enum: { values: ['highSchool', 'underGraduateSchool', 'graduateSchool', 'postGraduateSchool'], message: 'Education does not exist' } },
   maritalStatus: { type: String, enum: { values: ['unmarried', 'married'], message: 'Marital Status does not exist' } },
   naturalizedCitizen: Boolean,
   countryOfOrigin: String,

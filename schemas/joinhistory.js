@@ -8,7 +8,7 @@ function leadOrAdmin(){
       console.error('ERR', err)
       return false;
     } else {
-      let ans = (result.activeRoles.includes('admin') || result.activeRoles.includes('lead'));
+      let ans = await (result.activeRoles.includes('admin') || result.activeRoles.includes('lead'));
       console.log('ANS', ans)
       return ans;
     }
