@@ -1,34 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const TimesheetSchema = require('../schemas/timesheet');
-
-function ShiftValidator(shiftArray) {
-	return shiftArray.every((shift)=>{
-    return (shift>0 && shift<7)  
-  })
-}
 
 const AuditorreviewSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
+  reviewerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'ReviewerId required'] },
   auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
-  completed: { type: Boolean, default: false },
-  comments:
-  showedUp:
-  punctuality:
-  overallGrade:
-  activityLevel:
-  demeanor:
-  leadership:
-
-  organizedDC:
-  managementDC:
-  leadsDC:
-  auditorsDC:
-  overallExperienceDC:
-  wouldDoAgainDC:
-  commentsDC:
-  stipendImportanceDC:
+  revieweeId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'RevieweeId required'] },
+  punctuality: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  reliability: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  overallGrade: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  activityLevel: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  demeanor: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  leadership: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
+  comments: String
 });
 
-module.exports = mongoose.model('Schedule', AuditorreviewSchema);
+module.exports = mongoose.model('Auditorreview', AuditorreviewSchema);
 
