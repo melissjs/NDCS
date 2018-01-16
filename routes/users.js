@@ -120,27 +120,6 @@ function isLead(req, res, next){
   }
 }
 
-// /* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE */
-// function authedForTeam(req, res, next){
-//   Audit.findOne({
-//     'electionId': req.params.electionId,
-//     'pollingStationId': req.params.pollingStationId
-//   })
-//   .then(async (audit) => {
-//     let team = await audit.team;
-//     if (team.some((uId) => uId.equals(req.authedUser._id))) {
-//       next()
-//     } else {
-//       return res.status(401).json({
-//           title: 'Not authenticated',
-//           error: {
-//             message: 'Team inaccessible'
-//           }
-//         });
-//     }
-//   })
-// }
-
 /* AUTHED TO SEE SPECIFIC TEAM IN SCHEDULE WITH ELECTIONID AND POLLINGSTATIONID */
 function authedForTeam(req, res, next){
   Audit.findOne({
@@ -158,7 +137,7 @@ function authedForTeam(req, res, next){
     }
     else if (err) {
       return res.status(401).json({
-        title: 'Not authenticated',
+        title: 'An error occured',
         error: err
       });
     } 
@@ -281,8 +260,8 @@ async function authedForUserFN(passedUserId, authedUserSchedule) {
   }
 }
 
-///////////////////////// returnTeamFN
-async function returnTeamFN(userId, auditId) {
+///////////////////////// returnTeamFN (userIds)
+async function returnTeamFN(auditId) {
     let audit;
   try {
     audit = await Audit.findById(auditId);
@@ -400,7 +379,7 @@ router.get('/admins', isAdmin, function(req, res, next) {
 /* GET USERS IN TEAM AS AUDITOR OR LEAD */
 router.get('/team/:auditId', isAuditor, authedForTeamWithAuditId, async function(req, res, next) {
   try {
-    let team = await returnTeamFN(req.authedUser._id, req.params.auditId);
+    let team = await returnTeamFN(req.params.auditId);
     let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
     console.log('users', users)
     res.status(200).json({
