@@ -381,7 +381,6 @@ router.get('/team/:auditId', isAuditor, authedForTeamWithAuditId, async function
   try {
     let team = await returnTeamFN(req.params.auditId);
     let users = await returnSterilizedUsers(team, req.authedUser.activeRoles);
-    console.log('users', users)
     res.status(200).json({
       message: 'Success',
       obj: users
