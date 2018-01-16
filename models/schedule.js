@@ -12,7 +12,8 @@ const ScheduleSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
-  timeSheet: { type: [TimesheetSchema] }
+  timeSheet: { type: [TimesheetSchema] },
+  completed: { type: Boolean, default: false }
 },
 // {
 //   toObject: { virtuals: true }, 

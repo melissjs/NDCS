@@ -7,7 +7,8 @@ const TimesheetSchema = new Schema({
   inOrOut: { type: String, enum: { values: ['in', 'out'], message: 'Invalid selection' }, required: [true, 'inOrOut required'] },
   location: { type: LocationSchema, required: [true, 'Location required'] },
   date: { type: Date, required: [true, 'Timesheet date required'], default: Date.now() },
-  auth: { type: AuthSchema, required: [function() { return this.roleInOrOut === 'in' }, 'AuthenticatingVolunteerId required for check in'] }
+  selfInitiated: { type: Boolean, default: true, required: [true, 'selfInitiated required'] },
+  auth: { type: AuthSchema, required: [function() { return (this.roleInOrOut === 'in' || !this.selfInitiated) }, 'AuthenticatingVolunteerId required for check in'] }
 });
 
 module.exports = TimesheetSchema;
