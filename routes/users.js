@@ -309,8 +309,56 @@ async function returnSterilizedUsers(userIdArr, activeRoles) {
 // ------------------- GET -------------------
 
 /* GET ALL USERS AS ADMIN */
-router.get('/', isAdmin, function(req, res, next) {
+router.get('/all', isAdmin, function(req, res, next) {
   User.find({})
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
+
+/* GET ALL ACTIVE USERS AS ADMIN */
+router.get('/all/active', isAdmin, function(req, res, next) {
+  User.find({
+    userRoles: {
+      $elemMatch: {
+        'role': 'user',
+        'active': true
+      }
+    }
+ })
+    .exec(function(err, users) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: users
+      });
+    });
+});
+
+/* GET ALL INACTIVE USERS AS ADMIN */
+router.get('/all/inactive', isAdmin, function(req, res, next) {
+  User.find({
+    userRoles: {
+      $elemMatch: {
+        'role': 'user',
+        'active': false
+      }
+    }
+ })
     .exec(function(err, users) {
       if (err) {
         return res.status(500).json({
