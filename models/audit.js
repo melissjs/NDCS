@@ -10,12 +10,19 @@ function ShiftValidator(shiftArray) {
 const AuditSchema = new Schema({
   pollingStationId: { type: Schema.Types.ObjectId, ref: 'Pollingstation', required: [true, 'PollingStationId required'] },
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
-  operative: { type: Boolean, default: true }
 });
 
 AuditSchema.virtual('active').get(async function() {
-  let election = await election.findById()
-  return (election.active && this.operative) ? true : false;
+  const Election = require('./election');
+  const Pollingstation = require('./pollingstation');
+  try {
+    let election = await Election.findById(electionId);
+    let pollingstation = await pollingstation.findById(pollingStationId);
+    return (election.active && pollingstation.operative) ? true : false;
+  }
+  catch(e) {
+    console.error(e);
+  }
 });
 
 // finds total votes for this election/office
@@ -32,7 +39,7 @@ AuditSchema.virtual('team').get(async function() {
     return team;
   }
   catch(e) {
-    return e;
+    console.error(e);
   }
 })
 

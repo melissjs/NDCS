@@ -24,27 +24,16 @@ const ScheduleSchema = new Schema({
 // }
 );
 
-//////////// TO DO //////////////
+//////////// VIRTUAL TO DO //////////////
 // showedUp: { type: Boolean, default: false }
 // completedAllShifts: { type: Boolean, default: false }
+// reviews for this user
 
-// finds team of users for schedule object
-// ScheduleSchema.statics.currentTeam = async function(electionId, pollingStationId) {
-//   const team = [];
-//   try {
-//     const teamSchedules = await this.find({ 
-//       pollingStationId: pollingStationId,
-//       electionId: electionId
-//     })
-//     teamSchedules.forEach((sched) => {
-//       team.push(sched.userId);
-//     })
-//     return team;
-//   }
-//   catch(e) {
-//     return e;
-//   }
-// }
+ScheduleSchema.virtual('active').get(async function() {
+  const Audit = require('./audit');
+  let audit = await Audit.findById(auditId);
+  return (audit.active && this.joinHistory[this.joinHistory.length -1].isMember) ? true : false;
+});
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
 

@@ -23,3 +23,6 @@ const JoinhistorySchema = new Schema({
 });
 
 module.exports = JoinhistorySchema;
+
+//oldpollingstation arr
+// lockdown bool
