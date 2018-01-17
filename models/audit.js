@@ -10,6 +10,12 @@ function ShiftValidator(shiftArray) {
 const AuditSchema = new Schema({
   pollingStationId: { type: Schema.Types.ObjectId, ref: 'Pollingstation', required: [true, 'PollingStationId required'] },
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
+  operative: { type: Boolean, default: true }
+});
+
+AuditSchema.virtual('active').get(async function() {
+  let election = await election.findById()
+  return (election.active && this.operative) ? true : false;
 });
 
 // finds total votes for this election/office

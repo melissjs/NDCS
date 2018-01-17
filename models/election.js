@@ -11,7 +11,7 @@ const electionSchema = new Schema({
 });
 
 electionSchema.virtual('active').get(function() {
-  return ((Date.parse(this.electionDay) + 86400000) < Date.now()) ? false : true
+  return ((Date.parse(this.electionDay) + 86400000) < Date.now()) ? false : true;
 });
 
 module.exports = mongoose.model('Election', electionSchema);

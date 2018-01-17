@@ -16,9 +16,9 @@ function leadOrAdmin(){
 }
 
 const JoinhistorySchema = new Schema({
-  joinedOrUnjoined: { type: String, enum: { values: ['joined', 'unjoined'], message: 'Invalid join kind' }, required: [true, 'joinKind required'] },
+  isMember: { type: Boolean, required: [true, 'IsMember required'] },
   selfInitiated: { type: Boolean, default: true, required: [true, 'selfInitiated required'] },
-  joiningUserId: { type: Schema.Types.ObjectId, ref: 'User', required: [function() { return !selfInitiated }, 'joiningUserId required'], validate: { isAsync: true, validator: leadOrAdmin, message: 'joiningUser requires higher rank' } },
+  joiningUserId: { type: Schema.Types.ObjectId, ref: 'User', required: [function() { return !selfInitiated }, 'joiningUserId required'], validate: { isAsync: true, validator: leadOrAdmin, message: 'JoiningUser requires higher rank' } },
   date: { type: [Date], required: [true, 'Joinhistory date required'] },
 });
 

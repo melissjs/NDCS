@@ -20,7 +20,6 @@ const userSchema = new Schema({
     age: { type: Number, required: [true, 'Age required']},
     sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] }, 
-    // schedule: { [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] },
     schedule: { type: [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] }
   },
   {
