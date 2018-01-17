@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const AuditorreviewSchema = new Schema({
+const ExitreviewSchema = new Schema({
   reviewerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'ReviewerId required'] },
   auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   pollingStationStaff: { type: Number, min: [1, 'Must be at least 1'], max: [5, 'Must be 5 or less'] },
@@ -17,5 +17,5 @@ const AuditorreviewSchema = new Schema({
   comments: String
 });
 
-module.exports = mongoose.model('Auditorreview', AuditorreviewSchema);
+module.exports = mongoose.model('Exitreview', ExitreviewSchema);
 
