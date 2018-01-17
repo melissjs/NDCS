@@ -6,6 +6,7 @@ const globals = require('../globals') ;
 
 const pollingstationSchema = new Schema({
     electionId: { type: [Schema.Types.ObjectId], required: true, ref: 'Election' },
+    operative: { type: Boolean, default: true },
     precinctNumber: String,
     locationName: { type: String, required: [true, 'LocationName required'] },
     streetAddress: { type: String, required: [true, 'Address required'] },
