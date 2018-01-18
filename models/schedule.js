@@ -13,6 +13,7 @@ const ScheduleSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   joinHistory:  { type: [JoinhistorySchema], required: [true, 'JoinHistory required'] },
+  lockdown: { type: Boolean, default: false },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] },
   exitReview: { type: Schema.Types.ObjectId, ref: 'Exitreview' },
@@ -28,6 +29,7 @@ const ScheduleSchema = new Schema({
 // showedUp: { type: Boolean, default: false }
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
+//oldpollingstation arr
 
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = require('./audit');
@@ -36,4 +38,5 @@ ScheduleSchema.virtual('active').get(async function() {
 });
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
+
 
