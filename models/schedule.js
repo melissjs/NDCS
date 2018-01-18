@@ -28,7 +28,6 @@ const ScheduleSchema = new Schema({
 // showedUp: { type: Boolean, default: false }
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
-//oldpollingstation arr
 
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = require('./audit');

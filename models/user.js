@@ -29,6 +29,9 @@ const userSchema = new Schema({
   }
 );
 
+//unjoined, active pollingstation arr
+
+
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 });
