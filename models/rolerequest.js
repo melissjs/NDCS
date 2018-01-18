@@ -12,7 +12,6 @@ function ethnicitiesValidator(ethnicitiesArray) {
 
 const RolerequestSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
-  auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   rolesRequested: { type: [String], validate: { validator: ethnicitiesValidator, message: "Role does not exist" } },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] },
@@ -23,3 +22,4 @@ const RolerequestSchema = new Schema({
 module.exports = mongoose.model('Rolerequest', RolerequestSchema);
 
 
+// approved to roles?
