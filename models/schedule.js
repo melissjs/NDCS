@@ -13,7 +13,6 @@ const ScheduleSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   auditId: { type: Schema.Types.ObjectId, ref: 'Audit', required: [true, 'AuditId required'] },
   joinHistory:  { type: [JoinhistorySchema], required: [true, 'JoinHistory required'] },
-  lockdown: { type: Boolean, default: false },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] },
   exitReview: { type: Schema.Types.ObjectId, ref: 'Exitreview' },
