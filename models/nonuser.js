@@ -7,7 +7,7 @@ function isAuditor(){
   return this.activeRoles.includes('auditor');
 }
 
-const userSchema = new Schema({
+const nonuserSchema = new Schema({
     username: { type: String, required: [true, 'Username required'], unique: true, uniqueCaseInsensitive: true, lowercase: true },
     password: { type: String, required: [true, 'Password required'] },
     userRoles: { type: [UserRoleSchema], required: [true, 'At least one role is required']},
@@ -33,11 +33,11 @@ const userSchema = new Schema({
 //unjoined, active pollingstation arr
 
 
-userSchema.virtual('scheduleCount').get(function() {
+nonuserSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 });
 
-userSchema.virtual('activeRoles').get(function() {
+nonuserSchema.virtual('activeRoles').get(function() {
   let activeRoles = [];
   this.userRoles.forEach((ur) => {
     ur.active ? activeRoles.push(ur.role) : null;
@@ -45,6 +45,6 @@ userSchema.virtual('activeRoles').get(function() {
   return activeRoles;
 });
 
-userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });
+nonuserSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Nonuser', nonuserSchema);
