@@ -44,21 +44,20 @@ describe('Virtual types (records calculated but not saved in db)', () => {
   });
 
 
-  it.only('schedule active returns true if schedule is active', (done) => {
+  it('schedule active returns true if schedule is active', (done) => {
     //election, pollingstation, audit
-    const thisElection = new Electoffice(THM.electionObj);
+    const thisElection = new Election(THM.electionObj);
     const thisPollingstation = new Pollingstation(THM.pollingstationObj);
-    const thisAudit = new Audit;
-    thisAudit.electionId = thisElection;
-    thisAudit.pollingStationId = thisPollingstation;
-    const thisVolunteer = new User(THM.userObj);
+    const thisAudit = new Audit();
+    thisAudit.electionId = thisElection._id;
+    thisAudit.pollingStationId = thisPollingstation._id;
     const thisSchedule = new Schedule(THM.scheduleObj);
     thisSchedule.set('_id', '5a3047c071b36b39cfce6789');
-    thisVolunteer.schedule.push(...['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6640', thisSchedule._id]);
-    Promise.all([thisAudit.save(), thisPollingstation.save(), thisElection.save(), thisVolunteer.save(), thisSchedule.save()])
-      .then(() => Schedule.findById('5a3047c071b36b39cfce6789'))
-      .then((sched) => {
-        assert(sched[2].active === true);
+    thisSchedule.auditId = thisAudit._id;
+    Promise.all([thisAudit.save(), thisPollingstation.save(), thisElection.save(), thisSchedule.save()])
+      .then(() => Schedule.findById(thisSchedule._id))
+      .then(async (sched) => {
+        assert(await sched.active === true);
         done();
       })
   });

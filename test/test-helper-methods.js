@@ -114,6 +114,7 @@ const THM = {
 
   pollingstationObj: {
     electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+    operative: true,
     precinctNumber: 'thisPrecinctNumber',
     locationName: 'thisLocationName',
     streetAddress: 'thisStreetAddress',

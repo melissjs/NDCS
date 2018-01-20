@@ -16,8 +16,10 @@ AuditSchema.virtual('active').get(async function() {
   const Election = require('./election');
   const Pollingstation = require('./pollingstation');
   try {
-    let election = await Election.findById(electionId);
-    let pollingstation = await pollingstation.findById(pollingStationId);
+    // let election = await Election.findById(this.electionId);
+    let pollingstation = await Pollingstation.findById(this.pollingStationId);
+    console.log('PLLPLPL', this.pollingStationId)
+    console.log('FROMAAUDTI', pollingstation)
     return (election.active && pollingstation.operative) ? true : false;
   }
   catch(e) {

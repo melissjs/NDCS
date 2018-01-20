@@ -18,10 +18,10 @@ const ScheduleSchema = new Schema({
   exitReview: { type: Schema.Types.ObjectId, ref: 'Exitreview' },
   auditorReviews: { type: [Schema.Types.ObjectId], ref: 'Auditorreview' },
 },
-// {
-//   toObject: { virtuals: true }, 
-//   toJSON: { virtuals: true } 
-// }
+{
+  toObject: { virtuals: true }, 
+  toJSON: { virtuals: true } 
+}
 );
 
 //////////// STILL TO DO //////////////
@@ -35,7 +35,7 @@ const ScheduleSchema = new Schema({
 
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = require('./audit');
-  let audit = await Audit.findById(auditId);
+  let audit = await Audit.findById(this.auditId);
   return (audit.active && this.joinHistory[this.joinHistory.length -1].isMember) ? true : false;
 });
 
