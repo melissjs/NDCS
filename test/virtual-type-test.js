@@ -3,6 +3,7 @@ const Officevote = require('../models/officevote');
 const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
 const Pollingstation = require('../models/pollingstation');
+const Audit = require('../models/audit');
 const Schedule = require('../models/schedule');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
@@ -38,6 +39,26 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       .then((volunteer) => {
         assert(volunteer.activeRoles.length === 3);
         assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
+        done();
+      })
+  });
+
+
+  it.only('schedule active returns true if schedule is active', (done) => {
+    //election, pollingstation, audit
+    const thisElection = new Electoffice(THM.electionObj);
+    const thisPollingstation = new Pollingstation(THM.pollingstationObj);
+    const thisAudit = new Audit;
+    thisAudit.electionId = thisElection;
+    thisAudit.pollingStationId = thisPollingstation;
+    const thisVolunteer = new User(THM.userObj);
+    const thisSchedule = new Schedule(THM.scheduleObj);
+    thisSchedule.set('_id', '5a3047c071b36b39cfce6789');
+    thisVolunteer.schedule.push(...['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6640', thisSchedule._id]);
+    Promise.all([thisAudit.save(), thisPollingstation.save(), thisElection.save(), thisVolunteer.save(), thisSchedule.save()])
+      .then(() => Schedule.findById('5a3047c071b36b39cfce6789'))
+      .then((sched) => {
+        assert(sched[2].active === true);
         done();
       })
   });

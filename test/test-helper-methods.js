@@ -78,7 +78,7 @@ const THM = {
   electionObj: {
     cIId: 'thiscIId',
     electionTitle: 'thisElectionTitle',
-    electionDay: Date.now(),
+    electionDay: (Date.now() + 86400000),
     electionType: 'primary',
     ocdDivisionId: 'thisOcdDivisionId',
     previousElection: '5a3047c071b36b39cfce6640',
@@ -125,6 +125,11 @@ const THM = {
   scheduleObj: {
     userId: '5a3047c071b36b39cfce6610',
     auditId: '5a3047c071b36b39cfce6643',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1, 2, 3],
     timeSheet: [{
       inOrOut: 'in',
@@ -137,7 +142,9 @@ const THM = {
           authenticatingUserId: '5a3047c071b36b39cfce6640',
           date: Date.now()
         }
-    }]
+    }],
+    exitReview: '5a3047c071b36b39cfce6640',
+    auditorReviews: ['5a3047c071b36b39cfce6640', '5a3047c071b36b39cfce6640']
   },
 
    userObj: {

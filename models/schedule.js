@@ -24,10 +24,14 @@ const ScheduleSchema = new Schema({
 // }
 );
 
+//////////// STILL TO DO //////////////
+//require exitreview if shiftsFinished && showedup
+
 //////////// VIRTUAL TO DO //////////////
 // showedUp: { type: Boolean, default: false }
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
+
 
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = require('./audit');
