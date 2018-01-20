@@ -14,17 +14,12 @@ const AuditSchema = new Schema({
 
 AuditSchema.virtual('active').get(async function() {
   const Election = require('./election');
-  const Pollingstation = require('./pollingstation');
-  try {
-    // let election = await Election.findById(this.electionId);
-    let pollingstation = await Pollingstation.findById(this.pollingStationId);
-    console.log('PLLPLPL', this.pollingStationId)
-    console.log('FROMAAUDTI', pollingstation)
-    return (election.active && pollingstation.operative) ? true : false;
-  }
-  catch(e) {
-    console.error(e);
-  }
+  const Pollingstation = require('./pollingstation'); 
+  const [election, pollingstation] = await Promise.all([
+      Election.findById(this.electionId),
+      Pollingstation.findById(this.pollingStationId)
+  ]);
+  return (election.active && pollingstation.operative) ? true : false;
 });
 
 // finds total votes for this election/office
