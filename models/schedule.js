@@ -51,7 +51,7 @@ ScheduleSchema.pre('save', function(next) {
 const User = mongoose.model('User');
 User.findById(this.userId)
   .then((user) => {
-    if (user.scheduleCount <= 5) {
+    if (user.scheduleCount <= 4) {
       next()
     } // deactivate schedules and flag user/deactivate account 
     else {
