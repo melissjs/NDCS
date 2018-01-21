@@ -21,8 +21,7 @@ const userSchema = new Schema({
     sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] }, 
     schedule: { type: [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] },
-    lockdown: { type: Boolean, default: false },
-    active: { type: Boolean, default: true }
+    status: { type: String, default: 'active', required: [true, 'Status required'], enum: { values: ['active', 'inactive', 'onboarding', 'lockdown', 'deleted'], message: 'Status does not exist' } },
   },
   {
     toObject: { virtuals: true }, 
@@ -32,6 +31,7 @@ const userSchema = new Schema({
 
 //if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
 //status active, inactive, onboarding, lockdown, deleted
+// handle userRole user with active status now...
 
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
