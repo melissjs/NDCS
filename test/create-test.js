@@ -184,6 +184,22 @@ describe('Creating records (user and volunteer, etc)', () => {
     }))
   });
 
+  it('disallows saving a schedule when user already has 5 active schedule items', (done) => {
+    const thisUser = new User(THM.userObj);
+    const thisSchedule = new Schedule(THM.scheduleObj);
+    thisSchedule.userId = thisUser._id;
+    thisUser.save()
+    .then(() =>
+      thisSchedule.save()
+      .then(() => {
+        assert(!thisSchedule.isNew);
+        done();
+      })
+      .catch((e) => {
+        done(e);
+    }))
+  });
+
   it('saves a user', (done) => {
     const thisUser = new User(THM.userObj);
     thisUser.save()

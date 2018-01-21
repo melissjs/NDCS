@@ -34,6 +34,19 @@ const userSchema = new Schema({
 //if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
 // handle userRole user with active status now... IE if userrole user active && status active
 
+userSchema.virtual('effectiveScheduleCount').get(function() { //returns schedules arr with current or future election - whether member or not
+  const Schedule = mongoose.model('Schedule');
+  // this.schedule.forEach((sched) => {
+  // });
+  Schedule.find({ _id: { $in: this.schedule } })
+    .then((schedArr) => {
+      // let effectScheduleArr = [];
+      return schedArr.filter((sched) => {
+        return sched.effective;
+      })
+    })
+});
+
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 });
