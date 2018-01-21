@@ -32,7 +32,14 @@ const ScheduleSchema = new Schema({
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
 
+/* RETURN IF AUDIT IS ACTIVE */
+ScheduleSchema.virtual('effective').get(async function() {
+  const Audit = mongoose.model('Audit');
+  let audit = await Audit.findById(this.auditId);
+  return audit.active ? true : false;
+});
 
+/* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = mongoose.model('Audit');
   let audit = await Audit.findById(this.auditId);
