@@ -169,15 +169,19 @@ describe('Creating records (user and volunteer, etc)', () => {
   });
 
   it('saves a schedule', (done) => {
+    const thisUser = new User(THM.userObj);
     const thisSchedule = new Schedule(THM.scheduleObj);
-    thisSchedule.save()
+    thisSchedule.userId = thisUser._id;
+    thisUser.save()
+    .then(() =>
+      thisSchedule.save()
       .then(() => {
         assert(!thisSchedule.isNew);
         done();
       })
       .catch((e) => {
         done(e);
-      });
+    }))
   });
 
   it('saves a user', (done) => {
