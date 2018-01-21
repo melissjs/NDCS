@@ -23,12 +23,13 @@ describe('Associations', () => {
     thisAudit.pollingStationId = thisPollingStation;
     thisSchedule = new Schedule(THM.scheduleObj);
     thisSchedule.auditId = thisAudit;
-    // thisSchedule.pollingStationId = thisPollingStation;
-    // thisSchedule.electionId = thisElection;
+    thisSchedule.userId = thisUser;
     thisSchedule.shifts = [1, 2];
     thisUser.schedule.push(thisSchedule);
-    Promise.all([thisUser.save(), thisPollingStation.save(), thisElection.save(), thisPreviousElection.save(), thisSchedule.save(), thisAudit.save()])
-    .then(() => done());
+    thisUser.save().then(() => {
+      Promise.all([thisPollingStation.save(), thisElection.save(), thisPreviousElection.save(), thisSchedule.save(), thisAudit.save()])
+      .then(() => done());
+    })
   });
 
   it('Saves relation between user and schedule', (done) => {
