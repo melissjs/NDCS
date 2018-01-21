@@ -22,6 +22,7 @@ const userSchema = new Schema({
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] }, 
     schedule: { type: [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] },
     status: { type: String, default: 'active', required: [true, 'Status required'], enum: { values: ['active', 'inactive', 'onboarding', 'lockdown', 'deleted'], message: 'Status does not exist' } },
+    statusHistory: { type: [String], default: ['onboarding'], required: [true, 'statusHistory required']}
   },
   {
     toObject: { virtuals: true }, 
@@ -29,6 +30,7 @@ const userSchema = new Schema({
   }
 );
 
+// what triggers change from onboarding to active?
 //if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
 // handle userRole user with active status now... IE if userrole user active && status active
 

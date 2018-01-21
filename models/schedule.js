@@ -44,12 +44,13 @@ ScheduleSchema.pre('save', function(next) {
 const User = mongoose.model('User');
 User.findById(this.userId)
   .then((user) => {
+    console.log('AHHHHAHAHAHAHHHAHHAHAHA', user) // pass tests with real user
     if (user.scheduleCount <= 5) {
       next()
     } // deactivate schedules and flag user/deactivate account 
     else {
-      user.schedule.forEach((sched) => {
-        if (sched.active) { 
+      user.schedule.forEach(async (sched) => { // refactor with loop so can break after one
+        if (await sched.active) { 
           sched.joinHistory.push({
             isMember: false,
             selfInitiated: false,
@@ -59,7 +60,6 @@ User.findById(this.userId)
         }
       })
        user.status = 'lockdown';
-       return;
     }
   })
 })
