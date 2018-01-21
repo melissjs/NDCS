@@ -30,6 +30,9 @@ const userSchema = new Schema({
   }
 );
 
+//if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
+//status active, inactive, onboarding, lockdown, deleted
+
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
 });
