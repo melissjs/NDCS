@@ -40,13 +40,29 @@ ScheduleSchema.virtual('active').get(async function() {
 });
 
 // middleware disallows saving sixth schedule for same, active election, also flags user lockdown
-// ScheduleSchema.pre('save', function(next) {
-// const User = mongoose.model('User');
-// User.findById(this.userId)
-//   .then((user) => {
-//     user.scheduleCount <= 5 ? next() : // deactivate schedules and flag user/deactivate account 
-//   })
-// })
+ScheduleSchema.pre('save', function(next) {
+const User = mongoose.model('User');
+User.findById(this.userId)
+  .then((user) => {
+    if (user.scheduleCount <= 5) {
+      next()
+    } // deactivate schedules and flag user/deactivate account 
+    else {
+      user.schedule.some((sched) => {
+        if (sched.active) { 
+          sched.joinHistory.push({
+            isMember: false,
+            selfInitiated: false,
+            joiningUserId: globals.admin,
+            date: Date.now(),
+          });
+        }
+      })
+       user.status = 'lockdown';
+       return;
+    }
+  })
+})
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
 
