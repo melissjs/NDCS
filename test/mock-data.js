@@ -481,6 +481,11 @@ const MD = {
   scheduleObj1: {
     userId: '5a3047c071b36b39cfce7700',
     auditId: '5a3047c071b36b39cfce1111',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -500,6 +505,11 @@ const MD = {
   scheduleObj2: {
     userId: '5a3047c071b36b39cfce7711',
     auditId: '5a3047c071b36b39cfce1111',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -519,6 +529,11 @@ const MD = {
   scheduleObj3: {
     userId: '5a3047c071b36b39cfce7712',
     auditId: '5a3047c071b36b39cfce1111',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -538,6 +553,11 @@ const MD = {
   scheduleObj4: {
     userId: '5a3047c071b36b39cfce7722',
     auditId: '5a3047c071b36b39cfce1122',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
@@ -557,6 +577,11 @@ const MD = {
   scheduleObj5: {
     userId: '5a3047c071b36b39cfce7722',
     auditId: '5a3047c071b36b39cfce1133',
+    joinHistory: [{
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now()
+    }],
     shifts: [1,2,3],
     timeSheet: [{
       inOrOut: 'in',
