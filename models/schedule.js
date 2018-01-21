@@ -48,7 +48,7 @@ User.findById(this.userId)
       next()
     } // deactivate schedules and flag user/deactivate account 
     else {
-      user.schedule.some((sched) => {
+      user.schedule.forEach((sched) => {
         if (sched.active) { 
           sched.joinHistory.push({
             isMember: false,
