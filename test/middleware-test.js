@@ -44,7 +44,7 @@ describe('Creating records (user and volunteer, etc)', () => {
               .then((user) => {
                 console.log(user)
                 assert(user.status === 'lockdown');
-                console.log('STATUS', user.status)
+                console.log('SCHED', user.schedule)
                 done();
               })
           })

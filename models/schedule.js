@@ -74,7 +74,6 @@ User.findById(this.userId)
       // })
       user.status = 'lockdown';
       user.save();
-      // console.log('USER', user)
       next();
     }
   })
