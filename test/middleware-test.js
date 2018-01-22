@@ -5,7 +5,7 @@ const THM = require('./test-helper-methods');
 
 describe('Creating records (user and volunteer, etc)', () => {
   
-  it.only('disallows saving a schedule when user already has 5 active schedule items', (done) => {
+  it('locksdown user when user saves 6th effective schedule item', (done) => {
   const thisUser = new User(THM.userObj);
   const thisSchedule2 = new Schedule(THM.scheduleObj);
   const thisSchedule3 = new Schedule(THM.scheduleObj);

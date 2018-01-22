@@ -43,6 +43,28 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       })
   });
 
+  it('users effectiveSchedules returns effective schedues', (done) => {
+    const thisVolunteer = new User(THM.userObj);
+    thisVolunteer.userRoles.push({
+      role: 'admin',
+      active: true,
+      dateInitiated: [Date.now()],
+      dateActivated: [Date.now()],
+      dateInactivated: [null],
+      auth: {
+        authenticatingUserId: '5a3047c071b36b39cfce6640',
+        date: Date.now()
+      }
+    })
+    thisVolunteer.save()
+      .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
+      .then((volunteer) => {
+        assert(volunteer.activeRoles.length === 3);
+        assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
+        done();
+      })
+  });
+
 
   it('schedule active returns true if schedule is active', (done) => {
     const thisUser = new User(THM.userObj);

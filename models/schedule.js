@@ -46,7 +46,7 @@ ScheduleSchema.virtual('active').get(async function() {
   return (audit.active && this.joinHistory[this.joinHistory.length -1].isMember) ? true : false;
 });
 
-// middleware disallows saving sixth schedule for same, active election, also flags user lockdown
+/* MIDDLEWARE LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH EFFEDCTIVE SCHEDULE SAVE */
 ScheduleSchema.pre('save', function(next) {
 const User = mongoose.model('User');
 const Schedule = mongoose.model('Schedule');
@@ -79,7 +79,7 @@ User.findById(this.userId)
   })
 })
 
-/* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */ // should sched arr on user be a virtual???
+/* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */
 ScheduleSchema.post('save', function(doc, next) {
   const User = mongoose.model('User');
   User.findById(this.userId)

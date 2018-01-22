@@ -35,18 +35,18 @@ const userSchema = new Schema({
 // handle userRole user with active status now... IE if userrole user active && status active
 
 /* RETURN EFFECTIVE SCHEDULES */
-// userSchema.virtual('effectiveScheduleCount').get(function() {
-//   const Schedule = mongoose.model('Schedule');
-//   // this.schedule.forEach((sched) => {
-//   // });
-//   Schedule.find({ _id: { $in: this.schedule } })
-//     .then((schedArr) => {
-//       // let effectScheduleArr = [];
-//       return schedArr.filter(async (sched) => {
-//         return await sched.effective;
-//       })
-//     })
-// });
+userSchema.virtual('effectiveSchedules').get(function() {
+  const Schedule = mongoose.model('Schedule');
+  // this.schedule.forEach((sched) => {
+  // });
+  Schedule.find({ _id: { $in: this.schedule } })
+    .then((schedArr) => {
+      // let effectScheduleArr = [];
+      return schedArr.filter(async (sched) => {
+        return await sched.effective;
+      })
+    })
+});
 
 /* RETURN SCHEDULE COUNT */
 userSchema.virtual('scheduleCount').get(function() {
