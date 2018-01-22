@@ -74,12 +74,16 @@ User.findById(this.userId)
 })
 
 /* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */ // should sched arr on user be a virtual???
-ScheduleSchema.post('save', function(next) {
+ScheduleSchema.post('save', function(doc, next) {
   const User = mongoose.model('User');
   User.findById(this.userId)
   .then((user) => {
-    user.schedule.push(this._id);
-    next();
+    user.schedule.push(doc._id);
+    user.save()
+    .then(() => {
+      console.log('here in post', user)
+      next()
+    })
   })
   .catch((e) => {
     console.error(e);
