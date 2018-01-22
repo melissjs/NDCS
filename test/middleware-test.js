@@ -1,18 +1,5 @@
-// const Affidavit = require('../models/affidavit');
-// const Amendment = require('../models/amendment');
-// const Anomaly = require('../models/anomaly');
-// const Audit = require('../models/audit');
-// const Candidate = require('../models/candidate');
-// const Contact = require('../models/contact');
-// const Demographics = require('../models/demographics');
-// const Election = require('../models/election');
-// const Electoffice = require('../models/electoffice');
-// const Evidence = require('../models/evidence');
-// const Officevote = require('../models/officevote');
-// const Pollingstation = require('../models/pollingstation');
 const Schedule = require('../models/schedule');
 const User = require('../models/user');
-// const Vote = require('../models/vote');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
@@ -37,14 +24,11 @@ describe('Creating records (user and volunteer, etc)', () => {
         thisSchedule6.save()
           .then(() => {
             assert(!thisSchedule6.isNew);
-            console.log('ISNEW', thisSchedule6.isNew)
           })
           .then(() => {
             User.findById(thisUser._id)
               .then((user) => {
-                console.log(user)
                 assert(user.status === 'lockdown');
-                console.log('SCHED', user.schedule)
                 done();
               })
           })
