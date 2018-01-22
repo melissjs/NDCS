@@ -52,10 +52,13 @@ const User = mongoose.model('User');
 User.findById(this.userId)
   .then((user) => {
     if (user.scheduleCount <= 4) {
+      console.log('lessthanoreq4')
       next()
     } // deactivate schedules and flag user/deactivate account 
     else {
+      console.log('beingcalled')
       user.schedule.forEach(async (sched) => { // refactor with loop so can break after one
+        console.log('beingcalled in foreach')
         if (await sched.active) { 
           sched.joinHistory.push({
             isMember: false,
@@ -67,6 +70,19 @@ User.findById(this.userId)
       })
        user.status = 'lockdown';
     }
+  })
+})
+
+/* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */ // should sched arr on user be a virtual???
+ScheduleSchema.post('save', function(next) {
+  const User = mongoose.model('User');
+  User.findById(this.userId)
+  .then((user) => {
+    user.schedule.push(this._id);
+    next();
+  })
+  .catch((e) => {
+    console.error(e);
   })
 })
 
