@@ -408,6 +408,131 @@ const THM = {
     }]
   },
 
+     // for virtual effectiveSchedules
+
+     electionPastObj: {
+      cIId: 'thiscIId',
+      electionTitle: 'thisElectionTitle',
+      electionDay: (Date.now() - 86400000),
+      electionType: 'primary',
+      ocdDivisionId: 'thisOcdDivisionId',
+      previousElection: '5a3047c071b36b39cfce6640',
+    },
+
+    electionPresentObj: {
+      cIId: 'thiscIId',
+      electionTitle: 'thisElectionTitle',
+      electionDay: (Date.now() + 86400000),
+      electionType: 'primary',
+      ocdDivisionId: 'thisOcdDivisionId',
+      previousElection: '5a3047c071b36b39cfce6640',
+    },
+
+    pollingstationNonOperativeObj: {
+      electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+      operative: false,
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    },
+
+    pollingstationOperative1Obj: {
+      electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+      operative: true,
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    },
+
+    pollingstationOperative2Obj: {
+      electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+      operative: true,
+      precinctNumber: 'thisPrecinctNumber',
+      locationName: 'thisLocationName',
+      streetAddress: 'thisStreetAddress',
+      city: 'thisCity',
+      state: 'thisState',
+      zip: 11111
+    },
+
+    scheduleOneObj: {
+      // userId: '5a3047c071b36b39cfce6610', // this one is not effective
+      // auditId: '5a3047c071b36b39cfce6643', //inop station
+      joinHistory: [{
+        isMember: true,
+        selfInitiated: true,
+        date: Date.now()
+      }]
+    },
+
+    scheduleTwoObj: {
+      // userId: '5a3047c071b36b39cfce6610', // this one is not effective
+      // auditId: '5a3047c071b36b39cfce6643', // past election, op station
+      joinHistory: [{
+        isMember: true,
+        selfInitiated: true,
+        date: Date.now()
+      }]
+    },
+
+    scheduleTwoObj: {
+      // userId: '5a3047c071b36b39cfce6610', // this one is  effective
+      // auditId: '5a3047c071b36b39cfce6643', // op station 1
+      joinHistory: [{
+        isMember: true,
+        selfInitiated: true,
+        date: Date.now()
+      }]
+    },
+
+    scheduleTwoObj: {
+      // userId: '5a3047c071b36b39cfce6610', // this one is  effective (but not active )
+      // auditId: '5a3047c071b36b39cfce6643', // op station 2
+      joinHistory: [{
+        isMember: false,
+        selfInitiated: true,
+        date: Date.now()
+      }]
+    },
+
+    userESObj: {
+      username: 'thisUsername',
+      password: 'thisPassword',
+      userRoles: [{
+        role: 'user',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null]
+      }, {
+        role: 'volunteer',
+        active: true,
+        dateInitiated: [Date.now()],
+        dateActivated: [Date.now()],
+        dateInactivated: [null],
+        auth: {
+          authenticatingUserId: '5a3047c071b36b39cfce6640',
+          date: Date.now()
+        }
+      }],
+      firstName: 'thisVolunteerFirstName', 
+      lastName: 'thisVolunteerLastName',
+      emailAddress: 'thisVolunteer@Email.Address',
+      phoneNumber: 1111111111,
+      exposeEmail: 'thisVolunteerExposeEmail',
+      exposePhoneNumber: 'thisVolunteerExposePhoneNumber',
+      age: 22,
+      sex: 'female',
+      partyAffiliation: 'thisVolunteerPartyAffiliation',
+      // schedule: ['5a3047c071b36b39cfce6640']
+    },
+
 }
 
 module.exports = THM;
