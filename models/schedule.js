@@ -53,29 +53,29 @@ const Schedule = mongoose.model('Schedule');
 User.findById(this.userId)
   .then((user) => {
     if (user.scheduleCount <= 4) {
-      console.log('lessthanoreq4')
       next()
     } // deactivate schedules and flag user/deactivate account 
     else {
-      console.log('beingcalled')
-      user.schedule.forEach((sched) => { // refactor with loop so can break after one
-        console.log('beingcalled in foreach', sched)
-        Schedule.findById(sched)
-          .then(async (schedObj) => {
-            console.log('beingcalled in foreach after pop', schedObj)
-            if (await schedObj.active) { 
-              schedObj.joinHistory.push({
-                isMember: false,
-                selfInitiated: false,
-                joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
-                date: Date.now(),
-              });
-            }
-            user.status = 'lockdown';
-            console.log('USER', user)
-            next();
-          })
-      })
+      // user.schedule.forEach((sched) => { // refactor with loop so can break after one
+      //   Schedule.findById(sched)
+      //     .then(async (schedObj) => {
+      //       console.log('beingcalled in foreach', await schedObj.active)
+      //       let schedActive = await schedObj.active;
+      //       console.log('beingcalled in foreach after pop ACTIVE', schedActive)
+      //       if (await schedObj.active) { 
+      //         schedObj.joinHistory.push({
+      //           isMember: false,
+      //           selfInitiated: false,
+      //           joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+      //           date: Date.now(),
+      //         });
+      //       }
+      //     })
+      // })
+      user.status = 'lockdown';
+      user.save();
+      // console.log('USER', user)
+      next();
     }
   })
 })

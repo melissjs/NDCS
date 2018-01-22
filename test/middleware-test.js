@@ -28,8 +28,6 @@ describe('Creating records (user and volunteer, etc)', () => {
   thisSchedule3.userId = thisUser._id;
   thisSchedule4.userId = thisUser._id;
   thisSchedule5.userId = thisUser._id;
-  // thisUser.schedule.push(thisSchedule2, thisSchedule3, thisSchedule4, thisSchedule5)
-  // console.log('USER', thisUser)
   thisUser.save()
     .then(() =>
       Promise.all([thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisSchedule5.save()])
@@ -37,16 +35,22 @@ describe('Creating records (user and volunteer, etc)', () => {
         const thisSchedule6 = new Schedule(THM.scheduleObj);
         thisSchedule6.userId = thisUser._id;
         thisSchedule6.save()
-        //   .then(() => {
-        //     // assert(thisSchedule6.isNew);
-        //     // console.log('NEW', thisSchedule6.isNew)
-        //     done();
-        //   })
-        //   .catch((e) => {
-        //     // console.log('NEW', thisSchedule6.isNew)
-        //     console.log('NEW')
-        //     done(e);
-        //   })
+          .then(() => {
+            assert(!thisSchedule6.isNew);
+            console.log('ISNEW', thisSchedule6.isNew)
+          })
+          .then(() => {
+            User.findById(thisUser._id)
+              .then((user) => {
+                console.log(user)
+                assert(user.status === 'lockdown');
+                console.log('STATUS', user.status)
+                done();
+              })
+          })
+          .catch((e) => {
+            done(e);
+          })
       })
       .catch((e) => {
         done(e);
