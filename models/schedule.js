@@ -49,6 +49,7 @@ ScheduleSchema.virtual('active').get(async function() {
 // middleware disallows saving sixth schedule for same, active election, also flags user lockdown
 ScheduleSchema.pre('save', function(next) {
 const User = mongoose.model('User');
+const Schedule = mongoose.model('Schedule');
 User.findById(this.userId)
   .then((user) => {
     if (user.scheduleCount <= 4) {
@@ -57,18 +58,24 @@ User.findById(this.userId)
     } // deactivate schedules and flag user/deactivate account 
     else {
       console.log('beingcalled')
-      user.schedule.forEach(async (sched) => { // refactor with loop so can break after one
-        console.log('beingcalled in foreach')
-        if (await sched.active) { 
-          sched.joinHistory.push({
-            isMember: false,
-            selfInitiated: false,
-            joiningUserId: globals.admin,
-            date: Date.now(),
-          });
-        }
+      user.schedule.forEach((sched) => { // refactor with loop so can break after one
+        console.log('beingcalled in foreach', sched)
+        Schedule.findById(sched)
+          .then(async (schedObj) => {
+            console.log('beingcalled in foreach after pop', schedObj)
+            if (await schedObj.active) { 
+              schedObj.joinHistory.push({
+                isMember: false,
+                selfInitiated: false,
+                joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+                date: Date.now(),
+              });
+            }
+            user.status = 'lockdown';
+            console.log('USER', user)
+            next();
+          })
       })
-       user.status = 'lockdown';
     }
   })
 })
@@ -81,7 +88,6 @@ ScheduleSchema.post('save', function(doc, next) {
     user.schedule.push(doc._id);
     user.save()
     .then(() => {
-      console.log('here in post', user)
       next()
     })
   })
