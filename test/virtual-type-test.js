@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Officevote = require('../models/officevote');
 const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
+const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
 const Audit = require('../models/audit');
 const Schedule = require('../models/schedule');
@@ -43,9 +44,33 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       })
   });
 
-  it('users effectiveSchedules returns effective schedues', (done) => {
-    const thisVolunteer = new User(THM.userObj);
-    thisVolunteer.userRoles.push({
+  it.only('users effectiveSchedules returns effective schedues', (done) => {
+    // make user with four schedules, two effective and two innefective (one past one inoperative pollingstation)
+    // requires 2 elections, 1 past one present
+    // requires 4 audits - not created in THM
+    // auditObj: {
+    //   electionId: '5a3047c071b36b39cfce6611',
+    //   pollingStationId: '5a3047c071b36b39cfce6666'
+    // },
+    // requires 4 schedules
+    // requires 1 user
+    // requires three polling stations
+    const thisVolunteer = new User(THM.userESObj);
+    const thisPastElection = new Election(THM.electionPastObj);
+    const thisPresentElection = new Election(THM.electionPresentObj);
+    const thisNonOpPollongStation = new Pollingstation(THM.pollingstationNonOperativeObj);
+    const thisOpPollongStation1 = new Pollingstation(THM.pollingstationOperative1Obj);
+    const thisOpPollongStation2 = new Pollingstation(THM.pollingstationOperative2Obj);
+    const thisSchedule1 = new Schedule(THM.scheduleOneObj);
+    const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
+    const thisSchedule3 = new Schedule(THM.scheduleThreeObj);
+    const thisSchedule4 = new Schedule(THM.scheduleFourObj);
+    const thisOldAudit = new Audit({
+        electionId: thisPastElection._id,
+        pollingStationId: thisOpPollongStation1._id
+      })
+
+    thisVolunteer.schedule.push({
       role: 'admin',
       active: true,
       dateInitiated: [Date.now()],
