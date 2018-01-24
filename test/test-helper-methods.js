@@ -481,7 +481,7 @@ const THM = {
       }]
     },
 
-    scheduleTwoObj: {
+    scheduleThreeObj: {
       // userId: '5a3047c071b36b39cfce6610', // this one is  effective
       // auditId: '5a3047c071b36b39cfce6643', // op station 1
       joinHistory: [{
@@ -491,7 +491,7 @@ const THM = {
       }]
     },
 
-    scheduleTwoObj: {
+    scheduleFourObj: {
       // userId: '5a3047c071b36b39cfce6610', // this one is  effective (but not active )
       // auditId: '5a3047c071b36b39cfce6643', // op station 2
       joinHistory: [{

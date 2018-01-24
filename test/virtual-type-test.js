@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Officevote = require('../models/officevote');
-const Election = require('../models/election');
 const Electoffice = require('../models/electoffice');
 const Election = require('../models/election');
 const Pollingstation = require('../models/pollingstation');
@@ -58,35 +57,48 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
-    const thisNonOpPollongStation = new Pollingstation(THM.pollingstationNonOperativeObj);
-    const thisOpPollongStation1 = new Pollingstation(THM.pollingstationOperative1Obj);
-    const thisOpPollongStation2 = new Pollingstation(THM.pollingstationOperative2Obj);
+    const thisNonOpPollingStation = new Pollingstation(THM.pollingstationNonOperativeObj);
+    const thisOpPollingStation1 = new Pollingstation(THM.pollingstationOperative1Obj);
+    const thisOpPollingStation2 = new Pollingstation(THM.pollingstationOperative2Obj);
     const thisSchedule1 = new Schedule(THM.scheduleOneObj);
     const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
     const thisSchedule3 = new Schedule(THM.scheduleThreeObj);
     const thisSchedule4 = new Schedule(THM.scheduleFourObj);
     const thisOldAudit = new Audit({
-        electionId: thisPastElection._id,
-        pollingStationId: thisOpPollongStation1._id
-      })
-
-    thisVolunteer.schedule.push({
-      role: 'admin',
-      active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
-        date: Date.now()
-      }
-    })
+      electionId: thisPastElection._id,
+      pollingStationId: thisOpPollingStation1._id
+    });
+    const thisInOpAudit = new Audit({
+      electionId: thisPresentElection._id,
+      pollingStationId: thisNonOpPollingStation._id
+    });
+    const thisOp1Audit = new Audit({
+      electionId: thisPresentElection._id,
+      pollingStationId: thisOpPollingStation1._id
+    });
+    const thisOp2Audit = new Audit({
+      electionId: thisPresentElection._id,
+      pollingStationId: thisOpPollingStation2._id
+    });
+    thisSchedule1.userId = thisVolunteer._id;
+    thisSchedule1.auditId = thisInOpAudit._id;
+    thisSchedule2.userId = thisVolunteer._id;
+    thisSchedule2.auditId = thisOldAudit._id;
+    thisSchedule3.userId = thisVolunteer._id;
+    thisSchedule3.auditId = thisOp1Audit._id;
+    thisSchedule4.userId = thisVolunteer._id;
+    thisSchedule4.auditId = thisOp2Audit._id;
+    //save user then save schedules
     thisVolunteer.save()
-      .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
-      .then((volunteer) => {
-        assert(volunteer.activeRoles.length === 3);
-        assert(volunteer.activeRoles.includes('user', 'volunteer', 'admin'));
-        done();
+      .then(() => {
+        Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
+        .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
+        .then(async (volunteer) => {
+          // console.log('SCHED COUNT', volunteer )
+          // console.log('SCHED AWAITED', await volunteer.effectiveSchedules )
+          assert(await volunteer.effectiveSchedules.length === 2);
+          done();
+        })
       })
   });
 
