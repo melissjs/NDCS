@@ -49,8 +49,8 @@ const officevoteSchema = new Schema({
 //     });
 // };
 
-officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId, cb){
-  return await this.where({ electOfficeId: electOfficeId})
+officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (electOfficeId, candidateId, cb){
+  return this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })
     .count(function (err, count) {
         return true;
