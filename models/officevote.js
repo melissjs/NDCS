@@ -41,12 +41,22 @@ const officevoteSchema = new Schema({
 
 
 // statistics
-officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId){
+// officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId){
+//   return await this.where({ electOfficeId: electOfficeId})
+//     .find({ candidateId: candidateId })
+//     .count(function (err, count) {
+//         return true;
+//     });
+// };
+
+officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId, cb){
   return await this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })
     .count(function (err, count) {
         return true;
-    });
+    })
+    .exec(cb);
+
 };
 
 // methods
