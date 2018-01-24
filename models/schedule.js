@@ -37,10 +37,9 @@ ScheduleSchema.methods.effective = function effective (cb) {
   const Audit = mongoose.model('Audit');
   return Audit.findById(this.auditId, (err, aud) => {
     return aud.active((err, res) => {
-      return res;
+      return cb(err, res);
     })
   })
-  .exec(cb)
 };
 
 /* RETURN IF AUDIT IS ACTIVE WHETHER MEMBER OR NOT */

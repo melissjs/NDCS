@@ -56,38 +56,38 @@ const userSchema = new Schema({
 // });
 
 /* RETURN EFFECTIVE SCHEDULES */
-userSchema.virtual('effectiveSchedules').get(async function() {
-  const Schedule = mongoose.model('Schedule');
-  let schedObjArr = [];
-  let effSchedObjArr = [];
-  try {
-    let schedObjArr = await Schedule.find({ _id: { $in: this.schedule } });
-    schedObjArr.forEach(async (sched) => {
-    try {
-      let eff = await sched.effective;
-      console.log('EFF', eff);
-      try {
-        console.log('EFF', eff);
-        if (eff === true) {
-          effSchedObjArr = effSchedObjArr.push(sched);
-          // console.log('EFFINSIDE', effSchedObjArr);
-        }
-      } 
-      catch(e) {
-        console.error(e)
-      }
-    }
-    catch(e) {
-      console.error(e)
-    }
-  })
-  console.log('effSchedObjArr', await effSchedObjArr)
+// userSchema.virtual('effectiveSchedules').get(async function() {
+//   const Schedule = mongoose.model('Schedule');
+//   let schedObjArr = [];
+//   let effSchedObjArr = [];
+//   try {
+//     let schedObjArr = await Schedule.find({ _id: { $in: this.schedule } });
+//     schedObjArr.forEach(async (sched) => {
+//     try {
+//       let eff = await sched.effective;
+//       console.log('EFF', eff);
+//       try {
+//         console.log('EFF', eff);
+//         if (eff === true) {
+//           effSchedObjArr.push(sched);
+//           // console.log('EFFINSIDE', effSchedObjArr);
+//         }
+//       }
+//       catch(e) {
+//         console.error(e)
+//       }
+//     }
+//     catch(e) {
+//       console.error(e)
+//     }
+//   })
+//   console.log('effSchedObjArr', await effSchedObjArr)
 
-  }
-  catch(e) {
-    console.error(e)
-  }
-});
+//   }
+//   catch(e) {
+//     console.error(e)
+//   }
+// });
 
 /* RETURN SCHEDULE COUNT */
 userSchema.virtual('scheduleCount').get(function() {

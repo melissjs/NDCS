@@ -114,21 +114,36 @@ describe('Methods and statistics on models', () => {
   });
 
   it.only('schedule effective returns true if audit is active', (done) => {
-    const thisElection = new Election(THM.electionPastObj);
+    const thisUser = new User(THM.userESObj);
+    const thisElection = new Election(THM.electionPresentObj);
     const thisPollingStation = new Pollingstation(THM.pollingstationObj);
     const thisAudit = new Audit({
       electionId: thisElection._id,
       pollingStationId: thisPollingStation._id
-    })
-    Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
+    });
+    Promise.all([thisUser.save(), thisElection.save(), thisPollingStation.save(), thisAudit.save()])
     .then(() => {
-      Audit.findById(thisAudit._id)
-      .then((aud) => {
-        aud.active((err, res) => {
-          assert(res === false);
-          done();
+      const thisSchedule = new Schedule(THM.scheduleOneObj);
+      thisSchedule.userId = thisUser._id;
+      thisSchedule.auditId = thisAudit._id;
+      thisSchedule.save()
+        .then(() => {
+          User.findById(thisUser._id)
+          .populate({
+            path: 'schedule',
+            model: 'Schedule',
+            populate: {
+              path: 'auditId',
+              model: 'Audit'
+            }
+          })
+            .then((user) => {
+              user.schedule[0].effective((err, res) => {
+                assert(res === true);
+                done();
+              })
+            })
         })
-      })
     })
   });
 
