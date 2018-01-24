@@ -7,7 +7,7 @@ const THM = require('./test-helper-methods');
 
 describe('Methods and statistics on models', () => {
 
-  it('officeVote candidateVoteCount statistic returns total for given electOffice and candidate', (done) => {
+  it.only('officeVote candidateVoteCount statistic returns total for given electOffice and candidate', (done) => {
     const thisElectOffice = new Electoffice(THM.electOfficeObj);
     thisElectOffice.save().then(() => {
       const thisOfficeVote1 = new Officevote(THM.officeVoteObj1);

@@ -43,7 +43,7 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       })
   });
 
-  it.only('users effectiveSchedules returns effective schedues', (done) => {
+  it('users effectiveSchedules returns effective schedues', (done) => {
     // make user with four schedules, two effective and two innefective (one past one inoperative pollingstation)
     // requires 2 elections, 1 past one present
     // requires 4 audits - not created in THM
