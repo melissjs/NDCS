@@ -12,15 +12,28 @@ const AuditSchema = new Schema({
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
 });
 
-AuditSchema.virtual('active').get(async function() {
-  const Election = require('./election');
-  const Pollingstation = require('./pollingstation'); 
-  const [election, pollingstation] = await Promise.all([
-      Election.findById(this.electionId),
-      Pollingstation.findById(this.pollingStationId)
-  ]);
-  return (election.active && pollingstation.operative) ? true : false;
-});
+
+// AuditSchema.virtual('active').get(async function() {
+//   const Election = require('./election');
+//   const Pollingstation = require('./pollingstation'); 
+//   const [election, pollingstation] = await Promise.all([
+//       Election.findById(this.electionId),
+//       Pollingstation.findById(this.pollingStationId)
+//   ]);
+//   return (election.active && pollingstation.operative) ? true : false;
+// });
+
+/////////// try as method not virtual for async
+AuditSchema.methods.active = function active (cb) {
+  const Election = mongoose.model('Election');
+  const Pollingstation = mongoose.model('Pollingstation');
+    Election.findById(this.electionId, (err, election) => {
+      Pollingstation.findById(this.pollingStationId, (err, ps) => {
+      let res = (election.active && ps.operative);
+       cb(err, res);
+    })
+  })
+};
 
 // finds total votes for this election/office
 AuditSchema.virtual('team').get(async function() {

@@ -2,6 +2,9 @@ const User = require('../models/user');
 const Officevote = require('../models/officevote');
 const Electoffice = require('../models/electoffice');
 const Schedule = require('../models/schedule');
+const Pollingstation = require('../models/pollingstation');
+const Election = require('../models/election');
+const Audit = require('../models/audit');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
@@ -43,17 +46,7 @@ describe('Methods and statistics on models', () => {
     });
   });
 
-  it.only('users effectiveSchedules returns effective schedues', (done) => {
-    // make user with four schedules, two effective and two innefective (one past one inoperative pollingstation)
-    // requires 2 elections, 1 past one present
-    // requires 4 audits - not created in THM
-    // auditObj: {
-    //   electionId: '5a3047c071b36b39cfce6611',
-    //   pollingStationId: '5a3047c071b36b39cfce6666'
-    // },
-    // requires 4 schedules
-    // requires 1 user
-    // requires three polling stations
+  it('users effectiveSchedules returns effective schedues', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -88,7 +81,6 @@ describe('Methods and statistics on models', () => {
     thisSchedule3.auditId = thisOp1Audit._id;
     thisSchedule4.userId = thisVolunteer._id;
     thisSchedule4.auditId = thisOp2Audit._id;
-    //save user then save schedules
     thisVolunteer.save()
       .then(() => {
         Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
@@ -100,6 +92,44 @@ describe('Methods and statistics on models', () => {
           done();
         })
       })
+  });
+
+  it('audit active returns false if election is in the past', (done) => {
+    const thisElection = new Election(THM.electionPastObj);
+    const thisPollingStation = new Pollingstation(THM.pollingstationObj);
+    const thisAudit = new Audit({
+      electionId: thisElection._id,
+      pollingStationId: thisPollingStation._id
+    })
+    Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
+    .then(() => {
+      Audit.findById(thisAudit._id)
+      .then((aud) => {
+        aud.active((err, res) => {
+          assert(res === false);
+          done();
+        })
+      })
+    })
+  });
+
+  it.only('schedule effective returns true if audit is active', (done) => {
+    const thisElection = new Election(THM.electionPastObj);
+    const thisPollingStation = new Pollingstation(THM.pollingstationObj);
+    const thisAudit = new Audit({
+      electionId: thisElection._id,
+      pollingStationId: thisPollingStation._id
+    })
+    Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
+    .then(() => {
+      Audit.findById(thisAudit._id)
+      .then((aud) => {
+        aud.active((err, res) => {
+          assert(res === false);
+          done();
+        })
+      })
+    })
   });
 
 
