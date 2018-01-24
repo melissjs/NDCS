@@ -46,53 +46,53 @@ describe('Methods and statistics on models', () => {
     });
   });
 
-  it('users effectiveSchedules returns effective schedues', (done) => {
-    const thisVolunteer = new User(THM.userESObj);
-    const thisPastElection = new Election(THM.electionPastObj);
-    const thisPresentElection = new Election(THM.electionPresentObj);
-    const thisNonOpPollingStation = new Pollingstation(THM.pollingstationNonOperativeObj);
-    const thisOpPollingStation1 = new Pollingstation(THM.pollingstationOperative1Obj);
-    const thisOpPollingStation2 = new Pollingstation(THM.pollingstationOperative2Obj);
-    const thisSchedule1 = new Schedule(THM.scheduleOneObj);
-    const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
-    const thisSchedule3 = new Schedule(THM.scheduleThreeObj);
-    const thisSchedule4 = new Schedule(THM.scheduleFourObj);
-    const thisOldAudit = new Audit({
-      electionId: thisPastElection._id,
-      pollingStationId: thisOpPollingStation1._id
-    });
-    const thisInOpAudit = new Audit({
-      electionId: thisPresentElection._id,
-      pollingStationId: thisNonOpPollingStation._id
-    });
-    const thisOp1Audit = new Audit({
-      electionId: thisPresentElection._id,
-      pollingStationId: thisOpPollingStation1._id
-    });
-    const thisOp2Audit = new Audit({
-      electionId: thisPresentElection._id,
-      pollingStationId: thisOpPollingStation2._id
-    });
-    thisSchedule1.userId = thisVolunteer._id;
-    thisSchedule1.auditId = thisInOpAudit._id;
-    thisSchedule2.userId = thisVolunteer._id;
-    thisSchedule2.auditId = thisOldAudit._id;
-    thisSchedule3.userId = thisVolunteer._id;
-    thisSchedule3.auditId = thisOp1Audit._id;
-    thisSchedule4.userId = thisVolunteer._id;
-    thisSchedule4.auditId = thisOp2Audit._id;
-    thisVolunteer.save()
-      .then(() => {
-        Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
-        .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
-        .then(async (volunteer) => {
-          // console.log('SCHED COUNT', volunteer )
-          // console.log('SCHED AWAITED', await volunteer.effectiveSchedules )
-          assert(await volunteer.effectiveSchedules.length === 2);
-          done();
-        })
-      })
-  });
+  // it('users effectiveSchedules returns effective schedues', (done) => {
+  //   const thisVolunteer = new User(THM.userESObj);
+  //   const thisPastElection = new Election(THM.electionPastObj);
+  //   const thisPresentElection = new Election(THM.electionPresentObj);
+  //   const thisNonOpPollingStation = new Pollingstation(THM.pollingstationNonOperativeObj);
+  //   const thisOpPollingStation1 = new Pollingstation(THM.pollingstationOperative1Obj);
+  //   const thisOpPollingStation2 = new Pollingstation(THM.pollingstationOperative2Obj);
+  //   const thisSchedule1 = new Schedule(THM.scheduleOneObj);
+  //   const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
+  //   const thisSchedule3 = new Schedule(THM.scheduleThreeObj);
+  //   const thisSchedule4 = new Schedule(THM.scheduleFourObj);
+  //   const thisOldAudit = new Audit({
+  //     electionId: thisPastElection._id,
+  //     pollingStationId: thisOpPollingStation1._id
+  //   });
+  //   const thisInOpAudit = new Audit({
+  //     electionId: thisPresentElection._id,
+  //     pollingStationId: thisNonOpPollingStation._id
+  //   });
+  //   const thisOp1Audit = new Audit({
+  //     electionId: thisPresentElection._id,
+  //     pollingStationId: thisOpPollingStation1._id
+  //   });
+  //   const thisOp2Audit = new Audit({
+  //     electionId: thisPresentElection._id,
+  //     pollingStationId: thisOpPollingStation2._id
+  //   });
+  //   thisSchedule1.userId = thisVolunteer._id;
+  //   thisSchedule1.auditId = thisInOpAudit._id;
+  //   thisSchedule2.userId = thisVolunteer._id;
+  //   thisSchedule2.auditId = thisOldAudit._id;
+  //   thisSchedule3.userId = thisVolunteer._id;
+  //   thisSchedule3.auditId = thisOp1Audit._id;
+  //   thisSchedule4.userId = thisVolunteer._id;
+  //   thisSchedule4.auditId = thisOp2Audit._id;
+  //   thisVolunteer.save()
+  //     .then(() => {
+  //       Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
+  //       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
+  //       .then(async (volunteer) => {
+  //         // console.log('SCHED COUNT', volunteer )
+  //         // console.log('SCHED AWAITED', await volunteer.effectiveSchedules )
+  //         assert(await volunteer.effectiveSchedules.length === 2);
+  //         done();
+  //       })
+  //     })
+  // });
 
   it('audit active returns false if election is in the past', (done) => {
     const thisElection = new Election(THM.electionPastObj);
@@ -113,7 +113,7 @@ describe('Methods and statistics on models', () => {
     })
   });
 
-  it.only('schedule effective returns true if audit is active', (done) => {
+  it('schedule effective returns true if audit is active', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisElection = new Election(THM.electionPresentObj);
     const thisPollingStation = new Pollingstation(THM.pollingstationObj);
