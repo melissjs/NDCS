@@ -42,13 +42,6 @@ ScheduleSchema.methods.effective = function effective (cb) {
   })
 };
 
-/* RETURN IF AUDIT IS ACTIVE WHETHER MEMBER OR NOT */
-// ScheduleSchema.virtual('effective').get(async function() {
-//   const Audit = mongoose.model('Audit');
-//   let audit = await Audit.findById(this.auditId);
-//   return await audit.active ? true : false;
-// });
-
 /* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
 ScheduleSchema.virtual('active').get(async function() {
   const Audit = mongoose.model('Audit');
