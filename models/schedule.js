@@ -87,37 +87,39 @@ ScheduleSchema.methods.active = function active (cb) {
 // })
 
 /* MIDDLEWARE LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH EFFECTIVE SCHEDULE SAVE */
-// ScheduleSchema.pre('save', function(next) {
-//   const User = mongoose.model('User');
-//   const Schedule = mongoose.model('Schedule');
-//   User.findById(this.userId)
-//     .then((user) => {
-//       if (user.scheduleCount <= 4) {
-//         next()
-//       } // deactivate schedules and flag user/deactivate account 
-//       else {
-//         // user.schedule.forEach((sched) => { // refactor with loop so can break after one
-//         //   Schedule.findById(sched)
-//         //     .then(async (schedObj) => {
-//         //       console.log('beingcalled in foreach', await schedObj.active)
-//         //       let schedActive = await schedObj.active;
-//         //       console.log('beingcalled in foreach after pop ACTIVE', schedActive)
-//         //       if (await schedObj.active) { 
-//         //         schedObj.joinHistory.push({
-//         //           isMember: false,
-//         //           selfInitiated: false,
-//         //           joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
-//         //           date: Date.now(),
-//         //         });
-//         //       }
-//         //     })
-//         // })
-//         user.status = 'lockdown';
-//         user.save();
-//         next();
-//       }
-//     })
-//   })
+ScheduleSchema.pre('save', function(next) {
+  // console.log('here is presave')
+  const User = mongoose.model('User');
+  const Schedule = mongoose.model('Schedule');
+  User.findById(this.userId, (err, user) => {
+    if (user.scheduleCount <= 4) {
+      // console.log('user.scheduleCount in under 5', user.scheduleCount)
+      return next()
+    } // deactivate schedules and flag user/deactivate account 
+    else {
+      // console.log('user.scheduleCount in else', user.scheduleCount)
+      // user.schedule.forEach((sched) => { // refactor with loop so can break after one
+      //   Schedule.findById(sched)
+      //     .then(async (schedObj) => {
+      //       console.log('beingcalled in foreach', await schedObj.active)
+      //       let schedActive = await schedObj.active;
+      //       console.log('beingcalled in foreach after pop ACTIVE', schedActive)
+      //       if (await schedObj.active) { 
+      //         schedObj.joinHistory.push({
+      //           isMember: false,
+      //           selfInitiated: false,
+      //           joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+      //           date: Date.now(),
+      //         });
+      //       }
+      //     })
+      // })
+      user.status = 'lockdown';
+      user.save();
+      next();
+    }
+  })
+})
 
 /* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */
 ScheduleSchema.post('save', function(doc, next) {
