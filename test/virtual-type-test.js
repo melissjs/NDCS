@@ -43,28 +43,6 @@ describe('Virtual types (records calculated but not saved in db)', () => {
       })
   });
 
-  it('schedule active returns true if schedule is active', (done) => {
-    const thisUser = new User(THM.userObj);
-    const thisElection = new Election(THM.electionObj);
-    const thisPollingstation = new Pollingstation(THM.pollingstationObj);
-    const thisAudit = new Audit();
-    thisAudit.electionId = thisElection._id;
-    thisAudit.pollingStationId = thisPollingstation._id;
-    const thisSchedule = new Schedule(THM.scheduleObj);
-    thisSchedule.set('_id', '5a3047c071b36b39cfce6789');
-    thisSchedule.auditId = thisAudit._id;
-    thisSchedule.userId = thisUser._id;
-    thisUser.save()
-      .then(() => {
-        Promise.all([thisAudit.save(), thisPollingstation.save(), thisElection.save(), thisSchedule.save()])
-        .then(() => Schedule.findById(thisSchedule._id))
-        .then(async (sched) => {
-          assert(await sched.active === true);
-          done();
-        })
-      })
-  });
-
   it('officeVote totalVotes returns number of total votes for electOffice', (done) => {
     const thisElectOffice = new Electoffice(THM.electOfficeObj);
     thisElectOffice.save().then(() => {

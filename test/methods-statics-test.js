@@ -70,7 +70,6 @@ describe('Methods and statistics on models', () => {
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
         .then((volunteer) => {
           volunteer.effectiveSchedules((err, res) => {
-            console.log('RES', res)
             assert(res.length === 2);
             done();
           })
@@ -87,8 +86,7 @@ describe('Methods and statistics on models', () => {
     })
     Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
     .then(() => {
-      Audit.findById(thisAudit._id)
-      .then((aud) => {
+      Audit.findById(thisAudit._id, (err, aud) => {
         aud.active((err, res) => {
           assert(res === false);
           done();
