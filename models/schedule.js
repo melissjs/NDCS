@@ -32,7 +32,7 @@ const ScheduleSchema = new Schema({
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
 
-/////////// try as method not virtual for async
+/* RETURN IF AUDIT IS ACTIVE */
 ScheduleSchema.methods.effective = function effective (cb) {
   const Audit = mongoose.model('Audit');
   return Audit.findById(this.auditId, (err, aud) => {
@@ -50,16 +50,8 @@ ScheduleSchema.methods.active = function active (cb) {
       let ans = res && this.joinHistory[this.joinHistory.length -1].isMember;
       cb(err, ans)
     })
-    
   });
 };
-
-/* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
-// ScheduleSchema.virtual('active').get(async function() {
-//   const Audit = mongoose.model('Audit');
-//   let audit = await Audit.findById(this.auditId);
-//   return (await audit.active && this.joinHistory[this.joinHistory.length -1].isMember) ? true : false;
-// });
 
 /* MIDDLEWARE LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH EFFECTIVE SCHEDULE SAVE */
 // ScheduleSchema.pre('save', function(next) {

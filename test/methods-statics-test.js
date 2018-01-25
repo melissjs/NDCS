@@ -131,7 +131,7 @@ describe('Methods and statistics on models', () => {
     })
   });
 
-  it.only('schedule active returns true if audit is active and joinhistory ismember', (done) => {
+  it('schedule active returns true if audit is active and joinhistory ismember', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisElection = new Election(THM.electionPresentObj);
     const thisPollingStation = new Pollingstation(THM.pollingstationObj);
