@@ -34,60 +34,6 @@ const userSchema = new Schema({
 //if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
 // handle userRole user with active status now... IE if userrole user active && status active
 
-/* RETURN EFFECTIVE SCHEDULES */
-// userSchema.virtual('effectiveSchedules').get(async function() {
-//   const Schedule = mongoose.model('Schedule');
-//   Schedule.find({ _id: { $in: this.schedule } })
-//     .then(async (schedArr) => {
-//       // console.log('ARRRRR', await schedArr[0].active)
-//       let effScheds = [];
-//       schedArr.forEach((sched) => {
-//         let effectiveBool = sched.effective;
-//         // console.log('effectiveBool', effectiveBool)
-//         if (effectiveBool === true) {
-//           effectiveBool.push(sched);
-//         }
-//       })
-//       // const aggTeam = [].concat( ...await Promise.all(teams));
-
-//       // console.log('EFFSCHEDULES', effScheds)
-//       return effScheds;
-//     }).then((effScheds) => console.log('EEEEFFFF', effScheds))
-// });
-
-/* RETURN EFFECTIVE SCHEDULES */
-// userSchema.virtual('effectiveSchedules').get(async function() {
-//   const Schedule = mongoose.model('Schedule');
-//   let schedObjArr = [];
-//   let effSchedObjArr = [];
-//   try {
-//     let schedObjArr = await Schedule.find({ _id: { $in: this.schedule } });
-//     schedObjArr.forEach(async (sched) => {
-//     try {
-//       let eff = await sched.effective;
-//       console.log('EFF', eff);
-//       try {
-//         console.log('EFF', eff);
-//         if (eff === true) {
-//           effSchedObjArr.push(sched);
-//           // console.log('EFFINSIDE', effSchedObjArr);
-//         }
-//       }
-//       catch(e) {
-//         console.error(e)
-//       }
-//     }
-//     catch(e) {
-//       console.error(e)
-//     }
-//   })
-//   console.log('effSchedObjArr', await effSchedObjArr)
-
-//   }
-//   catch(e) {
-//     console.error(e)
-//   }
-// });
 
 /* RETURN EFFECTIVE SCHEDULES */
 userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
@@ -101,7 +47,6 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
         if (res) {
           effSchedArr.push(sched);
         }
-        console.log('counter and arrlen', counter, array.length)
         if (counter === array.length) {
           cb(err, effSchedArr)
         }
@@ -109,7 +54,6 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
     })
   });
 };
-
 
 /* RETURN SCHEDULE COUNT */
 userSchema.virtual('scheduleCount').get(function() {
