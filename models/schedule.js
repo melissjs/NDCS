@@ -90,7 +90,7 @@ ScheduleSchema.methods.active = function active (cb) {
 ScheduleSchema.pre('save', function(next) {
   // console.log('here is presave')
   const User = mongoose.model('User');
-  const Schedule = mongoose.model('Schedule');
+  // const Schedule = mongoose.model('Schedule');
   User.findById(this.userId, (err, user) => {
     if (user.scheduleCount <= 4) {
       // console.log('user.scheduleCount in under 5', user.scheduleCount)

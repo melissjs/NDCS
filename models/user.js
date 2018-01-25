@@ -55,6 +55,26 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
   });
 };
 
+/* RETURN ACTIVE SCHEDULE */
+userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
+  const Schedule = mongoose.model('Schedule');
+  Schedule.find({ _id: { $in: this.schedule } }, (err, schedObjArr) => {
+    let effSchedArr = [];
+    let counter = 0;
+    schedObjArr.forEach((sched, index, array) => {
+       sched.effective((err, res) => {
+        counter++
+        if (res) {
+          effSchedArr.push(sched);
+        }
+        if (counter === array.length) {
+          cb(err, effSchedArr)
+        }
+      })
+    })
+  });
+};
+
 /* RETURN SCHEDULE COUNT */
 userSchema.virtual('scheduleCount').get(function() {
   return this.schedule.length;
