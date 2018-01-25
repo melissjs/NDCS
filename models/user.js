@@ -56,19 +56,20 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
 };
 
 /* RETURN ACTIVE SCHEDULE */
-userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
+userSchema.methods.activeSchedule = function activeSchedule (cb) {
   const Schedule = mongoose.model('Schedule');
   Schedule.find({ _id: { $in: this.schedule } }, (err, schedObjArr) => {
-    let effSchedArr = [];
+    let activeSched;
     let counter = 0;
     schedObjArr.forEach((sched, index, array) => {
-       sched.effective((err, res) => {
+       sched.active((err, res) => {
         counter++
         if (res) {
-          effSchedArr.push(sched);
+          activeSched = sched;
         }
-        if (counter === array.length) {
-          cb(err, effSchedArr)
+        if (activeSched != null) {
+           cb(err, activeSched);
+           return;
         }
       })
     })

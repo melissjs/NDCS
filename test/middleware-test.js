@@ -5,7 +5,7 @@ const THM = require('./test-helper-methods');
 
 describe('Middleware', () => {
   
-  it.only('locksdown user when user saves 6th effective schedule item', (done) => {
+  it('locksdown user when user saves 6th effective schedule item', (done) => {
   const thisUser = new User(THM.userObj);
   const thisSchedule2 = new Schedule(THM.scheduleObj);
   const thisSchedule3 = new Schedule(THM.scheduleObj);
