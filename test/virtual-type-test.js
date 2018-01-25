@@ -92,36 +92,6 @@ describe('Virtual types (records calculated but not saved in db)', () => {
     });
   });
 
-  // it('pollingstation currentTeam returns pollingstation team for current election', (done) => {
-  //   const thisPollingstation = new Pollingstation(THM.pollingstationObj);
-  //   thisPollingstation.set( '_id', '5a3047c071b36b39cfce6600')
-  //   const thisUser1 = new User(THM.userObj1);
-  //   thisUser1.set('_id', '5a3047c071b36b39cfce6611');
-  //   const thisSchedule1 = new Schedule(THM.scheduleObj1);
-  //   thisSchedule1.set('_id', '5a3047c071b36b39cfce1111');
-  //   thisUser1.schedule.push(thisSchedule1);
-  //   const thisUser2 = new User(THM.userObj2);
-  //   thisUser2.set('_id', '5a3047c071b36b39cfce6612');
-  //   const thisSchedule2 = new Schedule(THM.scheduleObj2);
-  //   thisSchedule2.set('_id', '5a3047c071b36b39cfce2222');
-  //   thisUser2.schedule.push(thisSchedule2);
-  //   const thisUser3 = new User(THM.userObj3);
-  //   thisUser3.set('_id', '5a3047c071b36b39cfce6613');
-  //   const thisSchedule3 = new Schedule(THM.scheduleObj3);
-  //   thisSchedule3.set('_id', '5a3047c071b36b39cfce3333');
-  //   thisUser3.schedule.push(thisSchedule3);
-    
-  //   Promise.all([thisPollingstation.save(), thisUser1.save(), thisSchedule1.save(), thisUser2.save(), thisSchedule2.save(), thisUser3.save(), thisSchedule3.save(),])
-  //   .then(() => {
-  //     Pollingstation.findOne({ precinctNumber: 'thisPrecinctNumber' })
-  //     .then(async (ps) => {
-  //       const team = await ps.currentTeam;
-  //       assert(team.length === 2);
-  //       done();
-  //     })
-  //   });
-  // });
-
   it('election active returns false if election is in the past', (done) => {
     const thisElection = new Election(THM.electionObj);
     thisElection.save()
