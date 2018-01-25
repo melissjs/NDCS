@@ -29,7 +29,7 @@ describe('Methods and statistics on models', () => {
     });
   });
 
-  it.only('users effectiveSchedules returns effective schedues', (done) => {
+  it('users effectiveSchedules returns effective schedues', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -69,8 +69,6 @@ describe('Methods and statistics on models', () => {
         Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
         .then((volunteer) => {
-          // console.log('SCHED COUNT', volunteer )
-          // console.log('SCHED AWAITED', await volunteer.effectiveSchedules )
           volunteer.effectiveSchedules((err, res) => {
             console.log('RES', res)
             assert(res.length === 2);
