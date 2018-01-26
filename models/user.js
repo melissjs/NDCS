@@ -34,6 +34,19 @@ const userSchema = new Schema({
 //if user has multiple schedules (active or not) that are for active elections (over 5) freeze account with lockdown flag
 // handle userRole user with active status now... IE if userrole user active && status active
 
+/* RETURN SCHEDULE COUNT */
+userSchema.virtual('scheduleCount').get(function() {
+  return this.schedule.length;
+});
+
+/* RETURN ACTIVE ROLES */
+userSchema.virtual('activeRoles').get(function() {
+  let activeRoles = [];
+  this.userRoles.forEach((ur) => {
+    ur.active ? activeRoles.push(ur.role) : null;
+  });
+  return activeRoles;
+});
 
 /* RETURN EFFECTIVE SCHEDULES */
 userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
@@ -55,12 +68,9 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
   });
 };
 
-
 /* RETURN ACTIVE SCHEDULE */
 userSchema.methods.activeSchedule = function activeSchedule (cb) {
   const Schedule = mongoose.model('Schedule');
-  const Pollingstation = mongoose.model('Pollingstation');
-  const Election = mongoose.model('Election');
   Schedule.find({ _id: { $in: this.schedule } })
   .populate({
     path: 'auditId',
@@ -87,20 +97,6 @@ userSchema.methods.activeSchedule = function activeSchedule (cb) {
     }
   })
 };
-
-/* RETURN SCHEDULE COUNT */
-userSchema.virtual('scheduleCount').get(function() {
-  return this.schedule.length;
-});
-
-/* RETURN ACTIVE ROLES */
-userSchema.virtual('activeRoles').get(function() {
-  let activeRoles = [];
-  this.userRoles.forEach((ur) => {
-    ur.active ? activeRoles.push(ur.role) : null;
-  });
-  return activeRoles;
-});
 
 userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });
 
