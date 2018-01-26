@@ -38,6 +38,10 @@ const officevoteSchema = new Schema({
   voteId: { type: Schema.Types.ObjectId, ref: 'Vote', required: [true, 'VoteId required'] },
 });
 
+// get total vote, non vote, provisional, outside records
+// get each of the above for each candidate
+
+/* RETURNS ACTIVE BOOLEAN */
 officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (electOfficeId, candidateId, cb){
   return this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })
@@ -45,14 +49,7 @@ officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (elect
         return true;
     })
     .exec(cb);
-
 };
-
-// methods
-
-// get total vote, non vote, provisional, outside records
-// get each of the above for each candidate
-
 
 
 module.exports = mongoose.model('Officevote', officevoteSchema);
