@@ -77,7 +77,7 @@ describe('Methods and statistics on models', () => {
       })
   });
 
-  it.only('users activeSchedule returns the active schedule', (done) => {
+  it('users activeSchedule returns the active schedule', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -123,7 +123,7 @@ describe('Methods and statistics on models', () => {
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
         .then((volunteer) => {
           volunteer.activeSchedule((err, res) => {
-            assert(res.auditId.toString() === thisOp1Audit._id.toString());
+            assert(res.auditId._id.toString() === thisOp1Audit._id.toString());
             done();
           })
         })

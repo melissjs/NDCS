@@ -38,17 +38,6 @@ const officevoteSchema = new Schema({
   voteId: { type: Schema.Types.ObjectId, ref: 'Vote', required: [true, 'VoteId required'] },
 });
 
-
-
-// statistics
-// officevoteSchema.statics.candidateVoteCount = async function candidateVoteCount (electOfficeId, candidateId){
-//   return await this.where({ electOfficeId: electOfficeId})
-//     .find({ candidateId: candidateId })
-//     .count(function (err, count) {
-//         return true;
-//     });
-// };
-
 officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (electOfficeId, candidateId, cb){
   return this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })

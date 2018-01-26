@@ -32,6 +32,11 @@ const ScheduleSchema = new Schema({
 // completedAllShifts: { type: Boolean, default: false }
 // reviews for this user
 
+/* RETURN IF SCHEDULE IS JOINED */
+ScheduleSchema.virtual('isMember').get(function() {
+  return this.joinHistory[this.joinHistory.length -1].isMember
+});
+
 /* RETURN IF AUDIT IS ACTIVE */
 ScheduleSchema.methods.effective = function effective (cb) {
   const Audit = mongoose.model('Audit');
@@ -42,13 +47,13 @@ ScheduleSchema.methods.effective = function effective (cb) {
   })
 };
 
-/* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
+// /* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
 ScheduleSchema.methods.active = function active (cb) {
   const Audit = mongoose.model('Audit');
   Audit.findById(this.auditId, (err, audit) => {
     audit.active((err, res) => {
       let ans = res && this.joinHistory[this.joinHistory.length -1].isMember;
-      cb(err, ans)
+      cb(err, ans);
     })
   });
 };

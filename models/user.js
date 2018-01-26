@@ -55,25 +55,37 @@ userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
   });
 };
 
+
 /* RETURN ACTIVE SCHEDULE */
 userSchema.methods.activeSchedule = function activeSchedule (cb) {
   const Schedule = mongoose.model('Schedule');
-  Schedule.find({ _id: { $in: this.schedule } }, (err, schedObjArr) => {
-    let activeSched;
-    let counter = 0;
-    schedObjArr.forEach((sched, index, array) => {
-       sched.active((err, res) => {
-        counter++
-        if (res) {
-          activeSched = sched;
-        }
-        if (activeSched != null) {
-           cb(err, activeSched);
-           return;
-        }
-      })
-    })
-  });
+  const Pollingstation = mongoose.model('Pollingstation');
+  const Election = mongoose.model('Election');
+  Schedule.find({ _id: { $in: this.schedule } })
+  .populate({
+    path: 'auditId',
+    model: 'Audit',
+    populate: { 
+      path: 'pollingStationId',
+      model: 'Pollingstation'
+    }
+  })
+  .populate({
+    path: 'auditId',
+    model: 'Audit',
+    populate: { 
+      path: 'electionId',
+      model: 'Election'
+    }
+  })
+  .exec((err, schedObjArr) => {
+    for (i = 0; i < schedObjArr.length; i++) {
+      if (schedObjArr[i].isMember && schedObjArr[i].auditId.electionId.active && schedObjArr[i].auditId.pollingStationId.operative) {
+        cb(err, schedObjArr[i]);
+        break;
+      }
+    }
+  })
 };
 
 /* RETURN SCHEDULE COUNT */
