@@ -58,32 +58,48 @@ ScheduleSchema.methods.active = function active (cb) {
   });
 };
 
-/* MIDDLEWARE LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH EFFECTIVE SCHEDULE SAVE */
+/* PRESAVE MIDDLEWARE UNJOINS LAST ACTIVE SCHEDULE AND ALSO LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH **EFFECTIVE** SCHEDULE SAVE */
 ScheduleSchema.pre('save', function(next) {
-  // console.log('here is presave')
   const User = mongoose.model('User');
-  // const Schedule = mongoose.model('Schedule');
   User.findById(this.userId, (err, user) => {
-    if (user.scheduleCount <= 4) {
-      // console.log('user.scheduleCount in under 5', user.scheduleCount)
-      return next()
-    } 
-    else {
-      // find active schedule and deactivate
+      console.log('user.scheduleCount in under 5', user.scheduleCount)
       user.activeSchedule((err, sched) => {
-        sched.joinHistory.push({
-          isMember: false,
-          selfInitiated: false,
-          joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
-          date: Date.now(),
-        });
-        user.status = 'lockdown';
-        user.save();
-        next();
+        if ( sched === null) {
+          if (user.scheduleCount <= 4) {
+            return next();
+          } 
+          else {
+            user.status = 'lockdown';
+            user.save();
+            next();
+          }
+        }
+        else if (user.scheduleCount <= 4) {
+          sched.joinHistory.push({
+            isMember: false,
+            selfInitiated: true,
+            joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+            date: Date.now(),
+          });
+          user.save();
+          return next()
+        }
+        else {
+          console.log('else', user.scheduleCount);
+          sched.joinHistory.push({
+            isMember: false,
+            selfInitiated: false,
+            joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+            date: Date.now(),
+          });
+          user.status = 'lockdown';
+          user.save();
+          next();
+        }
       })
-    }
+    })
   })
-})
+
 
 /* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */
 ScheduleSchema.post('save', function(doc, next) {

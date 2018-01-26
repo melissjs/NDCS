@@ -408,7 +408,7 @@ const THM = {
     }]
   },
 
-     // for virtual effectiveSchedules
+     // for virtual effectiveSchedules and schedule middleware
 
      electionPastObj: {
       cIId: 'thiscIId',
@@ -532,6 +532,30 @@ const THM = {
       partyAffiliation: 'thisVolunteerPartyAffiliation',
       // schedule: ['5a3047c071b36b39cfce6640']
     },
+
+  //  schedule middleware
+  pollingstationOperative3Obj: {
+    electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+    operative: true,
+    precinctNumber: 'thisPrecinctNumber',
+    locationName: 'thisLocationName',
+    streetAddress: 'thisStreetAddress',
+    city: 'thisCity',
+    state: 'thisState',
+    zip: 11111
+  },
+
+  pollingstationOperative4Obj: {
+    electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
+    operative: true,
+    precinctNumber: 'thisPrecinctNumber',
+    locationName: 'thisLocationName',
+    streetAddress: 'thisStreetAddress',
+    city: 'thisCity',
+    state: 'thisState',
+    zip: 11111
+  }
+
 
 }
 
