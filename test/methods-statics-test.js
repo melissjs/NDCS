@@ -67,11 +67,10 @@ describe('Methods and statistics on models', () => {
       .then(() => {
         Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
-        .then((volunteer) => {
-          volunteer.effectiveSchedules((err, res) => {
-            assert(res.length === 2);
-            done();
-          })
+        .then(async (volunteer) => {
+          const effSchedArr = await volunteer.effectiveSchedules();
+          assert(effSchedArr.length === 2);
+          done();
         })
       })
   });
