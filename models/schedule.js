@@ -37,66 +37,84 @@ ScheduleSchema.virtual('isMember').get(function() {
   return this.joinHistory[this.joinHistory.length -1].isMember
 });
 
+// /* RETURN IF AUDIT IS ACTIVE */
+// ScheduleSchema.methods.effective = function effective (cb) {
+//   const Audit = mongoose.model('Audit');
+//   return Audit.findById(this.auditId, (err, aud) => {
+//     return aud.active((err, res) => {
+//       return cb(err, res);
+//     })
+//   })
+// };
+
 /* RETURN IF AUDIT IS ACTIVE */
-ScheduleSchema.methods.effective = function effective (cb) {
+ScheduleSchema.methods.effective = async function effective () {
   const Audit = mongoose.model('Audit');
-  return Audit.findById(this.auditId, (err, aud) => {
-    return aud.active((err, res) => {
-      return cb(err, res);
-    })
-  })
+  try {
+    const aud = await Audit.findById(this.auditId);
+    const isActive = await aud.active();
+    return isActive;
+  }
+  catch(e) {
+    console.error(e)
+  }
+
 };
 
 // /* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
-ScheduleSchema.methods.active = function active (cb) {
+ScheduleSchema.methods.active = async function active () {
   const Audit = mongoose.model('Audit');
-  Audit.findById(this.auditId, (err, audit) => {
-    audit.active((err, res) => {
-      let ans = res && this.joinHistory[this.joinHistory.length -1].isMember;
-      cb(err, ans);
-    })
-  });
+  try {
+    const audit = await Audit.findById(this.auditId);
+    const auditIsActive = await audit.active();
+    return auditIsActive && this.isMember;
+  }
+  catch (e) {
+    console.error('Error [ScheduleSchema]:', e )
+  }
+
 };
 
 /* PRESAVE MIDDLEWARE UNJOINS LAST ACTIVE SCHEDULE AND ALSO LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH **EFFECTIVE** SCHEDULE SAVE */
 ScheduleSchema.pre('save', function(next) {
   const User = mongoose.model('User');
   User.findById(this.userId, (err, user) => {
-      console.log('user.scheduleCount in under 5', user.scheduleCount)
-      user.activeSchedule((err, sched) => {
-        if ( sched === null) {
-          if (user.scheduleCount <= 4) {
-            return next();
-          } 
-          else {
-            user.status = 'lockdown';
-            user.save();
-            next();
-          }
-        }
-        else if (user.scheduleCount <= 4) {
-          sched.joinHistory.push({
-            isMember: false,
-            selfInitiated: true,
-            joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
-            date: Date.now(),
-          });
-          user.save();
-          return next()
-        }
-        else {
-          console.log('else', user.scheduleCount);
-          sched.joinHistory.push({
-            isMember: false,
-            selfInitiated: false,
-            joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
-            date: Date.now(),
-          });
-          user.status = 'lockdown';
-          user.save();
-          next();
-        }
-      })
+      // console.log('user.scheduleCount in under 5', user.scheduleCount)
+      // user.activeSchedule((err, sched) => {
+      //   if ( sched === null) {
+      //     if (user.scheduleCount <= 4) {
+      //       return next();
+      //     } 
+      //     else {
+      //       user.status = 'lockdown';
+      //       user.save();
+      //       next();
+      //     }
+      //   }
+      //   else if (user.scheduleCount <= 4) {
+      //     sched.joinHistory.push({
+      //       isMember: false,
+      //       selfInitiated: true,
+      //       joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+      //       date: Date.now(),
+      //     });
+      //     user.save();
+      //     return next()
+      //   }
+      //   else {
+      //     console.log('else', user.scheduleCount);
+      //     sched.joinHistory.push({
+      //       isMember: false,
+      //       selfInitiated: false,
+      //       joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
+      //       date: Date.now(),
+      //     });
+      //     user.status = 'lockdown';
+      //     user.save();
+      //     next();
+      //   }
+      // })
+      next();
     })
   })
 

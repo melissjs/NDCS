@@ -139,13 +139,13 @@ describe('Methods and statistics on models', () => {
     })
     Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
     .then(() => {
-      Audit.findById(thisAudit._id, (err, aud) => {
-        aud.active((err, res) => {
-          assert(res === false);
-          done();
+      Audit.findById(thisAudit._id)
+        .then(async (aud) => {
+          let isActive = await aud.active();
+            assert(isActive === false);
+            done();
         })
       })
-    })
   });
 
   it('schedule effective returns true if audit is active', (done) => {
@@ -172,17 +172,16 @@ describe('Methods and statistics on models', () => {
               model: 'Audit'
             }
           })
-            .then((user) => {
-              user.schedule[0].effective((err, res) => {
-                assert(res === true);
-                done();
-              })
+            .then(async (user) => {
+              const isEffective = await user.schedule[0].effective();
+              assert(isEffective === true);
+              done();
             })
         })
     })
   });
 
-  it('schedule active returns true if audit is active and joinhistory ismember', (done) => {
+  it.only('schedule active returns true if audit is active and joinhistory ismember', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisElection = new Election(THM.electionPresentObj);
     const thisPollingStation = new Pollingstation(THM.pollingstationObj);
@@ -206,12 +205,11 @@ describe('Methods and statistics on models', () => {
               model: 'Audit'
             }
           })
-            .then((user) => {
-              user.schedule[0].active((err, res) => {
-                assert(res === true);
-                done();
-              })
-            })
+          .then(async (user) => {
+            const schedActive = await user.schedule[0].active();
+            assert(schedActive === true);
+            done();
+          })
         })
     })
   });

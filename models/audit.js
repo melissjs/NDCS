@@ -31,15 +31,19 @@ AuditSchema.virtual('team').get(async function() {
 })
 
 /* RETURNS ACTIVE BOOLEAN */
-AuditSchema.methods.active = function active (cb) {
-  const Election = mongoose.model('Election');
-  const Pollingstation = mongoose.model('Pollingstation');
-    Election.findById(this.electionId, (err, election) => {
-      Pollingstation.findById(this.pollingStationId, (err, ps) => {
-      let res = (election.active && ps.operative);
-       cb(err, res);
-    })
-  })
+AuditSchema.methods.active = async function active () {
+  const Election = require('./election');
+  const Pollingstation = require('./pollingstation');
+  try {
+    const [election, pollingstation] = await Promise.all([
+      Election.findById(this.electionId),
+      Pollingstation.findById(this.pollingStationId)
+    ]);
+    return election.active && pollingstation.operative
+  }
+  catch (e) {
+    console.error('Error [AuditSchema]:', e )
+  }
 };
 
 module.exports = mongoose.model('Audit', AuditSchema);
