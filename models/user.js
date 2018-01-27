@@ -49,26 +49,6 @@ userSchema.virtual('activeRoles').get(function() {
 });
 
 /* RETURN EFFECTIVE SCHEDULES */
-// userSchema.methods.effectiveSchedules = function effectiveSchedules (cb) {
-//   const Schedule = mongoose.model('Schedule');
-//   Schedule.find({ _id: { $in: this.schedule } }, (err, schedObjArr) => {
-//     let effSchedArr = [];
-//     let counter = 0;
-//     schedObjArr.forEach((sched, index, array) => {
-//        sched.effective((err, res) => {
-//         counter++
-//         if (res) {
-//           effSchedArr.push(sched);
-//         }
-//         if (counter === array.length) {
-//           cb(err, effSchedArr)
-//         }
-//       })
-//     })
-//   });
-// };
-
-/* RETURN EFFECTIVE SCHEDULES */
 userSchema.methods.effectiveSchedules = async function effectiveSchedules () {
   const Schedule = mongoose.model('Schedule');
   const schedObjArr = await Schedule.find({ _id: { $in: this.schedule } });
