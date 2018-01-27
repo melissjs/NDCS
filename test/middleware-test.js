@@ -8,7 +8,7 @@ const THM = require('./test-helper-methods');
 
 describe('Middleware', () => {
   
-  it('locksdown user when user saves 6th effective schedule item', (done) => {
+  it.only('locksdown user when user saves 6th effective schedule item', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -49,8 +49,22 @@ describe('Middleware', () => {
     thisSchedule4.userId = thisUser._id;
     thisSchedule4.auditId = thisOp2Audit._id;
     thisUser.save()
-      .then(() => {
-        Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
+      .then(async () => {
+        await thisPastElection.save();
+        await thisPresentElection.save();
+        await thisNonOpPollingStation.save();
+        await thisOpPollingStation1.save();
+        await thisOpPollingStation2.save();
+        await thisOldAudit.save();
+        await thisInOpAudit.save();
+        await thisOp1Audit.save();
+        await thisOp2Audit.save();
+        await thisSchedule1.save();
+        await thisSchedule2.save();
+        await thisSchedule3.save(); 
+        await thisSchedule4.save(); 
+      })
+        // Promise.all([thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
         .then(() => {
           const thisOpPollingStation3 = new Pollingstation(THM.pollingstationOperative3Obj);
           const thisOp3Audit = new Audit({
@@ -76,26 +90,16 @@ describe('Middleware', () => {
           .then(() => {
               // console.log('isNew', thisSchedule6.isNew)
               assert(!thisSchedule6.isNew);
-            })
-              .then(() => {
-                User.findById(thisUser._id)
-                  .then((user) => {
-                    console.log('status', user.status)
-                    assert(user.status === 'lockdown');
-                    done();
-                  })
+          })
+          .then(() => {
+            User.findById(thisUser._id)
+              .then((user) => {
+                console.log('status', user.status)
+                assert(user.status === 'lockdown');
+                done();
               })
-              .catch((e) => {
-                done(e);
-              })
+          })
         })
-        .catch((e) => {
-          done(e);
-      })
-    })
-    .catch((e) => {
-      done(e);
-    })
   })
   });
 

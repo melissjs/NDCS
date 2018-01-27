@@ -75,7 +75,7 @@ ScheduleSchema.methods.active = async function active () {
 };
 
 /* PRESAVE MIDDLEWARE UNJOINS LAST ACTIVE SCHEDULE AND ALSO LOCKSDOWN USER AND INACTIVATES ACTIVE SCHEDULE ON SIXTH **EFFECTIVE** SCHEDULE SAVE */
-ScheduleSchema.pre('save', async function(next) { // if audit id is same, update old schedule, dont make new one
+ScheduleSchema.pre('save', async function(next) { 
   const User = mongoose.model('User');
   let user;
   let activeSched;
@@ -88,13 +88,16 @@ ScheduleSchema.pre('save', async function(next) { // if audit id is same, update
   catch (e) {
     console.error('Error [ScheduleSchema]:', e )
   }
+// find out if user has a schedule with this auditId already, if yes, ammend that schedule, *update* and return without next
+
   if (!activeSched && effectiveSchedArr.length <= 4) {
     return next();
   } 
   else if (!activeSched && effectiveSchedArr.length > 4) {
-    user.status = 'lockdown';
-    user.save();
-    next();
+    user.update({ status: 'lockdown' })
+    .then(() => {
+      next();
+    })
   }
   else if (activeSched && user.scheduleCount <= 4) {
     activeSched.joinHistory.push({
@@ -112,9 +115,10 @@ ScheduleSchema.pre('save', async function(next) { // if audit id is same, update
       joiningUserId: '5a3047c071b36b39cfce6640',//globals.admin,
       date: Date.now(),
     });
-    user.status = 'lockdown';
-    user.save();
-    next();
+    user.update({ status: 'lockdown' })
+    .then(() => {
+      next();
+    })
   }
 })
 
@@ -123,8 +127,9 @@ ScheduleSchema.post('save', function(doc, next) {
   const User = mongoose.model('User');
   User.findById(this.userId)
   .then((user) => {
-    user.schedule.push(doc._id);
-    user.save()
+    let newSched = user.schedule.slice(0);
+    newSched.push(doc._id);
+    user.update({ schedule: newSched })
     .then(() => {
       next()
     })
