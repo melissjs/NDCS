@@ -80,6 +80,7 @@ ScheduleSchema.pre('save', async function(next) {
   let user;
   let activeSched;
   let effectiveSchedArr;
+  let exisitingSched;
   try {
     user = await User.findById(this.userId);
     activeSched = await user.activeSchedule();
@@ -89,7 +90,16 @@ ScheduleSchema.pre('save', async function(next) {
     console.error('Error [ScheduleSchema]:', e )
   }
 // find out if user has a schedule with this auditId already, if yes, ammend that schedule, *update* and return without next
-
+  user.schedule.forEach((sched) => {
+    (sched.auditId === this.auditId) ? exisitingSched = sched : null ;
+  })
+  if (exisitingSched) { // how to deal with this if its active or not?
+    exisitingSched.joinHistory.push({
+      isMember: true,
+      selfInitiated: true,
+      date: Date.now(),
+    });
+  }
   if (!activeSched && effectiveSchedArr.length <= 4) {
     return next();
   } 
