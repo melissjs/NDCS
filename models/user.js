@@ -62,33 +62,36 @@ return effSchedArr;
 };
 
 /* RETURN ACTIVE SCHEDULE */
-userSchema.methods.activeSchedule = function activeSchedule (cb) {
+userSchema.methods.activeSchedule = async function activeSchedule () {
   const Schedule = mongoose.model('Schedule');
-  Schedule.find({ _id: { $in: this.schedule } })
-  .populate({
-    path: 'auditId',
-    model: 'Audit',
-    populate: { 
-      path: 'pollingStationId',
-      model: 'Pollingstation'
-    }
-  })
-  .populate({
-    path: 'auditId',
-    model: 'Audit',
-    populate: { 
-      path: 'electionId',
-      model: 'Election'
-    }
-  })
-  .exec((err, schedObjArr) => {
-    for (i = 0; i < schedObjArr.length; i++) {
-      if (schedObjArr[i].isMember && schedObjArr[i].auditId.electionId.active && schedObjArr[i].auditId.pollingStationId.operative) {
-        cb(err, schedObjArr[i]);
-        break;
+  let schedObjArr = [];
+  try {
+    schedObjArr = await Schedule.find({ _id: { $in: this.schedule } })
+    .populate({
+      path: 'auditId',
+      model: 'Audit',
+      populate: { 
+        path: 'pollingStationId',
+        model: 'Pollingstation'
       }
+    })
+    .populate({
+      path: 'auditId',
+      model: 'Audit',
+      populate: { 
+        path: 'electionId',
+        model: 'Election'
+      }
+    });
+  }
+  catch (e) {
+    console.error('Error [userSchema]:', e )
+  }
+  for (i = 0; i < schedObjArr.length; i++) {
+    if (schedObjArr[i].isMember && schedObjArr[i].auditId.electionId.active && schedObjArr[i].auditId.pollingStationId.operative) {
+      return schedObjArr[i];
     }
-  })
+  }
 };
 
 userSchema.plugin(mongooseUniqueValidator, { message: '{PATH} must be unique, please enter another' });

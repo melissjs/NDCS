@@ -28,7 +28,7 @@ describe('Methods and statistics on models', () => {
     });
   });
 
-  it.only('users effectiveSchedules returns effective schedules', (done) => {
+  it('users effectiveSchedules returns effective schedules', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -119,11 +119,10 @@ describe('Methods and statistics on models', () => {
       .then(() => {
         Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
-        .then((volunteer) => {
-          volunteer.activeSchedule((err, res) => {
-            assert(res.auditId._id.toString() === thisOp1Audit._id.toString());
-            done();
-          })
+        .then(async (volunteer) => {
+          let activeSched = await volunteer.activeSchedule();
+          assert(activeSched.auditId._id.toString() === thisOp1Audit._id.toString());
+          done();
         })
       })
   });
