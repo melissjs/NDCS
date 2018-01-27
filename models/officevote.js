@@ -42,13 +42,13 @@ const officevoteSchema = new Schema({
 // get each of the above for each candidate
 
 /* RETURNS ACTIVE BOOLEAN */
-officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (electOfficeId, candidateId, cb){
+officevoteSchema.statics.candidateVoteCount = function candidateVoteCount (electOfficeId, candidateId){
   return this.where({ electOfficeId: electOfficeId})
     .find({ candidateId: candidateId })
-    .count(function (err, count) {
-        return true;
+    .count()
+    .catch((e) => {
+      console.error('Error [officevoteSchema]:', e )
     })
-    .exec(cb);
 };
 
 

@@ -21,15 +21,14 @@ describe('Methods and statistics on models', () => {
       thisOfficeVote3.set('electOfficeId', thisElectOffice._id);
       Promise.all([thisOfficeVote1.save(), thisOfficeVote2.save(), thisOfficeVote3.save()])
         .then(async () => {
-          Officevote.candidateVoteCount(thisElectOffice._id, thisOfficeVote3.candidateId, function(err, res) { 
-            assert(res  === 1 )
-            done()
-          })
+          const voteCount = await Officevote.candidateVoteCount(thisElectOffice._id, thisOfficeVote3.candidateId);
+          assert(voteCount  === 1 )
+          done()
         })
     });
   });
 
-  it('users effectiveSchedules returns effective schedules', (done) => {
+  it.only('users effectiveSchedules returns effective schedules', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -181,7 +180,7 @@ describe('Methods and statistics on models', () => {
     })
   });
 
-  it.only('schedule active returns true if audit is active and joinhistory ismember', (done) => {
+  it('schedule active returns true if audit is active and joinhistory ismember', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisElection = new Election(THM.electionPresentObj);
     const thisPollingStation = new Pollingstation(THM.pollingstationObj);
