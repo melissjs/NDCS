@@ -28,7 +28,7 @@ describe('Methods and statistics on models', () => {
     });
   });
 
-  it.only('users effectiveSchedules returns effective schedules', (done) => {
+  it('users effectiveSchedules returns effective schedules', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);
@@ -64,15 +64,27 @@ describe('Methods and statistics on models', () => {
     thisSchedule4.userId = thisVolunteer._id;
     thisSchedule4.auditId = thisOp2Audit._id;
     thisVolunteer.save()
-      .then(() => {
-        Promise.all([thisSchedule1.save(), thisSchedule2.save(), thisSchedule3.save(), thisSchedule4.save(), thisPastElection.save(), thisPresentElection.save(), thisNonOpPollingStation.save(), thisOpPollingStation1.save(), thisOpPollingStation2.save(), thisOldAudit.save(), thisInOpAudit.save(), thisOp1Audit.save(), thisOp2Audit.save()])
+      .then(async () => {
+        await thisPastElection.save();
+        await thisPresentElection.save();
+        await thisNonOpPollingStation.save();
+        await thisOpPollingStation1.save();
+        await thisOpPollingStation2.save();
+        await thisOldAudit.save();
+        await thisInOpAudit.save();
+        await thisOp1Audit.save();
+        await thisOp2Audit.save();
+        await thisSchedule1.save();
+        await thisSchedule2.save();
+        await thisSchedule3.save();
+        await thisSchedule4.save();
+      })
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
         .then(async (volunteer) => {
           const effSchedArr = await volunteer.effectiveSchedules();
           assert(effSchedArr.length === 2);
           done();
         })
-      })
   });
 
   it('users activeSchedule returns the active schedule', (done) => {
