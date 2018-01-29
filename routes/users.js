@@ -8,6 +8,8 @@ var Audit = require('../models/audit');
 
 // ------------------- AUTH -------------------
 
+///////// deal with user activity processes
+
 /* SIGN IN USER */
 router.post('/signin', function(req, res, next) {
   User.findOne({username: req.body.username}, function(err, user){
