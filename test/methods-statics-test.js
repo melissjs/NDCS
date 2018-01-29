@@ -75,7 +75,7 @@ describe('Methods and statistics on models', () => {
       })
   });
 
-  it('users activeSchedule returns the active schedule', (done) => {
+  it.only('users activeSchedule returns the active schedule', (done) => {
     const thisVolunteer = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);

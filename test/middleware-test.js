@@ -8,7 +8,7 @@ const THM = require('./test-helper-methods');
 
 describe('Middleware', () => {
   
-  it.only('locksdown user when user saves 6th effective schedule item', (done) => {
+  it('locksdown user when user saves 6th effective schedule item', (done) => {
     const thisUser = new User(THM.userESObj);
     const thisPastElection = new Election(THM.electionPastObj);
     const thisPresentElection = new Election(THM.electionPresentObj);

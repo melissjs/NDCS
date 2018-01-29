@@ -89,17 +89,17 @@ ScheduleSchema.pre('save', async function(next) {
   catch (e) {
     console.error('Error [ScheduleSchema]:', e )
   }
-// find out if user has a schedule with this auditId already, if yes, ammend that schedule, *update* and return without next
-  user.schedule.forEach((sched) => {
-    (sched.auditId === this.auditId) ? exisitingSched = sched : null ;
-  })
-  if (exisitingSched) { // how to deal with this if its active or not?
-    exisitingSched.joinHistory.push({
-      isMember: true,
-      selfInitiated: true,
-      date: Date.now(),
-    });
-  }
+// find out if user has a schedule with this auditId already, if yes, ammend that schedule, *update* and return without next ////////// GOES IN MIDDLEWARE FOR ROUTE
+  // user.schedule.forEach((sched) => {
+  //   (sched.auditId === this.auditId) ? exisitingSched = sched : null ;
+  // })
+  // if (exisitingSched) { // how to deal with this if its active or not?
+  //   exisitingSched.joinHistory.push({
+  //     isMember: true,
+  //     selfInitiated: true,
+  //     date: Date.now(),
+  //   });
+  // }
   if (!activeSched && effectiveSchedArr.length <= 4) {
     return next();
   } 
