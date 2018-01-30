@@ -608,7 +608,12 @@ const MD = {
     schedule4.set('_id', '5a3047c071b36b39cfce0444');
     let schedule5 = new Schedule(this.scheduleObj5);
     schedule5.set('_id', '5a3047c071b36b39cfce0555');
-    await Promise.all([schedule1.save(), schedule2.save(), schedule3.save(), schedule4.save(), schedule5.save()])
+    await schedule1.save();
+    await schedule2.save();
+    await schedule3.save();
+    await schedule4.save();
+    await schedule5.save();
+    // await Promise.all([schedule1.save(), schedule2.save(), schedule3.save(), schedule4.save(), schedule5.save()])
   },
 
   //////////////////////// USER ////////////////////////
@@ -905,8 +910,8 @@ const MD = {
     .then(() => MD.mockPollingstations())
     .then(() => MD.mockCandidates())
     .then(() => MD.mockAudits())
-    .then(() => MD.mockSchedules())
     .then(() => MD.mockUsers())
+    .then(() => MD.mockSchedules())
     .then(() => MD.mockVotesAndOfficeVotes())
     .then(() => MD.mockDemographics(MD.demographicsArray))
     .then(() => MD.mockAnomaliesAndEvidence())

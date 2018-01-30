@@ -79,7 +79,7 @@ ScheduleSchema.pre('save', async function(next) {
   const User = mongoose.model('User');
   let user;
   let activeSched;
-  let effectiveSchedArr;
+  let effectiveSchedArr = [];
   let exisitingSched;
   try {
     user = await User.findById(this.userId);
