@@ -8,7 +8,7 @@ function isAuditor(){
 }
 
 const userSchema = new Schema({
-    username: { type: String, required: [true, 'Username required'], unique: true, uniqueCaseInsensitive: true, lowercase: true },
+    username: { type: String, required: [true, 'Username required'], unique: true, uniqueCaseInsensitive: true, lowercase: true, minlength: [2, 'Username name must be at least three characters'] },
     password: { type: String, required: [true, 'Password required'] },
     userRoles: { type: [UserRoleSchema], required: [true, 'At least one role is required']},
     firstName: { type: String, required: [true, 'First name required'], minlength: [2, 'First name must be at least two characters'] },

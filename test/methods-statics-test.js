@@ -158,7 +158,11 @@ describe('Methods and statistics on models', () => {
       electionId: thisElection._id,
       pollingStationId: thisPollingStation._id
     })
-    Promise.all([thisElection.save(), thisPollingStation.save(), thisAudit.save()])
+    thisElection.save()
+    .then(async () => {
+      await thisPollingStation.save(), 
+      await thisAudit.save()
+    })
     .then(() => {
       Audit.findById(thisAudit._id)
         .then(async (aud) => {
