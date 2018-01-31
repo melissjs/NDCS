@@ -132,7 +132,7 @@ ScheduleSchema.pre('save', async function(next) {
   }
 })
 
-/* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */
+/* MIDDLEWARE ADD SCHEDULE TO ARRAY ON USER */ //remove?
 ScheduleSchema.post('save', function(doc, next) {
   const User = mongoose.model('User');
   User.findById(this.userId)
