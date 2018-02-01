@@ -6,6 +6,42 @@ var User = require('../models/user');
 var Schedule = require('../models/schedule');
 var Audit = require('../models/audit');
 
+// ------------------- POST -------------------
+
+/* CREATE NEW USER */
+router.post('/add', function(req, res, next) {
+  let user = new User({
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, 10),
+    userRoles: req.body.userRoles,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    emailAddress: req.body.emailAddress,
+    exposeEmail: req.body.exposeEmail,
+    phoneNumber: req.body.phoneNumber,
+    exposePhoneNumber: req.body.exposePhoneNumber,
+    age: req.body.age,
+    exposeAge: req.body.exposeAge,
+    sex: req.body.sex,
+    exposeSex: req.body.exposeSex,
+    partyAffiliation: req.body.partyAffiliation,
+    exposePartyAffiliation: req.body.exposePartyAffiliation,
+    // schedule: req.body.schedule
+  });
+  user.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while creating user',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'User created',
+      obj: result
+    });
+  });
+});
+
 // ------------------- AUTH -------------------
 
 ///////// deal with user activity processes
@@ -474,40 +510,6 @@ router.get('/team/:electionId/:pollingStationId', isAuditor, authedForTeam, func
 
 
 // ------------------- POST -------------------
-
-/* CREATE NEW USER */
-router.post('/add', function(req, res, next) {
-  let user = new User({
-    username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 10),
-    userRoles: req.body.userRoles,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    emailAddress: req.body.emailAddress,
-    exposeEmail: req.body.exposeEmail,
-    phoneNumber: req.body.phoneNumber,
-    exposePhoneNumber: req.body.exposePhoneNumber,
-    age: req.body.age,
-    exposeAge: req.body.exposeAge,
-    sex: req.body.sex,
-    exposeSex: req.body.exposeSex,
-    partyAffiliation: req.body.partyAffiliation,
-    exposePartyAffiliation: req.body.exposePartyAffiliation,
-    // schedule: req.body.schedule
-  });
-  user.save(function(err, result){
-    if (err) {
-      return res.status(500).json({
-        title: 'An error occurred while creating user',
-        error: err
-      });
-    }
-    res.status(201).json({
-      message: 'User created',
-      obj: result
-    });
-  });
-});
 
 // ------------------- PUT (REACTIVATE) -------------------
 
