@@ -484,13 +484,16 @@ router.post('/add', function(req, res, next) {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     emailAddress: req.body.emailAddress,
-    phoneNumber: req.body.phoneNumber,
     exposeEmail: req.body.exposeEmail,
+    phoneNumber: req.body.phoneNumber,
     exposePhoneNumber: req.body.exposePhoneNumber,
     age: req.body.age,
+    exposeAge: req.body.exposeAge,
     sex: req.body.sex,
+    exposeSex: req.body.exposeSex,
     partyAffiliation: req.body.partyAffiliation,
-    schedule: req.body.schedule
+    exposePartyAffiliation: req.body.exposePartyAffiliation,
+    // schedule: req.body.schedule
   });
   user.save(function(err, result){
     if (err) {
