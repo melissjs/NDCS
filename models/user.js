@@ -22,7 +22,7 @@ const userSchema = new Schema({
     sex: { type: String, required: [true, 'Sex required'], enum: { values: ['male', 'female', 'nonBinary', 'noAnswer'] } },
     exposeSex: { type: Boolean, default: false, required: [true, 'exposeSex required'] },
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
-    exposePartyAffiliatioin: { type: Boolean, default: false, required: [true, 'exposePartyAffiliatioin required'] },
+    exposePartyAffiliation: { type: Boolean, default: false, required: [true, 'exposePartyAffiliatioin required'] },
     schedule: { type: [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] },
     status: { type: String, default: 'active', required: [true, 'Status required'], enum: { values: ['active', 'inactive', 'onboarding', 'lockdown', 'deleted'], message: 'Status does not exist' } },
     statusHistory: { type: [String], default: ['onboarding'], required: [true, 'statusHistory required']}

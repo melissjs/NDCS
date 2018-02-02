@@ -9,11 +9,16 @@ var Audit = require('../models/audit');
 // ------------------- POST -------------------
 
 /* CREATE NEW USER */
-router.post('/add', function(req, res, next) {
+router.post('/add', function(req, res, next) { // handle if user exists already and is deactivated
   let user = new User({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 10),
-    userRoles: req.body.userRoles,
+    userRoles: {
+      role: 'user',
+      active: true,
+      dateInitiated: Date.now(),
+      dateActivated: Date.now(),
+    },
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     emailAddress: req.body.emailAddress,
