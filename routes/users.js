@@ -30,6 +30,7 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
     sex: req.body.sex,
     exposeSex: req.body.exposeSex,
     partyAffiliation: req.body.partyAffiliation,
+    otherPartyAffiliation: req.body.otherPartyAffiliation,
     exposePartyAffiliation: req.body.exposePartyAffiliation,
     // schedule: req.body.schedule
   });
