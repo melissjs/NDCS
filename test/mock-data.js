@@ -664,12 +664,13 @@ const MD = {
       firstName: 'Admin', 
       lastName: 'One',
       emailAddress: 'thisVolunteer1@Email.Address',
-      phoneNumber: 1111111111,
+      phoneNumber: 7777777777,
       exposeEmail: true,
       exposePhoneNumber: false,
       age: 22,
-      sex: 'noAnswer',
-      partyAffiliation: 'Democratic',
+      exposeAge: true,
+      sex: 'nonBinary',
+      partyAffiliation: 'independent',
       schedule: ['5a3047c071b36b39cfce0111']
     },
     ////////////////////// uvdl1Westwood2018
@@ -725,7 +726,7 @@ const MD = {
       exposePhoneNumber: true,
       age: 22,
       sex: 'female',
-      partyAffiliation: 'Republican',
+      partyAffiliation: 'republican',
       schedule: ['5a3047c071b36b39cfce0222']
     }, 
     ////////////////////// uvd2Westwood2018
@@ -772,7 +773,7 @@ const MD = {
       exposePhoneNumber: false,
       age: 22,
       sex: 'female',
-      partyAffiliation: 'Republican',
+      partyAffiliation: 'republican',
       schedule: ['5a3047c071b36b39cfce0333']
     },
     ////////////////////// uvd2Federal2018
@@ -819,7 +820,7 @@ const MD = {
       exposePhoneNumber: false,
       age: 22,
       sex: 'male',
-      partyAffiliation: 'Green',
+      partyAffiliation: 'green',
       schedule: ['5a3047c071b36b39cfce0444', '5a3047c071b36b39cfce0555']
     }
   ],
