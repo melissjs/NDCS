@@ -77,63 +77,63 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with volunteer_id listing. */
-// router.route('/:userId') 
-// .all(async function(req, res, next) {
-//   userId = req.params.userId;
-//   if (isSelfFN(userId, req.authedUser._id) || isAdminFN(req.authedUser.activeRoles) || await authedForUserFN(userId, req.authedUser.schedule)) {
-//     User.findById(userId, function(err, user) {
-//       if (err) {
-//         return status(500).json({
-//           title: 'An error occured',
-//           error: err
-//         })
-//       }
-//       else if (user === null) {
-//         return status(500).json({
-//           title: 'Not authenticated',
-//           error: {
-//             message: 'No access to user'
-//           }
-//         })
-//       }
-//       else {
-//         paramUser = user;
-//         next();
-//       }
-//     })
-//   } else {
-//     return res.status(401).json({
-//       title: 'Not authenticated',
-//       error: {
-//         message: 'No access to user'
-//       }
-//     });
-//   }
-// }).get(function(req, res) {
-//     res.status(201).json({
-//       message: 'Success',
-//       obj: paramUser
-//     });
-// }).post(function(req, res) {
-//     res.send('Post for paramUser ' + userId);
-// }).put(function(req, res) {
-//   paramUser.set({
-//     lastName : req.body.lastName
-//   });
-//   paramUser.save(function(err, result){
-//     if (err) {
-//       return res.status(500).json({
-//         title: 'An error occurred while updating user',
-//         error: err
-//       });
-//     }
-//     res.status(201).json({
-//       message: 'User updated',
-//       obj: result
-//     });
-//   });
-// }).delete(function(req, res) {
-//   res.send('Delete for paramUser ' + userId);
-// });
+router.route('/:pollingstationId') 
+.all(async function(req, res, next) {
+  pollingstationId = req.params.pollingstationId;
+  if (req.authedUser.aciveRoles.includes('admin')) {
+    Pollingstation.findById(pollingstationId, function(err, station) {
+      if (err) {
+        return status(500).json({
+          title: 'An error occured',
+          error: err
+        })
+      }
+      else if (station === null) {
+        return status(500).json({
+          title: 'Not authenticated',
+          error: {
+            message: 'No access to station'
+          }
+        })
+      }
+      else {
+        paramPollingstation = station;
+        next();
+      }
+    })
+  } else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'No access to station'
+      }
+    });
+  }
+}).get(function(req, res) {
+    res.status(201).json({
+      message: 'Success',
+      obj: paramPollingstation
+    });
+}).post(function(req, res) {
+    // res.send('Post for paramPollingstation ' + pollingstationId);
+}).put(function(req, res) {
+  paramPollingstation.set({
+    precinctNumber : req.body.precinctNumber
+  });
+  paramPollingstation.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while updating station',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'Pollingstation updated',
+      obj: result
+    });
+  });
+}).delete(function(req, res) {
+  // res.send('Delete for paramPollingstation ' + pollingstationId);
+});
 
 module.exports = router;
