@@ -94,7 +94,8 @@ router.post('/signin', function(req, res, next) {
 
 /* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
 router.use('/', function(req, res, next) {
-  jwt.verify(req.headers.authorization, 'secret', function(err, decoded) {
+  let token = req.headers.authorization.split(' ')[1]
+  jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       return res.status(401).json({
         title: 'Not authenticated',
@@ -568,7 +569,25 @@ router.route('/:userId')
 }).post(function(req, res) {
     res.send('Post for paramUser ' + userId);
 }).put(function(req, res) {
-  res.send('Put for paramUser ' + userId);
+  paramUser.set({
+    lastName : req.body.lastName
+  });
+  paramUser.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while updating user',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'User updated',
+      obj: result
+    });
+  });
+  // res.status(201).json({
+  //   message: 'Success',
+  //   obj: paramUser
+  // });
 }).delete(function(req, res) {
   res.send('Delete for paramUser ' + userId);
 });
