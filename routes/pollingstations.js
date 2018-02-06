@@ -50,23 +50,23 @@ var Pollingstation = require('../models/pollingstation');
 // ------------------- AUTH WITH JWT -------------------
 
 /* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
-// router.use('/', function(req, res, next) {
-//   let token = req.headers.authorization.split(' ')[1]
-//   jwt.verify(token, 'secret', function(err, decoded) {
-//     if (err) {
-//       return res.status(401).json({
-//         title: 'Not authenticated',
-//         error: err
-//       });
-//     }
-//     req.authedUser = decoded.user;
-//     next();
-//   });
-// });
+router.use('/', function(req, res, next) {
+  let token = req.headers.authorization.split(' ')[1]
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if (err) {
+      return res.status(401).json({
+        title: 'Not authenticated',
+        error: err
+      });
+    }
+    req.authedUser = decoded.user;
+    next();
+  });
+});
 
 // ------------------- GET -------------------
 
-/* GET ALL USERS AS ADMIN */
+/* GET ALL POLLINGSTATIONS */
 router.get('/all', function(req, res, next) {
   Pollingstation.find({})
     .exec(function(err, stations) {
