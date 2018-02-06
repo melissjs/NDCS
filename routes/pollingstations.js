@@ -74,14 +74,6 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
   });
 });
 
-// ------------------- PUT (REACTIVATE) -------------------
-
-// ------------------- DELETE (MIGRATE TO NONUSER) -------------------
-
-
-// ------------------- PUT (DEACTIVATE) -------------------
-
-
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with volunteer_id listing. */
