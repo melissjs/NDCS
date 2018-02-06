@@ -4,49 +4,6 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var Pollingstation = require('../models/pollingstation');
 
-
-// ------------------- POST -------------------
-
-/* CREATE NEW USER */
-// router.post('/add', function(req, res, next) { // handle if user exists already and is deactivated
-//   let user = new User({
-//     username: req.body.username,
-//     password: bcrypt.hashSync(req.body.password, 10),
-//     userRoles: {
-//       role: 'user',
-//       active: true,
-//       dateInitiated: Date.now(),
-//       dateActivated: Date.now(),
-//     },
-//     firstName: req.body.firstName,
-//     lastName: req.body.lastName,
-//     emailAddress: req.body.emailAddress,
-//     exposeEmail: req.body.exposeEmail,
-//     phoneNumber: req.body.phoneNumber,
-//     exposePhoneNumber: req.body.exposePhoneNumber,
-//     age: req.body.age,
-//     exposeAge: req.body.exposeAge,
-//     sex: req.body.sex,
-//     exposeSex: req.body.exposeSex,
-//     partyAffiliation: req.body.partyAffiliation,
-//     otherPartyAffiliation: req.body.otherPartyAffiliation,
-//     exposePartyAffiliation: req.body.exposePartyAffiliation,
-//     // schedule: req.body.schedule
-//   });
-//   user.save(function(err, result){
-//     if (err) {
-//       return res.status(500).json({
-//         title: 'An error occurred while creating user',
-//         error: err
-//       });
-//     }
-//     res.status(201).json({
-//       message: 'User created',
-//       obj: result
-//     });
-//   });
-// });
-
 // ------------------- AUTH WITH JWT -------------------
 
 /* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
@@ -83,7 +40,39 @@ router.get('/all', function(req, res, next) {
     });
 });
 
+
 // ------------------- POST -------------------
+
+/* CREATE NEW USER */
+router.post('/add', function(req, res, next) { // handle if user exists already and is deactivated
+  let pollingstation = new Pollingstation({
+    electionId: req.body.electionId,
+    operative: req.body.operative,
+    precinctNumber: req.body.precinctNumber,
+    locationName: req.body.locationName,
+    streetAddress: req.body.streetAddress,
+    line1: req.body.line1,
+    line2: req.body.line2,
+    line3: req.body.line3,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip,
+    pollingHours: req.body.pollingHours,
+    notes: req.body.notes
+  });
+  pollingstation.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while creating pollingstation',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'Pollingstation created',
+      obj: result
+    });
+  });
+});
 
 // ------------------- PUT (REACTIVATE) -------------------
 
