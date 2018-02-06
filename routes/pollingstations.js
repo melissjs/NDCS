@@ -80,7 +80,9 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
 router.route('/:pollingstationId') 
 .all(async function(req, res, next) {
   pollingstationId = req.params.pollingstationId;
-  if (req.authedUser.aciveRoles.includes('admin')) {
+  console.log('HEREEEEEEEE req.authedUser', req.authedUser)
+
+  if (req.authedUser.activeRoles.includes('admin')) {
     Pollingstation.findById(pollingstationId, function(err, station) {
       if (err) {
         return status(500).json({
@@ -117,6 +119,7 @@ router.route('/:pollingstationId')
 }).post(function(req, res) {
     // res.send('Post for paramPollingstation ' + pollingstationId);
 }).put(function(req, res) {
+  console.log('HEREEEEEEEE')
   paramPollingstation.set({
     precinctNumber : req.body.precinctNumber
   });
