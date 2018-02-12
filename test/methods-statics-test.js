@@ -239,4 +239,33 @@ describe('Methods and statistics on models', () => {
     })
   });
 
+  it('audit getTeam returns all audit team members', (done) => {
+    const thisUser = new User(THM.userObj1);
+    const thisOtherUser = new User(THM.userObj2);
+    const thisElection = new Election(THM.electionPresentObj);
+    const thisPollingStation = new Pollingstation(THM.pollingstationObj);
+    const thisAudit = new Audit({
+      electionId: thisElection._id,
+      pollingStationId: thisPollingStation._id
+    });
+    Promise.all([thisUser.save(), thisOtherUser.save(), thisElection.save(), thisPollingStation.save(), thisAudit.save()])
+    .then(() => {
+      const thisSchedule = new Schedule(THM.scheduleOneObj);
+      const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
+      thisSchedule.userId = thisUser._id;
+      thisSchedule2.userId = thisOtherUser._id;
+      thisSchedule.auditId = thisAudit._id;
+      thisSchedule2.auditId = thisAudit._id;
+      Promise.all([thisSchedule.save(), thisSchedule2.save()])
+        .then(() => {
+          Audit.findById(thisAudit._id)
+          .then(async (aud) => {
+            let team =  await aud.getTeam();
+            assert(team.length === 2);
+            done();
+          })
+        })
+    })
+  });
+
 })

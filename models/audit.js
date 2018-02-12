@@ -12,8 +12,8 @@ const AuditSchema = new Schema({
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
 });
 
-// finds total votes for this election/office   <----change this into method
-AuditSchema.virtual('team').get(async function() {
+/* RETURNS AUDIT TEAM */
+AuditSchema.methods.getTeam = async function getTeam () {
   const Schedule = require('./schedule');
   const team = [];
   try {
@@ -28,15 +28,14 @@ AuditSchema.virtual('team').get(async function() {
   catch(e) {
     console.error(e);
   }
-})
+};
 
-// finds total filled shifts election/office
-AuditSchema.virtual('filledShifts').get(async function() {
-})
+/* RETURNS NUMBER OF SHIFTS FILLED */
+// AuditSchema.methods.active = async function getShiftsFilled () {
+//   let aggShifts = [];
+//   let team = await this.getTeam();
 
-// finds total remaining shifts election/office
-AuditSchema.virtual('remainingShifts').get(async function() {
-})
+// };
 
 /* RETURNS ACTIVE BOOLEAN */
 AuditSchema.methods.active = async function active () {

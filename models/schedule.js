@@ -58,7 +58,6 @@ ScheduleSchema.methods.effective = async function effective () {
   catch(e) {
     console.error(e)
   }
-
 };
 
 // /* RETURN IF AUDIT IS ACTIVE AND ISMEMBER */
