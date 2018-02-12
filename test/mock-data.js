@@ -441,9 +441,12 @@ const MD = {
       precinctNumber: '2600',
       locationName: 'Federal Building',
       streetAddress: '444 thisStreetAddress',
+      line1: 'Third and fourth floor',
       city: 'Hollywood',
       state: 'FL',
-      zip: 11111
+      zip: 11111,
+      pollingHours: '6AM-9PM',
+      notes: 'Additional information'
     },
     {
       electionId: ['5a3047c071b36b39cfce6611'],

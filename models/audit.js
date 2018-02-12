@@ -12,12 +12,12 @@ const AuditSchema = new Schema({
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
 });
 
-// finds total votes for this election/office
+// finds total votes for this election/office   <----change this into method
 AuditSchema.virtual('team').get(async function() {
   const Schedule = require('./schedule');
   const team = [];
   try {
-    const teamSchedules = await Schedule.find({ 
+    const teamSchedules = await Schedule.find({
       auditId: this._id,
     })
     teamSchedules.forEach((sched) => {
@@ -28,6 +28,14 @@ AuditSchema.virtual('team').get(async function() {
   catch(e) {
     console.error(e);
   }
+})
+
+// finds total filled shifts election/office
+AuditSchema.virtual('filledShifts').get(async function() {
+})
+
+// finds total remaining shifts election/office
+AuditSchema.virtual('remainingShifts').get(async function() {
 })
 
 /* RETURNS ACTIVE BOOLEAN */
