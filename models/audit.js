@@ -33,18 +33,25 @@ AuditSchema.methods.getTeam = async function getTeam () {
 /* RETURNS NUMBER OF SHIFTS FILLED */
 AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
   const User = require('./user');
-  let aggShifts = [];
+  const Schedule = require('./schedule');
+  let aggShifts = 0;
+  let activeSched;
+  async function addShifts(user) {
+    activeSched = await user.activeSchedule();
+    aggShifts += activeSched.shifts.length;
+  };
   let team = await this.getTeam();
   team.forEach((user) => {
     mongoose.Types.ObjectId(user)
   })
-  // console.log('team', team);
-  // console.log('team', mongoose.Types.ObjectId(team));
-  User.find({ '_id': { $in: [...team]} })
-  .then((users) => {
-    console.log('length', users.length);
-  })
-
+  let users = await User.find({ '_id': team });
+  for (i = 0; i < users.length; i++) {
+    addShifts(users[i]);
+    if (i === users.length - 1) {
+      console.log('aggShifts', aggShifts)
+      return aggShifts;
+    }
+  }
 };
 
 /* RETURNS ACTIVE BOOLEAN */

@@ -289,8 +289,9 @@ describe('Methods and statistics on models', () => {
         .then(() => {
           Audit.findById(thisAudit._id)
           .then(async (aud) => {
-            await aud.getShiftsFilled();
-            // assert(team.length === 2);
+            let shiftsFilled = await aud.getShiftsFilled();
+            console.log('shiftsFilled', shiftsFilled)
+            // assert(shiftsFilled === 0);
             done();
           })
         })
