@@ -282,7 +282,7 @@ describe('Methods and statistics on models', () => {
       const thisSchedule = new Schedule(THM.scheduleOneObj);
       const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
       thisSchedule.shifts = [ 1, 2, 3 ],
-      thisSchedule2.shifts = [ 1 ];
+      thisSchedule2.shifts = [ 1, 4 ];
       thisSchedule.userId = thisUser._id;
       thisSchedule2.userId = thisOtherUser._id;
       thisSchedule.auditId = thisAudit._id;
@@ -292,7 +292,7 @@ describe('Methods and statistics on models', () => {
           Audit.findById(thisAudit._id)
           .then(async (aud) => {
             let shiftsFilled = await aud.getShiftsFilled();
-            assert(shiftsFilled === 4);
+            assert(shiftsFilled === 5);
             done();
           })
         })
