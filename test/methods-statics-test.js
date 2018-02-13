@@ -281,7 +281,8 @@ describe('Methods and statistics on models', () => {
     .then(() => {
       const thisSchedule = new Schedule(THM.scheduleOneObj);
       const thisSchedule2 = new Schedule(THM.scheduleTwoObj);
-      thisSchedule.shifts = [ 1, 2 ],
+      thisSchedule.shifts = [ 1, 2, 3 ],
+      thisSchedule2.shifts = [ 1 ];
       thisSchedule.userId = thisUser._id;
       thisSchedule2.userId = thisOtherUser._id;
       thisSchedule.auditId = thisAudit._id;
@@ -292,7 +293,7 @@ describe('Methods and statistics on models', () => {
           .then(async (aud) => {
             let shiftsFilled = await aud.getShiftsFilled();
             console.log('shiftsFilled', shiftsFilled)
-            assert(shiftsFilled === 2);
+            assert(shiftsFilled === 4);
             done();
           })
         })
