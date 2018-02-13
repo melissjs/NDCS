@@ -35,9 +35,14 @@ AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
   const User = require('./user');
   let aggShifts = [];
   let team = await this.getTeam();
-  User.find({ '_id': mongoose.Types.ObjectId(...team) })
+  team.forEach((user) => {
+    mongoose.Types.ObjectId(user)
+  })
+  // console.log('team', team);
+  // console.log('team', mongoose.Types.ObjectId(team));
+  User.find({ '_id': { $in: [...team]} })
   .then((users) => {
-    console.log(users);
+    console.log('length', users.length);
   })
 
 };
