@@ -268,7 +268,7 @@ describe('Methods and statistics on models', () => {
     })
   });
 
-  it.only('audit getShiftsFilled returns number of shifts filled for audit', (done) => {
+  it('audit getShiftsFilled returns number of shifts filled for audit', (done) => {
     const thisUser = new User(THM.userObj1);
     const thisOtherUser = new User(THM.userObj2);
     const thisElection = new Election(THM.electionPresentObj);
@@ -292,7 +292,6 @@ describe('Methods and statistics on models', () => {
           Audit.findById(thisAudit._id)
           .then(async (aud) => {
             let shiftsFilled = await aud.getShiftsFilled();
-            console.log('shiftsFilled', shiftsFilled)
             assert(shiftsFilled === 4);
             done();
           })

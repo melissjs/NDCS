@@ -36,17 +36,6 @@ AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
   const Schedule = require('./schedule');
   let aggShifts = 0;
   let activeSched;
-  // async function addShifts(user, usersLength, index) {
-  //   activeSched = await user.activeSchedule();
-  //   aggShifts = aggShifts + activeSched.shifts.length;
-  //   // console.log('index', index)
-  //   // console.log('usersLength', usersLength)
-  //   // console.log('aggShifts from outside if', aggShifts)
-  //   if (index === usersLength - 1) {
-  //     console.log('aggShifts from loop', aggShifts)
-  //     // return aggShifts;
-  //   }
-  // };
   let team = await this.getTeam();
   team.forEach((user) => {
     mongoose.Types.ObjectId(user)
@@ -54,15 +43,13 @@ AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
   let users = await User.find({ '_id': team });
   async function getShiftsFromUsers(users) {
     for (const user of users) {
-        activeSched = await user.activeSchedule();
-        aggShifts = aggShifts + activeSched.shifts.length;
-        console.log('doneaggShifts', aggShifts)
-        }
-        console.log('aggShifts', aggShifts)
-        return aggShifts;
+      activeSched = await user.activeSchedule();
+      aggShifts = aggShifts + activeSched.shifts.length;
     }
-    return getShiftsFromUsers(users);
+    return aggShifts;
   }
+  return getShiftsFromUsers(users);
+};
 
 
 
