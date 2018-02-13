@@ -31,11 +31,16 @@ AuditSchema.methods.getTeam = async function getTeam () {
 };
 
 /* RETURNS NUMBER OF SHIFTS FILLED */
-// AuditSchema.methods.active = async function getShiftsFilled () {
-//   let aggShifts = [];
-//   let team = await this.getTeam();
+AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
+  const User = require('./user');
+  let aggShifts = [];
+  let team = await this.getTeam();
+  User.find({ '_id': mongoose.Types.ObjectId(...team) })
+  .then((users) => {
+    console.log(users);
+  })
 
-// };
+};
 
 /* RETURNS ACTIVE BOOLEAN */
 AuditSchema.methods.active = async function active () {
