@@ -15,6 +15,7 @@ var users = require('./routes/users');
 var records = require('./routes/records');
 var elections = require('./routes/elections');
 var pollingstations = require('./routes/pollingstations');
+var audits = require('./routes/audits');
 
 var app = express();
 
@@ -38,6 +39,7 @@ var Affidavit = require('./models/affidavit');
 var Contact = require('./models/contact');
 // var Volunteer = require('./models/volunteer');
 var User = require('./models/user');
+var Audit = require('./models/audit');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -74,6 +76,7 @@ app.use('/users', users);
 app.use('/records', records);
 app.use('/elections', elections);
 app.use('/pollingstations', pollingstations);
+app.use('/audits', audits);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
