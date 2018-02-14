@@ -77,18 +77,33 @@ router.get('/all', function(req, res, next) {
 //   });
 // });
 
-// // ------------------- ALL (GET POST PUT DELETE) -------------------
+// ------------------- HELPER FUCTIONS -------------------
+
+const auditTeamLength = async(req, res, next) => {
+  let team;
+  try {
+    team = await req.paramAudit.getTeam()
+  }
+  catch(e) {
+    console.log('Error occured', e);
+    return null;
+  }
+  console.log('team.length', team.length)
+  req.teamLength = team.length
+  next()
+}
+
+// ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with volunteer_id listing. */
 router.route('/election/:electionId/pollingstation/:pollingstationId/stats') 
 .all(async function(req, res, next) {
   electionId = req.params.electionId;
   pollingstationId = req.params.pollingstationId;
-  console.log('HEREEEEEEEE req.authedUser', req.authedUser)
-debugger;
-  if (req.authedUser.activeRoles.includes('admin')) {
+  // console.log('HEREEEEEEEE req.authedUser', req.authedUser)
+  if (req.authedUser) {
     Audit.findOne({
-      pollingstationId: pollingstationId,
+      pollingStationId: pollingstationId,
       electionId: electionId
     }, function(err, audit) {
       if (err) {
@@ -106,6 +121,7 @@ debugger;
         })
       }
       else {
+        req.paramAudit = audit;
         paramAudit = audit;
         next();
       }
@@ -118,10 +134,11 @@ debugger;
       }
     });
   }
-}).get(function(req, res) {
+}).get(auditTeamLength, function(req, res) {
     res.status(201).json({
       message: 'Success',
-      obj: paramAudit
+      // obj: paramAudit
+      obj: req.teamLength
     });
 }).post(function(req, res) {
     // res.send('Post for paramAudit ' + pollingauditId);
