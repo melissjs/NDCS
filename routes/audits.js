@@ -77,19 +77,25 @@ router.get('/all', function(req, res, next) {
 //   });
 // });
 
-// ------------------- HELPER FUCTIONS -------------------
+// ------------------- MIDDLEWARE -------------------
 
-const auditTeamLength = async(req, res, next) => {
+const auditStats = async(req, res, next) => {
   let team;
+  let shiftsFilled;
+  let auditStats;
   try {
-    team = await req.paramAudit.getTeam()
+    team = await req.paramAudit.getTeam();
+    shiftsFilled = await req.paramAudit.getShiftsFilled();
   }
   catch(e) {
     console.log('Error occured', e);
     return null;
   }
-  console.log('team.length', team.length)
-  req.teamLength = team.length
+  auditStats = {
+    teamLength: team.length,
+    shiftsFilled: shiftsFilled
+  }
+  req.auditStats = auditStats;
   next()
 }
 
@@ -134,11 +140,11 @@ router.route('/election/:electionId/pollingstation/:pollingstationId/stats')
       }
     });
   }
-}).get(auditTeamLength, function(req, res) {
+}).get(auditStats, function(req, res) {
     res.status(201).json({
       message: 'Success',
       // obj: paramAudit
-      obj: req.teamLength
+      obj: req.auditStats
     });
 }).post(function(req, res) {
     // res.send('Post for paramAudit ' + pollingauditId);
