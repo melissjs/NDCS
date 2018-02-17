@@ -79,6 +79,7 @@ router.get('/all', function(req, res, next) {
 
 // ------------------- MIDDLEWARE -------------------
 
+/* RETURNS AUDIT STATS FOR TEAM MEMBER (ACCESS TO TEAM) OR INTERESTED PARTY (NO TEAM ACCESS) */
 const auditStats = async(req, res, next) => {
   let team;
   let shiftsFilled;
@@ -91,18 +92,32 @@ const auditStats = async(req, res, next) => {
     console.log('Error occured', e);
     return null;
   }
-  auditStats = {
-    teamLength: team.length,
-    shiftsFilled: shiftsFilled
+  if (team.some((uId) => uId.equals(req.authedUser._id))) {
+    auditStats = {
+      _id: req.paramAudit._ud,
+      election: req.paramAudit.electionId,
+      pollingstation: req.paramAudit.pollingstationId,
+      team: team, // sanitize this for auditor model
+      teamLength: team.length,
+      shifts: shiftsFilled
+    };
+    req.auditStats = auditStats;
+    next();
+  } 
+  else {
+    auditStats = {
+      teamLength: team.length,
+      shifts: shiftsFilled
+    }
+    req.auditStats = auditStats;
+    next()
   }
-  req.auditStats = auditStats;
-  next()
 }
 
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with volunteer_id listing. */
-router.route('/election/:electionId/pollingstation/:pollingstationId/stats') 
+router.route('/election/:electionId/pollingstation/:pollingstationId') 
 .all(async function(req, res, next) {
   electionId = req.params.electionId;
   pollingstationId = req.params.pollingstationId;
