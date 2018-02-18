@@ -7,6 +7,7 @@ var Election = require('../models/election');
 var Audit = require('../models/audit');
 var User = require('../models/user');
 var Schedule = require('../models/schedule');
+const mongoose = require('mongoose');
 
 // ------------------- AUTH WITH JWT -------------------
 
@@ -171,6 +172,19 @@ const auditStats = async (req, res, next) => {
   }
 }
 
+// /* RETURN USERS AUDIT */
+// const getAudit = async (req, res, next) =>{
+//   authedUsersActiveAudit
+//   {
+//     auditId: req.activeSched[0].auditId,
+//     electionId: req.activeSched[0].electionId,
+//     pollingstationId: req.activeSched[0].pollingStationId, //
+//     team?: Auditor[];
+//     teamLength: number;
+//     shifts: req.activeSched[0].shifts,
+//   }
+// }
+
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with electionId/pollingstationId listing. */
@@ -215,7 +229,6 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
 }).get(auditStats, function(req, res) {
     res.status(201).json({
       message: 'Success',
-      // obj: paramAudit
       obj: req.auditStats
     });
 }).post(function(req, res) {
@@ -265,9 +278,13 @@ router.route('/user/:userId')
         let activeSched = schedules.filter((sched) => {
           return sched.active();
         })
+        console.log('ID', activeSched[0].auditId)
         if (activeSched!=null){
-          req.activeSched = activeSched;
-          next();
+          Audit.findById(activeSched[0].auditId, function(err, audit){
+            req.paramAudit = audit;
+            console.log('erheshgeshtdrtjhrd', audit)
+            next();
+          }, )
         }
       }
     })
@@ -279,18 +296,11 @@ router.route('/user/:userId')
       }
     });
   }
-}).get(function(req, res) {
+}).get(auditStats, function(req, res) {
   // console.log('req.activeSched', req.activeSched.auditId)
     res.status(201).json({
       message: 'Success',
-      obj: {
-        auditId: req.activeSched[0].auditId,
-        electionId: req.activeSched[0].electionId,
-        pollingstationId: req.activeSched[0].pollingStationId, //
-        team?: Auditor[];
-        teamLength: number;
-        shifts: req.activeSched[0].shifts,
-      }
+      obj: req.authedUsersActiveAudit
     });
 }).post(function(req, res) {
 }).put(function(req, res) {
