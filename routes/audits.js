@@ -82,39 +82,14 @@ router.get('/all', function(req, res, next) {
 ///////////////////////// returnSterilizedAuditors for team member
 async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
   let users;
-  // let userSterilized = {};
   let userArrSterilized = [];
   let activeSched;
   try {
     users = await User.find({ '_id': userIdArr });
-    // userArrSterilized = users.map(async (user) => {
-    //   try {
-    //     activeSched = await user.activeSchedule();
-    //     // console.log('activeSched', activeSched)
-    //     userSterilized._id = user._id;
-    //     userSterilized.firstName = user.firstName;
-    //     userSterilized.lastName = user.lastName;
-    //     userSterilized.userRoles = user.activeRoles;
-    //     userSterilized.emailAddress = user.emailAddress;
-    //     userSterilized.phoneNumber = user.phoneNumber;
-    //     userSterilized.age = user.age;
-    //     userSterilized.sex = user.sex;
-    //     userSterilized.partyAffiliation = user.partyAffiliation;
-    //     userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
-    //     userSterilized.shifts = activeSched.shifts;
-    //     // console.log('userSter', userSterilized)
-    //     userArrSterilized.push(userSterilized);
-    //   }
-    //   catch(e) {
-    //     console.error('Error occured', e);
-    //     return null;
-    //   }
-    // })
     async function createAuditorTeam(passedUsers){
       for (const user of passedUsers) {
         let userSterilized = {};
         activeSched = await user.activeSchedule();
-        // console.log('activeSched', activeSched)
         userSterilized._id = user._id;
         userSterilized.firstName = user.firstName;
         userSterilized.lastName = user.lastName;
@@ -126,15 +101,11 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
         userSterilized.partyAffiliation = user.partyAffiliation;
         userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
         userSterilized.shifts = activeSched.shifts;
-        console.log('userSterDIIIIFFFF', userSterilized)
         userArrSterilized.push(userSterilized);
       }
-      // console.log('userArrSterilizeddddddddINSIDE', userArrSterilized)
-      // return userArrSterilized;
     }
     await createAuditorTeam(users);
     if (reqUser.activeRoles.includes('lead') || reqUser.activeRoles.includes('admin')) {
-      // console.log('userArrSterilizedddddddd', await Promise.all(userArrSterilized))
       return userArrSterilized;
     }
     else {
@@ -164,11 +135,9 @@ const auditStats = async (req, res, next) => {
   let auditStats;
   try {
     teamIds = await req.paramAudit.getTeam();
-    console.log('TEMAMMMAMMMMIIIIIDDDDDDDDSSSS', teamIds)
     shiftsFilled = await req.paramAudit.getShiftsFilled();
     try {
       team = await returnSterilizedUsers(teamIds, req.authedUser, req.paramAudit);
-      console.log('TEMAMMMAMMMM', await team)
     }
     catch(e) {
       console.log('Error occured', e);
@@ -249,9 +218,7 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
       obj: req.auditStats
     });
 }).post(function(req, res) {
-    // res.send('Post for paramAudit ' + pollingauditId);
 }).put(function(req, res) {
-  console.log('HEREEEEEEEE')
   paramAudit.set({
     precinctNumber : req.body.precinctNumber
   });
@@ -268,7 +235,6 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
     });
   });
 }).delete(function(req, res) {
-  // res.send('Delete for paramAudit ' + pollingauditId);
 });
 
 module.exports = router;
