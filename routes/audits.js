@@ -6,6 +6,7 @@ var Pollingstation = require('../models/pollingstation');
 var Election = require('../models/election');
 var Audit = require('../models/audit');
 var User = require('../models/user');
+var Schedule = require('../models/schedule');
 
 // ------------------- AUTH WITH JWT -------------------
 
@@ -172,7 +173,7 @@ const auditStats = async (req, res, next) => {
 
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
-/* ALL with volunteer_id listing. */
+/* ALL with electionId/pollingstationId listing. */
 router.route('/election/:electionId/pollingstation/:pollingstationId') 
 .all(async function(req, res, next) {
   electionId = req.params.electionId;
@@ -231,6 +232,76 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
     }
     res.status(201).json({
       message: 'Pollingaudit updated',
+      obj: result
+    });
+  });
+}).delete(function(req, res) {
+});
+
+/* ALL with volunteer_id listing. */
+router.route('/user/:userId') 
+.all(async function(req, res, next) {
+  userId = req.params.userId;
+  // console.log('HEREEEEEEEE req.authedUser', req.authedUser)
+  if (req.authedUser) {
+    Schedule.find({
+      userId: userId,
+    }, function(err, schedules) {
+      if (err) {
+        return status(500).json({
+          title: 'An error occured',
+          error: err
+        })
+      }
+      else if (schedules === null) {
+        return status(500).json({
+          title: 'Not authenticated',
+          error: {
+            message: 'No access to schedules'
+          }
+        })
+      }
+      else { // find active one and assign
+        let activeSched = schedules.filter((sched) => {
+          return sched.active();
+        })
+        if (activeSched!=null){
+          req.activeSched = activeSched;
+          next();
+        }
+      }
+    })
+  } else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'No access to schedule'
+      }
+    });
+  }
+}).get(function(req, res) {
+  // console.log('req.activeSched', req.activeSched.auditId)
+    res.status(201).json({
+      message: 'Success',
+      obj: {
+        auditId: req.activeSched[0].auditId,
+        shifts: req.activeSched[0].shifts
+      }
+    });
+}).post(function(req, res) {
+}).put(function(req, res) {
+  paramAudit.set({
+    precinctNumber : req.body.precinctNumber
+  });
+  paramAudit.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while updating schedule',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'Pollingschedule updated',
       obj: result
     });
   });
