@@ -285,7 +285,11 @@ router.route('/user/:userId')
       message: 'Success',
       obj: {
         auditId: req.activeSched[0].auditId,
-        shifts: req.activeSched[0].shifts
+        electionId: req.activeSched[0].electionId,
+        pollingstationId: req.activeSched[0].pollingStationId, //
+        team?: Auditor[];
+        teamLength: number;
+        shifts: req.activeSched[0].shifts,
       }
     });
 }).post(function(req, res) {
