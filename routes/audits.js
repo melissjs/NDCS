@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var Pollingstation = require('../models/pollingstation');
 var Election = require('../models/election');
 var Audit = require('../models/audit');
-
+var User = require('../models/user');
 
 // ------------------- AUTH WITH JWT -------------------
 
@@ -77,28 +77,112 @@ router.get('/all', function(req, res, next) {
 //   });
 // });
 
+// ------------------- HELPER FUNCTIONS -------------------
+
+///////////////////////// returnSterilizedAuditors for team member
+async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
+  let users;
+  let userSteralized = {};
+  let userArrSterilized = [];
+  let activeSched;
+  try {
+    users = await User.find({ '_id': userIdArr });
+    // userArrSterilized = users.map(async (user) => {
+    //   try {
+    //     activeSched = await user.activeSchedule();
+    //     // console.log('activeSched', activeSched)
+    //     userSteralized._id = user._id;
+    //     userSteralized.firstName = user.firstName;
+    //     userSteralized.lastName = user.lastName;
+    //     userSteralized.userRoles = user.activeRoles;
+    //     userSteralized.emailAddress = user.emailAddress;
+    //     userSteralized.phoneNumber = user.phoneNumber;
+    //     userSteralized.age = user.age;
+    //     userSteralized.sex = user.sex;
+    //     userSteralized.partyAffiliation = user.partyAffiliation;
+    //     userSteralized.associatedPollingStationKey = reqAudit.pollingStationId;
+    //     userSteralized.shifts = activeSched.shifts;
+    //     // console.log('userSter', userSteralized)
+    //     userArrSterilized.push(userSteralized);
+    //   }
+    //   catch(e) {
+    //     console.error('Error occured', e);
+    //     return null;
+    //   }
+    // })
+    async function createAuditorTeam(passedUsers){
+      for (const user of passedUsers) {
+        activeSched = await user.activeSchedule();
+        // console.log('activeSched', activeSched)
+        userSteralized._id = user._id;
+        userSteralized.firstName = user.firstName;
+        userSteralized.lastName = user.lastName;
+        userSteralized.userRoles = user.activeRoles;
+        userSteralized.emailAddress = user.emailAddress;
+        userSteralized.phoneNumber = user.phoneNumber;
+        userSteralized.age = user.age;
+        userSteralized.sex = user.sex;
+        userSteralized.partyAffiliation = user.partyAffiliation;
+        userSteralized.associatedPollingStationKey = reqAudit.pollingStationId;
+        userSteralized.shifts = activeSched.shifts;
+        // console.log('userSter', userSteralized)
+        userArrSterilized.push(userSteralized);
+      }
+      return userArrSterilized;
+    }
+    await createAuditorTeam(users);
+    if (reqUser.activeRoles.includes('lead') || reqUser.activeRoles.includes('admin')) {
+      console.log('userArrSterilizedddddddd', await Promise.all(userArrSterilized))
+      return userArrSterilized;
+    }
+    else {
+      userArrSterilized.forEach((user) => {
+        if (!user.exposeEmail){ delete user.emailAddress };
+        if (!user.exposePhoneNumber){ delete user.phoneNumber };
+        if (!user.exposeAge){ delete user.age };
+        if (!user.exposeSex){ delete user.sex };
+        if (!user.exposePartyAffiliation){ delete user.partyAffiliation };
+      })
+      return userArrSterilized;
+    }
+  }
+  catch(e) {
+    console.error('Error occured', e);
+    return null;
+  }
+}
+
 // ------------------- MIDDLEWARE -------------------
 
 /* RETURNS AUDIT STATS FOR TEAM MEMBER (ACCESS TO TEAM) OR INTERESTED PARTY (NO TEAM ACCESS) */
-const auditStats = async(req, res, next) => {
+const auditStats = async (req, res, next) => {
+  let teamIds;
   let team;
   let shiftsFilled;
   let auditStats;
   try {
-    team = await req.paramAudit.getTeam();
+    teamIds = await req.paramAudit.getTeam();
     shiftsFilled = await req.paramAudit.getShiftsFilled();
+    try {
+      team = returnSterilizedUsers(teamIds, req.authedUser, req.paramAudit);
+      console.log('TEMAMMMAMMMM', await team)
+    }
+    catch(e) {
+      console.log('Error occured', e);
+      return null;
+    }
   }
   catch(e) {
     console.log('Error occured', e);
     return null;
   }
-  if (team.some((uId) => uId.equals(req.authedUser._id))) {
+  if (teamIds.some((uId) => uId.equals(req.authedUser._id))) {
     auditStats = {
-      _id: req.paramAudit._ud,
+      _id: req.paramAudit._id,
       election: req.paramAudit.electionId,
-      pollingstation: req.paramAudit.pollingstationId,
-      team: team, // sanitize this for auditor model
-      teamLength: team.length,
+      pollingstation: req.paramAudit.pollingStationId,
+      team: team,
+      teamLength: teamIds.length,
       shifts: shiftsFilled
     };
     req.auditStats = auditStats;
@@ -106,7 +190,7 @@ const auditStats = async(req, res, next) => {
   } 
   else {
     auditStats = {
-      teamLength: team.length,
+      teamLength: teamIds.length,
       shifts: shiftsFilled
     }
     req.auditStats = auditStats;
