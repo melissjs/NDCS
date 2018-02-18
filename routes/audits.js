@@ -282,7 +282,6 @@ router.route('/user/:userId')
         if (activeSched!=null){
           Audit.findById(activeSched[0].auditId, function(err, audit){
             req.paramAudit = audit;
-            console.log('erheshgeshtdrtjhrd', audit)
             next();
           }, )
         }
@@ -300,7 +299,7 @@ router.route('/user/:userId')
   // console.log('req.activeSched', req.activeSched.auditId)
     res.status(201).json({
       message: 'Success',
-      obj: req.authedUsersActiveAudit
+      obj: req.auditStats
     });
 }).post(function(req, res) {
 }).put(function(req, res) {
