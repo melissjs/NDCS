@@ -82,7 +82,7 @@ router.get('/all', function(req, res, next) {
 ///////////////////////// returnSterilizedAuditors for team member
 async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
   let users;
-  let userSteralized = {};
+  // let userSterilized = {};
   let userArrSterilized = [];
   let activeSched;
   try {
@@ -91,19 +91,19 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
     //   try {
     //     activeSched = await user.activeSchedule();
     //     // console.log('activeSched', activeSched)
-    //     userSteralized._id = user._id;
-    //     userSteralized.firstName = user.firstName;
-    //     userSteralized.lastName = user.lastName;
-    //     userSteralized.userRoles = user.activeRoles;
-    //     userSteralized.emailAddress = user.emailAddress;
-    //     userSteralized.phoneNumber = user.phoneNumber;
-    //     userSteralized.age = user.age;
-    //     userSteralized.sex = user.sex;
-    //     userSteralized.partyAffiliation = user.partyAffiliation;
-    //     userSteralized.associatedPollingStationKey = reqAudit.pollingStationId;
-    //     userSteralized.shifts = activeSched.shifts;
-    //     // console.log('userSter', userSteralized)
-    //     userArrSterilized.push(userSteralized);
+    //     userSterilized._id = user._id;
+    //     userSterilized.firstName = user.firstName;
+    //     userSterilized.lastName = user.lastName;
+    //     userSterilized.userRoles = user.activeRoles;
+    //     userSterilized.emailAddress = user.emailAddress;
+    //     userSterilized.phoneNumber = user.phoneNumber;
+    //     userSterilized.age = user.age;
+    //     userSterilized.sex = user.sex;
+    //     userSterilized.partyAffiliation = user.partyAffiliation;
+    //     userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
+    //     userSterilized.shifts = activeSched.shifts;
+    //     // console.log('userSter', userSterilized)
+    //     userArrSterilized.push(userSterilized);
     //   }
     //   catch(e) {
     //     console.error('Error occured', e);
@@ -112,27 +112,29 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
     // })
     async function createAuditorTeam(passedUsers){
       for (const user of passedUsers) {
+        let userSterilized = {};
         activeSched = await user.activeSchedule();
         // console.log('activeSched', activeSched)
-        userSteralized._id = user._id;
-        userSteralized.firstName = user.firstName;
-        userSteralized.lastName = user.lastName;
-        userSteralized.userRoles = user.activeRoles;
-        userSteralized.emailAddress = user.emailAddress;
-        userSteralized.phoneNumber = user.phoneNumber;
-        userSteralized.age = user.age;
-        userSteralized.sex = user.sex;
-        userSteralized.partyAffiliation = user.partyAffiliation;
-        userSteralized.associatedPollingStationKey = reqAudit.pollingStationId;
-        userSteralized.shifts = activeSched.shifts;
-        // console.log('userSter', userSteralized)
-        userArrSterilized.push(userSteralized);
+        userSterilized._id = user._id;
+        userSterilized.firstName = user.firstName;
+        userSterilized.lastName = user.lastName;
+        userSterilized.userRoles = user.activeRoles;
+        userSterilized.emailAddress = user.emailAddress;
+        userSterilized.phoneNumber = user.phoneNumber;
+        userSterilized.age = user.age;
+        userSterilized.sex = user.sex;
+        userSterilized.partyAffiliation = user.partyAffiliation;
+        userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
+        userSterilized.shifts = activeSched.shifts;
+        console.log('userSterDIIIIFFFF', userSterilized)
+        userArrSterilized.push(userSterilized);
       }
-      return userArrSterilized;
+      // console.log('userArrSterilizeddddddddINSIDE', userArrSterilized)
+      // return userArrSterilized;
     }
     await createAuditorTeam(users);
     if (reqUser.activeRoles.includes('lead') || reqUser.activeRoles.includes('admin')) {
-      console.log('userArrSterilizedddddddd', await Promise.all(userArrSterilized))
+      // console.log('userArrSterilizedddddddd', await Promise.all(userArrSterilized))
       return userArrSterilized;
     }
     else {
@@ -162,9 +164,10 @@ const auditStats = async (req, res, next) => {
   let auditStats;
   try {
     teamIds = await req.paramAudit.getTeam();
+    console.log('TEMAMMMAMMMMIIIIIDDDDDDDDSSSS', teamIds)
     shiftsFilled = await req.paramAudit.getShiftsFilled();
     try {
-      team = returnSterilizedUsers(teamIds, req.authedUser, req.paramAudit);
+      team = await returnSterilizedUsers(teamIds, req.authedUser, req.paramAudit);
       console.log('TEMAMMMAMMMM', await team)
     }
     catch(e) {
