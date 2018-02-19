@@ -88,7 +88,7 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
   let activeSched;
   try {
     users = await User.find({ '_id': userIdArr });
-    async function createAuditorTeam(passedUsers){
+    async function createAuditorTeam(passedUsers, authedBool){
       for (const user of passedUsers) {
         let userSterilized = {};
         activeSched = await user.activeSchedule();
@@ -96,28 +96,48 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
         userSterilized.firstName = user.firstName;
         userSterilized.lastName = user.lastName;
         userSterilized.userRoles = user.activeRoles;
-        userSterilized.emailAddress = user.emailAddress;
-        userSterilized.phoneNumber = user.phoneNumber;
-        userSterilized.age = user.age;
-        userSterilized.sex = user.sex;
-        userSterilized.partyAffiliation = user.partyAffiliation;
+        if (authedBool) {
+          userSterilized.emailAddress = user.emailAddress;
+        }
+        else {
+          (user.exposeEmail) ? userSterilized.emailAddress = user.emailAddress : userSterilized.emailAddress = undefined;
+        }
+        if (authedBool) {
+          userSterilized.phoneNumber = user.phoneNumber;
+        }
+        else {
+          (user.exposePhoneNumber) ? userSterilized.phoneNumber = user.phoneNumber : userSterilized.phoneNumber = undefined;
+        }
+        if (authedBool) {
+          userSterilized.age = user.age;
+        }
+        else {
+          (user.exposeAge) ? userSterilized.age = user.age : userSterilized.age = undefined;
+        }
+        if (authedBool) {
+          userSterilized.sex = user.sex;
+        }
+        else {
+          (user.exposeSex) ? userSterilized.sex = user.sex : userSterilized.sex = undefined;
+        }
+        if (authedBool) {
+          userSterilized.partyAffiliation = user.partyAffiliation;
+        }
+        else {
+          (user.exposePartyAffiliation) ? userSterilized.partyAffiliation = user.partyAffiliation : userSterilized.partyAffiliation = undefined;
+        }
         userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
         userSterilized.shifts = activeSched.shifts;
         userArrSterilized.push(userSterilized);
       }
     }
-    await createAuditorTeam(users);
+
     if (reqUser.activeRoles.includes('lead') || reqUser.activeRoles.includes('admin')) {
+      await createAuditorTeam(users, true);
       return userArrSterilized;
     }
     else {
-      userArrSterilized.forEach((user) => {
-        if (!user.exposeEmail){ delete user.emailAddress };
-        if (!user.exposePhoneNumber){ delete user.phoneNumber };
-        if (!user.exposeAge){ delete user.age };
-        if (!user.exposeSex){ delete user.sex };
-        if (!user.exposePartyAffiliation){ delete user.partyAffiliation };
-      })
+      await createAuditorTeam(users, false);
       return userArrSterilized;
     }
   }
