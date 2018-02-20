@@ -77,7 +77,7 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
 // ------------------- ALL (GET POST PUT DELETE) -------------------
 
 /* ALL with volunteer_id listing. */
-router.route('/:pollingstationId') 
+router.route('pollingstation/:pollingstationId') 
 .all(async function(req, res, next) {
   pollingstationId = req.params.pollingstationId;
   console.log('HEREEEEEEEE req.authedUser', req.authedUser)
