@@ -279,7 +279,7 @@ router.route('/user/:userId')
   if (req.authedUser) {
     Schedule.find({
       userId: userId,
-    }, function(err, schedules) {
+    }, async function(err, schedules) {
       if (err) {
         return status(500).json({
           title: 'An error occured',
@@ -295,15 +295,38 @@ router.route('/user/:userId')
         })
       }
       else { // find active one and assign
-        let activeSched = schedules.find(async (sched) => {
-          return await sched.active();
-        })
-        if (activeSched!=null){
+        // let activeSched = schedules.find(async (sched) => {
+        //   return await sched.active();
+        // })
+
+        async function getActiveSchedule(passedSchedules) {
+          let activeSched;
+          for (const schedule of passedSchedules) {
+            if (await schedule.active()) {
+              activeSched = schedule;
+            }
+            else {
+              activeSched = undefined;
+            }
+          }
+          return activeSched;
+        }
+        let activeSched = await getActiveSchedule(schedules);
+        if (activeSched) {
           req.paramActiveSchedule = activeSched;
           Audit.findById(activeSched.auditId, function(err, audit){
             req.paramAudit = audit;
             next();
           })
+        }
+        else {
+          console.log('SHOULD BE ELSE BC NO ACTIVE')
+          return res.status(401).json({
+            title: 'Not authenticated',
+            error: {
+              message: 'No access to schedule'
+            }
+          });
         }
       }
     })
@@ -351,7 +374,7 @@ router.route('/user/:userId')
         error: err
       });
     }
-    console.log('result', result)
+    // console.log('result', result)
     res.status(201).json({
       message: 'Successfully left audit',
       obj: result

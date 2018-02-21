@@ -44,11 +44,13 @@ AuditSchema.methods.getShiftsFilled = async function getShiftsFilled () {
   async function getShiftsFromUsers(users) {
     for (const user of users) {
       activeSched = await user.activeSchedule();
-      aggShifts = aggShifts + activeSched.shifts.length;
+      if (activeSched) {
+        aggShifts = aggShifts + activeSched.shifts.length;
+      }
     }
     return aggShifts;
   }
-  return getShiftsFromUsers(users);
+  return await getShiftsFromUsers(users);
 };
 
 
