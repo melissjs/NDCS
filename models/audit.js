@@ -18,10 +18,12 @@ AuditSchema.methods.getTeam = async function getTeam () {
   const team = [];
   try {
     const teamSchedules = await Schedule.find({
-      auditId: this._id,
+      auditId: this._id, // and active
     })
     teamSchedules.forEach((sched) => {
+      if (sched.isMember){ // active sched
       team.push(sched.userId);
+      }
     })
     return team;
   }

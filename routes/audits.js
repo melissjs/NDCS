@@ -127,7 +127,9 @@ async function returnSterilizedUsers(userIdArr, reqUser, reqAudit) {
           (user.exposePartyAffiliation) ? userSterilized.partyAffiliation = user.partyAffiliation : userSterilized.partyAffiliation = undefined;
         }
         userSterilized.associatedPollingStationKey = reqAudit.pollingStationId;
+        // if (activeSched) {
         userSterilized.shifts = activeSched.shifts;
+        // } // maybe?
         userArrSterilized.push(userSterilized);
       }
     }
@@ -158,7 +160,7 @@ const auditStats = async (req, res, next) => {
   try {
     teamIds = await req.paramAudit.getTeam();
     shiftsFilled = await req.paramAudit.getShiftsFilled();
-    try {
+    try { // onlyforaccess?? teammember or admin
       team = await returnSterilizedUsers(teamIds, req.authedUser, req.paramAudit);
     }
     catch(e) {
