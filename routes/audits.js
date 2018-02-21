@@ -295,15 +295,15 @@ router.route('/user/:userId')
         })
       }
       else { // find active one and assign
-        let activeSched = schedules.filter((sched) => {
-          return sched.active();
+        let activeSched = schedules.find(async (sched) => {
+          return await sched.active();
         })
-        console.log('ID', activeSched[0].auditId)
         if (activeSched!=null){
-          Audit.findById(activeSched[0].auditId, function(err, audit){
+          req.paramActiveSchedule = activeSched;
+          Audit.findById(activeSched.auditId, function(err, audit){
             req.paramAudit = audit;
             next();
-          }, )
+          })
         }
       }
     })
@@ -339,6 +339,24 @@ router.route('/user/:userId')
     });
   });
 }).delete(function(req, res) {
+  req.paramActiveSchedule.joinHistory.push({
+    isMember: false,
+    selfInitiated: true,
+    date: Date.now()
+  });
+  req.paramActiveSchedule.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while unjoining active audit schedule',
+        error: err
+      });
+    }
+    console.log('result', result)
+    res.status(201).json({
+      message: 'Successfully left audit',
+      obj: result
+    });
+  });
 });
 
 /* ALL with auditId listing. */
