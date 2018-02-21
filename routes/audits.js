@@ -225,7 +225,6 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
         })
       }
       else if (audit === null) {
-        // console.error('HEREEEEEISERROR')
         return res.status(500).json({
           title: 'Audit does not exist',
           error: {
