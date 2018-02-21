@@ -341,64 +341,68 @@ router.route('/user/:userId')
 }).delete(function(req, res) {
 });
 
-/* ALL with userId listing. */
-router.route('/audit/:auditId') 
-.all(async function(req, res, next) {
-  auditId = req.params.auditId;
-  // console.log('HEREEEEEEEE req.authedUser', req.authedUser)
-  if (req.authedUser) {
-    Audit.findById(auditId, function(err, audit) {
-      if (err) {
-        return status(500).json({
-          title: 'An error occured',
-          error: err
-        })
-      }
-      else if (audit === null) {
-        return status(500).json({
-          title: 'Not authenticated',
-          error: {
-            message: 'No access to schedules'
-          }
-        })
-      }
-      else {
-        req.paramAudit = audit;
-        next();
-      }
-    })
-  } else {
-    return res.status(401).json({
-      title: 'Not authenticated',
-      error: {
-        message: 'No access to schedule'
-      }
-    });
-  }
-}).get(auditStats, function(req, res) {
-  // console.log('req.activeSched', req.activeSched.auditId)
-    res.status(201).json({
-      message: 'Success',
-      obj: req.auditStats
-    });
-}).post(function(req, res) {
-}).put(function(req, res) {
-  paramAudit.set({
-    precinctNumber : req.body.precinctNumber
-  });
-  paramAudit.save(function(err, result){
-    if (err) {
-      return res.status(500).json({
-        title: 'An error occurred while updating schedule',
-        error: err
-      });
-    }
-    res.status(201).json({
-      message: 'Pollingschedule updated',
-      obj: result
-    });
-  });
-}).delete(function(req, res) {
-});
+/* ALL with auditId listing. */
+// router.route('/audit/:auditId') 
+// .all(async function(req, res, next) {
+//   auditId = req.params.auditId;
+//   // console.log('HEREEEEEEEE req.authedUser', req.authedUser)
+//   if (req.authedUser) {
+//     Audit.findById(auditId, function(err, audit) {
+//       if (err) {
+//         return status(500).json({
+//           title: 'An error occured',
+//           error: err
+//         })
+//       }
+//       else if (audit === null) {
+//         return status(500).json({
+//           title: 'Not authenticated',
+//           error: {
+//             message: 'No access to schedules'
+//           }
+//         })
+//       }
+//       else {
+//         req.paramAudit = audit;
+//         next();
+//       }
+//     })
+//   } else {
+//     return res.status(401).json({
+//       title: 'Not authenticated',
+//       error: {
+//         message: 'No access to schedule'
+//       }
+//     });
+//   }
+// }).get(auditStats, function(req, res) {
+//     res.status(201).json({
+//       message: 'Success',
+//       obj: req.auditStats
+//     });
+// }).post(function(req, res) {
+// }).put(function(req, res) {
+//   paramAudit.set({
+//     precinctNumber : req.body.precinctNumber
+//   });
+//   paramAudit.save(function(err, result){
+//     if (err) {
+//       return res.status(500).json({
+//         title: 'An error occurred while updating schedule',
+//         error: err
+//       });
+//     }
+//     res.status(201).json({
+//       message: 'Pollingschedule updated',
+//       obj: result
+//     });
+//   });
+// }).delete(function(req, res) {
+//   req.paramAudit.remove();
+//   res.status(201).json({
+//     message: 'Success',
+//     obj: null
+//   });
+// });
 
 module.exports = router;
