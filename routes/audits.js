@@ -219,14 +219,15 @@ router.route('/election/:electionId/pollingstation/:pollingstationId')
       electionId: electionId
     }, function(err, audit) {
       if (err) {
-        return status(500).json({
+        return res.status(500).json({
           title: 'An error occured',
           error: err
         })
       }
       else if (audit === null) {
-        return status(500).json({
-          title: 'Not authenticated',
+        // console.error('HEREEEEEISERROR')
+        return res.status(500).json({
+          title: 'Audit does not exist',
           error: {
             message: 'No access to audit'
           }
