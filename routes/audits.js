@@ -322,7 +322,6 @@ router.route('/user/:userId')
           })
         }
         else {
-          console.log('SHOULD BE ELSE BC NO ACTIVE')
           return res.status(401).json({
             title: 'Not authenticated',
             error: {
