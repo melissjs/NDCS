@@ -186,6 +186,10 @@ const auditStats = async (req, res, next) => {
   } 
   else {
     auditStats = {
+      _id: req.paramAudit._id,
+      election: req.paramAudit.electionId,
+      pollingstation: req.paramAudit.pollingStationId,
+      team: undefined,
       teamLength: teamIds.length,
       shifts: shiftsFilled
     }
