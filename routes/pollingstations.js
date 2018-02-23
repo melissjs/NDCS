@@ -45,7 +45,7 @@ router.get('/election/:electionId/operative', function(req, res, next) {
   electionId = req.params.electionId;
   Pollingstation.find({
     operative: true,
-    electionId: [electionId]
+    electionId: electionId
   })
     .exec(function(err, stations) {
       if (err) {
