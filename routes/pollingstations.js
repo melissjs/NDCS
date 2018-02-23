@@ -40,6 +40,26 @@ router.get('/all', function(req, res, next) {
     });
 });
 
+/* GET ALL POLLINGSTATIONS FOR CERTAIN ELECTIOIN */
+router.get('/election/:electionId/operative', function(req, res, next) {
+  electionId = req.params.electionId;
+  Pollingstation.find({
+    operative: true,
+    electionId: [electionId]
+  })
+    .exec(function(err, stations) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: stations
+      });
+    });
+});
 
 // ------------------- POST -------------------
 
