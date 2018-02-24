@@ -293,10 +293,10 @@ router.route('/user/:userId')
         })
       }
       else if (schedules === null) {
-        return status(500).json({
-          title: 'Not authenticated',
+        return status(400).json({
+          title: 'Resource Not Found',
           error: {
-            message: 'No access to schedules'
+            message: 'No matching schedule'
           }
         })
       }
@@ -326,10 +326,10 @@ router.route('/user/:userId')
           })
         }
         else {
-          return res.status(401).json({
-            title: 'Not authenticated',
+          return res.status(400).json({
+            title: 'Resource Not Found',
             error: {
-              message: 'No access to schedule'
+              message: 'No matching schedule'
             }
           });
         }
