@@ -48,6 +48,12 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
   });
 });
 
+// ------------------- PUT -------------------
+
+/* REACTIVATE USER */
+// find user, check password, change status and status history, signin
+
+
 // ------------------- AUTH -------------------
 
 ///////// deal with user activity processes
@@ -64,7 +70,7 @@ router.post('/signin', function(req, res, next) {
     if (!user) {
       return res.status(401).json({
         title: 'Login failed',
-        error: {message: 'Invalid login credentials OH MELISSA'}
+        error: {message: 'Invalid login credentials NO USER'}
       });
     }
     if (!bcrypt.compareSync(req.body.password, user.password)) {
@@ -75,7 +81,7 @@ router.post('/signin', function(req, res, next) {
     }
     if (!isUserFN(user.activeRoles)) {
       return res.status(401).json({
-        title: 'Inactive account',
+        title: 'Account inactive',
         error: {message: 'Would you like to reactivate your account?'}
       });
     }
