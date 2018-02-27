@@ -2,7 +2,7 @@ const User = require('../models/user');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe('Validation tests', () => {
+describe.only('Validation tests', () => {
 
   it('Requires a unique username', (done) => {
     const thisUser = new User(THM.userObj);
@@ -39,13 +39,15 @@ describe('Validation tests', () => {
     thisVolunteer.userRoles.push({
       role: 'auditor',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
         date: Date.now()
-      }
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
     });
     thisVolunteer.save()
     .then((res) => {})
