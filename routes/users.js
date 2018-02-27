@@ -43,7 +43,7 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
     }
     res.status(201).json({
       message: 'User created',
-      obj: result
+      // obj: result
     });
   });
 });
@@ -73,6 +73,7 @@ router.post('/reactivate', function(req, res, next) {
       });
     }
     if (!isUserFN(user.activeRoles)) {
+      console.log('getting here')
       // status, userroles, statusHistory
       //go through userRoles and find 'user' then add initiated and activated 
       for (ur of user.userRoles) {
@@ -86,7 +87,7 @@ router.post('/reactivate', function(req, res, next) {
             authenticatingUserId: user._id,
             date: Date.now()
           });
-          return;
+          break;
         }
       }
       user.status = 'active';
@@ -100,7 +101,7 @@ router.post('/reactivate', function(req, res, next) {
         }
         res.status(201).json({
           message: 'User updated',
-          obj: result
+          // obj: result
         });
       })
     }
