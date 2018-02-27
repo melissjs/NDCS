@@ -636,51 +636,51 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null]
+        inactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       },{
         role: 'admin',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }],
       firstName: 'Admin', 
       lastName: 'One',
@@ -701,51 +701,51 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }, {
         role: 'lead',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }],
       firstName: 'Lead Volunteer', 
       lastName: 'One',
@@ -765,39 +765,39 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        dateInactivated: [null]
+        inactivated: [null]
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null]
+        inactivated: [null]
       }
     ],
       firstName: 'Volunteer', 
@@ -818,39 +818,42 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: false,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        dateInactivated: [null],
+        inactivated: [null],
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        dateInactivated: [null]
+        inactivated: [null]
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [{
+        initiated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        dateActivated: [{
+        activated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        dateInactivated: [null]
+        inactivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }]
       }
     ],
       firstName: 'Volunteer', 

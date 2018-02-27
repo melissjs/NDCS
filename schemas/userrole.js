@@ -14,9 +14,9 @@ const AuthSchema = require('./auth');
 const UserRoleSchema = new Schema({
   role: { type: String, required: [true, 'Role required'], enum: {values:  ['user', 'volunteer', 'auditor', 'lead', 'admin'], message: 'Invalid role option' } },
   active: { type: Boolean, required: [true, 'Active or inactive required'] },
-  dateInitiated: { type: [AuthSchema], required: [true, 'Role initiation date required'] },
-  dateActivated: { type: [AuthSchema]},
-  dateInactivated: { type: [AuthSchema] },
+  initiated: { type: [AuthSchema], required: [true, 'Role initiation date required'] },
+  activated: { type: [AuthSchema]},
+  inactivated: { type: [AuthSchema] },
 });
 
 module.exports = UserRoleSchema;

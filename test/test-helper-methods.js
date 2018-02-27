@@ -154,15 +154,15 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null]
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null],
       auth: {
         authenticatingUserId: '5a3047c071b36b39cfce6640',
         date: Date.now()
@@ -255,15 +255,15 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null]
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null],
       auth: {
         authenticatingUserId: '5a3047c071b36b39cfce6640',
         date: Date.now()
@@ -287,15 +287,15 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null]
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null],
       auth: {
         authenticatingUserId: '5a3047c071b36b39cfce6640',
         date: Date.now()
@@ -319,15 +319,15 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null]
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      dateInitiated: [Date.now()],
-      dateActivated: [Date.now()],
-      dateInactivated: [null],
+      initiated: [Date.now()],
+      activated: [Date.now()],
+      inactivated: [null],
       auth: {
         authenticatingUserId: '5a3047c071b36b39cfce6640',
         date: Date.now()
@@ -507,15 +507,15 @@ const THM = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null]
+        initiated: [Date.now()],
+        activated: [Date.now()],
+        inactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
+        initiated: [Date.now()],
+        activated: [Date.now()],
+        inactivated: [null],
         auth: {
           authenticatingUserId: '5a3047c071b36b39cfce6640',
           date: Date.now()
