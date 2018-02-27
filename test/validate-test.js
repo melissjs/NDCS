@@ -2,7 +2,7 @@ const User = require('../models/user');
 const assert = require('assert');
 const THM = require('./test-helper-methods');
 
-describe.only('Validation tests', () => {
+describe('Validation tests', () => {
 
   it('Requires a unique username', (done) => {
     const thisUser = new User(THM.userObj);
