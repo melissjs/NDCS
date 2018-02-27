@@ -22,13 +22,15 @@ describe('Creating, adding and deleting Sub Schemas (volunteer userRoles)', () =
         volunteer.userRoles.push({
           role: 'auditor',
           active: true,
-          dateInitiated: [Date.now()],
-          dateActivated: [Date.now()],
-          dateInactivated: [null],
-          auth: {
-            authenticatingUserId: '5a3047c071b36b39cfce6640',
+          initiated: [{
+            authenticatingUserId: '5a3047c071b36b39cfce7722',
             date: Date.now()
-          }
+          }],
+          activated: [{
+            authenticatingUserId: '5a3047c071b36b39cfce7722',
+            date: Date.now()
+          }],
+          inactivated: [null]
         });
         volunteer.save()
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))

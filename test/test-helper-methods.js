@@ -154,19 +154,27 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
       inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
-      inactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
         date: Date.now()
-      }
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
     }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
@@ -255,19 +263,27 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
       inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
-      inactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
         date: Date.now()
-      }
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
     }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
@@ -287,19 +303,27 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
       inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
-      inactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
         date: Date.now()
-      }
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
     }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
@@ -319,19 +343,27 @@ const THM = {
     userRoles: [{
       role: 'user',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
       inactivated: [null]
     }, {
       role: 'volunteer',
       active: true,
-      initiated: [Date.now()],
-      activated: [Date.now()],
-      inactivated: [null],
-      auth: {
-        authenticatingUserId: '5a3047c071b36b39cfce6640',
+      initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
         date: Date.now()
-      }
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
     }],
     firstName: 'thisVolunteerFirstName', 
     lastName: 'thisVolunteerLastName',
@@ -507,19 +539,27 @@ const THM = {
       userRoles: [{
         role: 'user',
         active: true,
-        initiated: [Date.now()],
-        activated: [Date.now()],
-        inactivated: [null]
+        initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
-        initiated: [Date.now()],
-        activated: [Date.now()],
-        inactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
-          date: Date.now()
-        }
+        initiated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      activated: [{
+        authenticatingUserId: '5a3047c071b36b39cfce7722',
+        date: Date.now()
+      }],
+      inactivated: [null]
       }],
       firstName: 'thisVolunteerFirstName', 
       lastName: 'thisVolunteerLastName',
