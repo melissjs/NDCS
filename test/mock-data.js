@@ -636,39 +636,51 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
         dateInactivated: [null]
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce7711',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
-        }
-      },{
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
+      }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateActivated: [{
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
-        }
+        }],
+        dateInactivated: [null],
       },{
         role: 'admin',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce7711',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }],
       firstName: 'Admin', 
       lastName: 'One',
@@ -689,43 +701,51 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
-        },
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }, {
         role: 'lead',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }],
       firstName: 'Lead Volunteer', 
       lastName: 'One',
@@ -745,33 +765,39 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
-        },
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7712',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7712',
+          date: Date.now()
+        }],
+        dateInactivated: [null]
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null]
       }
     ],
       firstName: 'Volunteer', 
@@ -792,33 +818,39 @@ const MD = {
       userRoles: [{
         role: 'user',
         active: false,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
-        },
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7722',
+          date: Date.now()
+        }],
+        dateInactivated: [null],
       }, {
         role: 'volunteer',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7722',
+          date: Date.now()
+        }],
+        dateInactivated: [null]
       }, {
         role: 'auditor',
         active: true,
-        dateInitiated: [Date.now()],
-        dateActivated: [Date.now()],
-        dateInactivated: [null],
-        auth: {
-          authenticatingUserId: '5a3047c071b36b39cfce6640',
+        dateInitiated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
-        }
+        }],
+        dateActivated: [{
+          authenticatingUserId: '5a3047c071b36b39cfce7700',
+          date: Date.now()
+        }],
+        dateInactivated: [null]
       }
     ],
       firstName: 'Volunteer', 
