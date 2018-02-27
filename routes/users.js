@@ -53,39 +53,58 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
 /* REACTIVATE USER */
 // find user, check password, change status and status history, signin
 router.post('/reactivate', function(req, res, next) {
-  // User.findOne({username: req.body.username}, function(err, user){
-  //   if (err) {
-  //     return res.status(500).json({
-  //       title: 'An error occured while signing in user',
-  //       error: err
-  //     });
-  //   }
-  //   if (!user) {
-  //     return res.status(401).json({
-  //       title: 'Login failed',
-  //       error: {message: 'Invalid login credentials NO USER'}
-  //     });
-  //   }
-  //   if (!bcrypt.compareSync(req.body.password, user.password)) {
-  //     return res.status(401).json({
-  //       title: 'Login failed',
-  //       error: {message: 'Invalid login credentials PASSWORD'}
-  //     });
-  //   }
-  //   if (!isUserFN(user.activeRoles)) {
-  //     user.set({ us})
-
-      
-  //     let userSterilized = JSON.parse(JSON.stringify(user));
-  //     delete userSterilized.password;
-  //     var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
-  //     res.status(200).json({
-  //       message: 'Successfully logged in',
-  //       token: token,
-  //       // userId: user._id
-  //     })
-  //   }
-  // })
+  User.findOne({username: req.body.username}, function(err, user){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occured while signing in user',
+        error: err
+      });
+    }
+    if (!user) {
+      return res.status(401).json({
+        title: 'Login failed',
+        error: {message: 'Invalid login credentials NO USER'}
+      });
+    }
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({
+        title: 'Login failed',
+        error: {message: 'Invalid login credentials PASSWORD'}
+      });
+    }
+    if (!isUserFN(user.activeRoles)) {
+      // status, userroles, statusHistory
+      //go through userRoles and find 'user' then add initiated and activated 
+      for (ur of user.userRoles) {
+        if (ur.role === 'user') {
+          ur.active = true;
+          ur.initiated.push({
+            authenticatingUserId: user._id,
+            date: Date.now()
+          });
+          ur.activated.push({
+            authenticatingUserId: user._id,
+            date: Date.now()
+          });
+          return;
+        }
+      }
+      user.status = 'active';
+      user.statusHistory.push('active');
+      user.save(function(err, result){
+        if (err) {
+          return res.status(500).json({
+            title: 'An error occurred while updating user',
+            error: err
+          });
+        }
+        res.status(201).json({
+          message: 'User updated',
+          obj: result
+        });
+      })
+    }
+  })
 })
 
 
