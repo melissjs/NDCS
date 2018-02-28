@@ -162,6 +162,10 @@ const MD = {
       electionId: '5a3047c071b36b39cfce6600',
       pollingStationId: '5a3047c071b36b39cfce6655'
     },
+    { // 2016 westwood
+      electionId: '5a3047c071b36b39cfce6600',
+      pollingStationId: '5a3047c071b36b39cfce6666'
+    },
     { // 2018 angeles
       electionId: '5a3047c071b36b39cfce6611',
       pollingStationId: '5a3047c071b36b39cfce6655'
@@ -177,7 +181,9 @@ const MD = {
     audit3.set('_id', '5a3047c071b36b39cfce1133');
     let audit4 = new Audit(this.auditArray[3]);
     audit4.set('_id', '5a3047c071b36b39cfce1144');
-    await Promise.all([audit1.save(), audit2.save(), audit3.save(), audit4.save()]);
+    let audit5 = new Audit(this.auditArray[4]);
+    audit5.set('_id', '5a3047c071b36b39cfce1155');
+    await Promise.all([audit1.save(), audit2.save(), audit3.save(), audit4.save(), audit4.save()]);
   },
 
   //////////////////////// CANDIDATE ////////////////////////
@@ -455,7 +461,7 @@ const MD = {
       notes: 'Additional information'
     },
     {
-      electionId: ['5a3047c071b36b39cfce6611'],
+      electionId: ['5a3047c071b36b39cfce6600', '5a3047c071b36b39cfce6611'],
       precinctNumber: '2001A - 2001B',
       locationName: 'Angeles High School',
       streetAddress: '555 thisStreetAddress',
@@ -1000,8 +1006,9 @@ module.exports = MD;
 // currentElection: 5a3047c071b36b39cfce6611
 // audit1: (westwood) 5a3047c071b36b39cfce1111,
 // audit2: (federal) 5a3047c071b36b39cfce1122,
-// audit3: (old westood) 5a3047c071b36b39cfce1133,
+// audit3: (old angeles) 5a3047c071b36b39cfce1133,
 // audit4: (angeles) 5a3047c071b36b39cfce1144,
+// audit4: (old westwood) 5a3047c071b36b39cfce1155,
 // electOffice (congress): 5a3047c071b36b39cfce6622
 // electOffice (senate): 5a3047c071b36b39cfce6633
 // pollingStation (federal): 5a3047c071b36b39cfce6644
