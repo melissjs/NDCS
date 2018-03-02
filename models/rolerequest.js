@@ -4,7 +4,7 @@ const TimesheetSchema = require('../schemas/timesheet');
 const JoinhistorySchema = require('../schemas/joinhistory');
 
 let ethnicities = [ 'volunteer', 'auditor', 'lead', 'admin'];
-function ethnicitiesValidator(ethnicitiesArray) {
+function rolesValidator(ethnicitiesArray) {
   return ethnicitiesArray.every((ethnicity)=>{
     return (ethnicities.includes(ethnicity))  
   })
@@ -12,7 +12,7 @@ function ethnicitiesValidator(ethnicitiesArray) {
 
 const RolerequestSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
-  rolesRequested: { type: [String], validate: { validator: ethnicitiesValidator, message: "Role does not exist" } },
+  rolesRequested: { type: [String], validate: { validator: rolesValidator, message: "Role does not exist" } },
   shifts: { type: [Number], validate: {validator: ShiftValidator, message: 'Invalid shift options' } },
   timeSheet: { type: [TimesheetSchema] },
   exitReview: { type: Schema.Types.ObjectId, ref: 'Exitreview' },
