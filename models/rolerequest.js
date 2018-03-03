@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const TimesheetSchema = require('../schemas/timesheet');
 const JoinhistorySchema = require('../schemas/joinhistory');
 
-let ethnicities = [ 'volunteer', 'auditor', 'lead', 'admin'];
-function rolesValidator(ethnicitiesArray) {
-  return ethnicitiesArray.every((ethnicity)=>{
-    return (ethnicities.includes(ethnicity))  
+let roles = [ 'volunteer', 'auditor', 'lead', 'admin'];
+function rolesValidator(rolesArray) {
+  return rolesArray.every((ethnicity)=>{
+    return (roles.includes(ethnicity))  
   })
 };
 
