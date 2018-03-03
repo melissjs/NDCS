@@ -19,4 +19,6 @@ const UserRoleSchema = new Schema({
   inactivated: { type: [AuthSchema] },
 });
 
+// make active a virtual property that returns true if activated.length = inactivated.length+1 ?
+
 module.exports = UserRoleSchema;
