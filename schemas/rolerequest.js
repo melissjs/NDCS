@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RoleRequestSchema = new Schema({
-
 roleRequested: { type: String, required: [true, 'Role required'], enum: {values:  ['user', 'volunteer', 'auditor', 'watcher', 'lead', 'legalObserver', 'admin'], message: 'Invalid role option' } },
-roleReason: { type: String, required: [true, 'Role reason required']},
+reasons: { type: String, required: [true, 'Role reason required']},
+questions: { type: String },
 reviewed: { type: Boolean,  default: false, required: [true, 'reviewed required'] }
 });
 
