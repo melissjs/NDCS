@@ -3,17 +3,9 @@ const Schema = mongoose.Schema;
 const TimesheetSchema = require('../schemas/timesheet');
 const JoinhistorySchema = require('../schemas/joinhistory');
 
-let roles = [ 'volunteer', 'auditor', 'lead', 'admin'];
-function rolesValidator(rolesArray) {
-  return rolesArray.every((role)=>{
-    return (roles.includes(role))  
-  })
-};
-
-const RolerequestSchema = new Schema({
+const RoleRequestApplicationSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
-  roleRequested: { type: [String], validate: { validator: rolesValidator, message: "Role does not exist" } },
-  // reason-role:,
+  // roleRequests: rr schema arr
   // questions:
   // preferredContact:,
   // references:,
@@ -27,7 +19,7 @@ const RolerequestSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('Rolerequest', RolerequestSchema);
+module.exports = mongoose.model('Rolerequest', RoleRequestApplicationSchema);
 
 
 // approved to roles?
