@@ -176,7 +176,7 @@ const auditStats = async (req, res, next) => {
     auditStats = {
       _id: req.paramAudit._id,
       election: req.paramAudit.electionId,
-      pollingstation: req.paramAudit.pollingStationId,
+      pollingstationId: req.paramAudit.pollingStationId,
       team: team,
       teamLength: teamIds.length,
       shifts: shiftsFilled
@@ -188,7 +188,7 @@ const auditStats = async (req, res, next) => {
     auditStats = {
       _id: req.paramAudit._id,
       election: req.paramAudit.electionId,
-      pollingstation: req.paramAudit.pollingStationId,
+      pollingstationId: req.paramAudit.pollingStationId,
       team: undefined,
       teamLength: teamIds.length,
       shifts: shiftsFilled
