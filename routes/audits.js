@@ -372,6 +372,22 @@ router.route('/user/:userId')
     selfInitiated: true,
     date: Date.now()
   });
+  console.log('authedUser.userRoles BEFORE role inactive', req.authedUser.userRoles)
+  // ammend auditor role as inactive
+  for (const auditRole of req.authedUser.userRoles) {
+    if (auditRole.role = 'auditor') {
+      auditRole.active = false;
+      auditRole.inactivated.push({
+        authenticatingUserId: req.paramAuthedUser._id,
+        date: Date.now()
+      });
+      console.log('HEREHEREHEREHEREHERE', auditRole)
+      break;
+    }
+  }
+  console.log('authedUser.userRoles after role inactive', req.authedUser.userRoles)
+  req.paramAuthedUser.save()
+  .then(
   req.paramActiveSchedule.save(function(err, result){
     if (err) {
       return res.status(500).json({
@@ -384,8 +400,9 @@ router.route('/user/:userId')
       message: 'Successfully left audit',
       obj: result
     });
-  });
+  }))
 });
+
 
 /* ALL with auditId listing. */
 // router.route('/audit/:auditId') 
