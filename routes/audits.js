@@ -374,50 +374,45 @@ router.route('/user/:userId')
   });
 
   // ammend auditor role as inactive
-  for (const auditRole of req.authedUser.userRoles) {
-    console.log('auditRole.inactivated', auditRole.inactivated);
-    if (auditRole.role === 'auditor') {
-      console.log('FOR AUDITOR ROLE', auditRole.inactivated);
-      // console.log('auditRole BEFORE role inactive', auditRole.inactivated)
-      auditRole.active = false;
-      // console.log('auditRoleTHIS ONE', auditRole);
-      // console.log('auditRole.inactivated', auditRole.inactivated);
-      // console.log('auditRole.inactivated.length', auditRole.inactivated.length);
-      // console.log('WHAT FUKING USER IS THIS', req.authedUser)
-      // if (auditRole.inactivated === []) {
-      //   // console.log('should DEFFFFFFF hit here')
-      //   auditRole.inactivated = [{
-      //     authenticatingUserId: req.paramAuthedUser._id,
-      //     date: Date.now()
-      //   }]
-      // }
-      // else {
-      //   // console.log('shouldnt hit here')
-      //   auditRole.inactivated.push({
-      //     authenticatingUserId: req.authedUser._id,
-      //     date: Date.now()
-      //   });
-      // }
-      // console.log('HEREHEREHEREHEREHERE', auditRole)
-      // console.log('auditRole after role inactive', auditRole);
-      // break;
-    }
-  }
-  req.paramAuthedUser.save()
-  .then(
-  req.paramActiveSchedule.save(function(err, result){
+  User.findById(req.authedUser._id, function(err, user) {
     if (err) {
       return res.status(500).json({
-        title: 'An error occurred while unjoining active audit schedule',
+        title: 'An error occurred while unjoining active audit schedule USER',
         error: err
       });
     }
-    // console.log('result', result)
-    res.status(201).json({
-      message: 'Successfully left audit',
-      obj: result
-    });
-  }))
+    for (const auditRole of user.userRoles) {
+      if (auditRole.role === 'auditor') {
+        auditRole.active = false;
+        auditRole.inactivated.push({
+          authenticatingUserId: req.authedUser._id,
+          date: Date.now()
+        });
+        break;
+      }
+    }
+    req.paramActiveSchedule.save(function(err, result){
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred while unjoining active audit schedule',
+          error: err
+        });
+      }
+      // console.log('result', result)
+      user.save(function(err, result) {
+        if (err) {
+          return res.status(500).json({
+            title: 'An error occurred while unjoining active audit schedule ROLE',
+            error: err
+          });
+        }
+        res.status(201).json({
+          message: 'Successfully left audit',
+          obj: result
+        });
+      })
+    })
+  })
 });
 
 
