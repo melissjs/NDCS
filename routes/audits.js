@@ -372,20 +372,37 @@ router.route('/user/:userId')
     selfInitiated: true,
     date: Date.now()
   });
-  console.log('authedUser.userRoles BEFORE role inactive', req.authedUser.userRoles)
+
   // ammend auditor role as inactive
   for (const auditRole of req.authedUser.userRoles) {
-    if (auditRole.role = 'auditor') {
+    console.log('auditRole.inactivated', auditRole.inactivated);
+    if (auditRole.role === 'auditor') {
+      console.log('FOR AUDITOR ROLE', auditRole.inactivated);
+      // console.log('auditRole BEFORE role inactive', auditRole.inactivated)
       auditRole.active = false;
-      auditRole.inactivated.push({
-        authenticatingUserId: req.paramAuthedUser._id,
-        date: Date.now()
-      });
-      console.log('HEREHEREHEREHEREHERE', auditRole)
-      break;
+      // console.log('auditRoleTHIS ONE', auditRole);
+      // console.log('auditRole.inactivated', auditRole.inactivated);
+      // console.log('auditRole.inactivated.length', auditRole.inactivated.length);
+      // console.log('WHAT FUKING USER IS THIS', req.authedUser)
+      // if (auditRole.inactivated === []) {
+      //   // console.log('should DEFFFFFFF hit here')
+      //   auditRole.inactivated = [{
+      //     authenticatingUserId: req.paramAuthedUser._id,
+      //     date: Date.now()
+      //   }]
+      // }
+      // else {
+      //   // console.log('shouldnt hit here')
+      //   auditRole.inactivated.push({
+      //     authenticatingUserId: req.authedUser._id,
+      //     date: Date.now()
+      //   });
+      // }
+      // console.log('HEREHEREHEREHEREHERE', auditRole)
+      // console.log('auditRole after role inactive', auditRole);
+      // break;
     }
   }
-  console.log('authedUser.userRoles after role inactive', req.authedUser.userRoles)
   req.paramAuthedUser.save()
   .then(
   req.paramActiveSchedule.save(function(err, result){

@@ -650,7 +650,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null]
+        inactivated: []
       }, {
         role: 'volunteer',
         active: true,
@@ -662,7 +662,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }, {
         role: 'auditor',
         active: true,
@@ -674,7 +674,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [] // remoasfvadavafvaw
       },{
         role: 'admin',
         active: true,
@@ -686,7 +686,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }],
       firstName: 'Admin', 
       lastName: 'One',
@@ -715,7 +715,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }, {
         role: 'volunteer',
         active: true,
@@ -727,7 +727,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7711',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }, {
         role: 'auditor',
         active: true,
@@ -739,7 +739,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }, {
         role: 'lead',
         active: true,
@@ -751,7 +751,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }],
       firstName: 'Lead Volunteer', 
       lastName: 'One',
@@ -779,7 +779,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        inactivated: [null]
+        inactivated: []
       }, {
         role: 'volunteer',
         active: true,
@@ -791,7 +791,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7712',
           date: Date.now()
         }],
-        inactivated: [null]
+        inactivated: []
       }, {
         role: 'auditor',
         active: true,
@@ -803,7 +803,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7700',
           date: Date.now()
         }],
-        inactivated: [null]
+        inactivated: []
       }
     ],
       firstName: 'Volunteer', 
@@ -832,7 +832,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        inactivated: [null],
+        inactivated: [],
       }, {
         role: 'volunteer',
         active: true,
@@ -844,7 +844,7 @@ const MD = {
           authenticatingUserId: '5a3047c071b36b39cfce7722',
           date: Date.now()
         }],
-        inactivated: [null]
+        inactivated: []
       }, {
         role: 'auditor',
         active: true,
