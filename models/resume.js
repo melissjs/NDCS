@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ApplicationSchema = new Schema({
+const ResumeSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   roleRequests: { type: [RoleRequestSchema] },
   preferredContact:{ type: String, required: [true, 'Preferred contact required'] },
@@ -17,7 +17,7 @@ const ApplicationSchema = new Schema({
   otherLinks: { type: String }
 });
 
-module.exports = mongoose.model('Application', ApplicationSchema);
+module.exports = mongoose.model('Resume', ResumeSchema);
 
 // collaborator form
 // redundant if id ref on user model?
