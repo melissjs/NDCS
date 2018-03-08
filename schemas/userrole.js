@@ -12,7 +12,7 @@ const AuthSchema = require('./auth');
 // });
 
 const UserRoleSchema = new Schema({
-  role: { type: String, required: [true, 'Role required'], enum: {values:  ['user', 'volunteer', 'auditor', 'watcher', 'lead', 'legalObserver', 'admin'], message: 'Invalid role option' } },
+  role: { type: String, required: [true, 'Role required'], enum: {values:  ['user', 'volunteer', 'auditor', 'watcher', 'translator', 'promoter', 'legalObserver', 'lead', 'admin'], message: 'Invalid role option' } },
   active: { type: Boolean, required: [true, 'Active or inactive required'] },
   initiated: { type: [AuthSchema], required: [true, 'Role initiation date required'] },
   activated: { type: [AuthSchema]},
