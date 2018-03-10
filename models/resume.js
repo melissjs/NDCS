@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ResumeSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   roleRequests: { type: [RoleRequestSchema] },
+  shortBio: { type: String },
   preferredContact:{ type: String, required: [true, 'Preferred contact required'] },
   references: { type: String },
   facebook: { type: String },
