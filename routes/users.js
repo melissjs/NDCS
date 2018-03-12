@@ -160,6 +160,13 @@ router.post('/signin', function(req, res, next) {
     }
     let userSterilized = JSON.parse(JSON.stringify(user));
     delete userSterilized.password;
+    delete userSterilized.id;
+    delete userSterilized.schedule;
+    delete userSterilized.scheduleCount;
+    delete userSterilized.status;
+    delete userSterilized.statusHistory;
+    delete userSterilized.userRoles;
+    delete userSterilized.__v;
     var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
     res.status(200).json({
       message: 'Successfully logged in',
