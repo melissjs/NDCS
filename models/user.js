@@ -27,7 +27,7 @@ const userSchema = new Schema({
     exposeSex: { type: Boolean, default: false, required: [true, 'exposeSex required'] },
     partyAffiliation: { type: String, required: [true, 'Party affiliation required'] },
     otherPartyAffiliation: { type: String, default: '', required: [otherPartyRequired, 'Other party affiliation required'] },
-    exposePartyAffiliation: { type: Boolean, default: false, required: [true, 'exposePartyAffiliatioin required'] },
+    exposePartyAffiliation: { type: Boolean, default: false, required: [true, 'exposePartyAffiliation required'] },
     schedule: { type: [{type: Schema.Types.ObjectId, ref: 'Schedule'}], required: [isAuditor, 'Schedule is required for auditors'] },
     status: { type: String, default: 'active', required: [true, 'Status required'], enum: { values: ['active', 'inactive', 'onboarding', 'lockdown', 'deleted'], message: 'Status does not exist' } },
     statusHistory: { type: [String], default: ['onboarding'], required: [true, 'statusHistory required']}

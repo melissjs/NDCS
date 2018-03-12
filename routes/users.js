@@ -13,12 +13,18 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
   let user = new User({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 10),
-    userRoles: {
-      role: 'user',
-      active: true,
-      dateInitiated: Date.now(),
-      dateActivated: Date.now(),
-    },
+    // userRoles: [{
+    //   role: 'user',
+    //   active: true,
+    //   initiated: {
+    //     authenticatingUserId: this._id,
+    //     date: Date.now()
+    //   },
+    //   activated: {
+    //     authenticatingUserId: this._id,
+    //     date: Date.now()
+    //   }
+    // }],
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     emailAddress: req.body.emailAddress,
@@ -34,6 +40,18 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
     exposePartyAffiliation: req.body.exposePartyAffiliation,
     // schedule: req.body.schedule
   });
+  user.userRoles = [{
+    role: 'user',
+    active: true,
+    initiated: {
+      authenticatingUserId: user._id,
+      date: Date.now()
+    },
+    activated: {
+      authenticatingUserId: user._id,
+      date: Date.now()
+    }
+  }];
   user.save(function(err, result){
     if (err) {
       return res.status(500).json({
@@ -631,7 +649,21 @@ router.route('/:userId')
     res.send('Post for paramUser ' + userId);
 }).put(function(req, res) {
   paramUser.set({
-    lastName : req.body.lastName
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, 10),
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    emailAddress: req.body.emailAddress,
+    exposeEmail: req.body.exposeEmail,
+    phoneNumber: req.body.phoneNumber,
+    exposePhoneNumber: req.body.exposePhoneNumber,
+    age: req.body.age,
+    exposeAge: req.body.exposeAge,
+    sex: req.body.sex,
+    exposeSex: req.body.exposeSex,
+    partyAffiliation: req.body.partyAffiliation,
+    otherPartyAffiliation: req.body.otherPartyAffiliation,
+    exposePartyAffiliation: req.body.exposePartyAffiliation,
   });
   paramUser.save(function(err, result){
     if (err) {
