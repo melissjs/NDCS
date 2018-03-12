@@ -103,7 +103,7 @@ router.route('/pollingstation/:pollingstationId')
   pollingstationId = req.params.pollingstationId;
   console.log('HEREEEEEEEE req.authedUser', req.authedUser)
 
-  if (req.authedUser.activeRoles.includes('admin')) {
+  if (req.authedUser.activeRoles.includes('user')) {
     Pollingstation.findById(pollingstationId, function(err, station) {
       if (err) {
         return status(500).json({
