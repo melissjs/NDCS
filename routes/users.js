@@ -158,15 +158,16 @@ router.post('/signin', function(req, res, next) {
         error: {message: 'Would you like to reactivate your account?'}
       });
     }
-    let userSterilized = JSON.parse(JSON.stringify(user));
-    delete userSterilized.password;
-    delete userSterilized.id;
-    delete userSterilized.schedule;
-    delete userSterilized.scheduleCount;
-    delete userSterilized.status;
-    delete userSterilized.statusHistory;
-    delete userSterilized.userRoles;
-    delete userSterilized.__v;
+    // let userSterilized = JSON.parse(JSON.stringify(user));
+    // delete userSterilized.password;
+    // delete userSterilized.id;
+    // delete userSterilized.schedule;
+    // delete userSterilized.scheduleCount;
+    // delete userSterilized.status;
+    // delete userSterilized.statusHistory;
+    // delete userSterilized.userRoles;
+    // delete userSterilized.__v;
+    let userSterilized = sterilizeUser(user);
     var token = jwt.sign({user: userSterilized}, 'secret', {expiresIn: 7200});
     res.status(200).json({
       message: 'Successfully logged in',
@@ -192,6 +193,21 @@ router.use('/', function(req, res, next) {
     next();
   });
 });
+
+// ------------------- HELPER FUNCTIONS -------------------
+
+function sterilizeUser(passedUser) {
+  let userSterilized = JSON.parse(JSON.stringify(passedUser));
+  delete userSterilized.password;
+  delete userSterilized.id;
+  delete userSterilized.schedule;
+  delete userSterilized.scheduleCount;
+  delete userSterilized.status;
+  delete userSterilized.statusHistory;
+  delete userSterilized.userRoles;
+  delete userSterilized.__v;
+  return userSterilized;
+}
 
 // ------------------- ROLE MIDDLEWARE -------------------
 
