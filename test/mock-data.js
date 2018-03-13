@@ -11,6 +11,7 @@ const Evidence = require('../models/evidence');
 const Officevote = require('../models/officevote')
 const Pollingstation = require('../models/pollingstation');
 const Schedule = require('../models/schedule');
+const Resume = require('../models/resume');
 const User = require('../models/user');
 const Vote = require('../models/vote');
 var bcrypt = require('bcryptjs');
@@ -976,6 +977,11 @@ const MD = {
     otherLinks: 'www.otherlinks.com, www.anotherlinkaswell.com'
   },
 
+  mockResume: async function() {
+    let resume1 = new Resume(this.resume);
+    await resume1.save();
+  },
+
   // FUNCTIONS
 
   createMockData: async function() {
@@ -992,6 +998,7 @@ const MD = {
     .then(() => MD.mockAffidavits(MD.affidavitArray))
     .then(() => MD.mockAmendments(MD.amendmentArray))
     .then(() => MD.mockContacts(MD.contactArray))
+    .then(() => MD.mockResume())
     .then(() => console.log('Mock data created'))
   },
 
@@ -1011,7 +1018,8 @@ const MD = {
       Officevote.remove({}),
       Pollingstation.remove({}),
       User.remove({}),
-      Vote.remove({})
+      Vote.remove({}),
+      Resume.remove({})
     ])
       .then(() => console.log('Deleted all mock data'))
   },
