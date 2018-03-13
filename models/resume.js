@@ -5,7 +5,7 @@ const ResumeSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'UserId required'] },
   roleRequests: { type: [RoleRequestSchema] },
   shortBio: { type: String },
-  preferredContact:{ type: String, required: [true, 'Preferred contact required'] },
+  preferredContact: { type: [String], required: [true, 'Preferred contact required'], enum: {values: ['email', 'phone', 'text'], message: 'Invalid preferred contact option' }  },
   references: { type: String },
   facebook: { type: String },
   twitter: { type: String },
@@ -13,7 +13,7 @@ const ResumeSchema = new Schema({
   linkedin: { type: String },
   website: { type: String },
   resume: { type: String },
-  areasOfExpertise: { type: String },
+  areasOfExpertise: { type: [String], enum: {values: ['activism', 'pr', 'business', 'legal', 'software', 'language', 'education', 'media'], message: 'Invalid area of expertise option' } },
   relatedExperience: { type: String },
   otherLinks: { type: String }
 });

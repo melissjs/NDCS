@@ -953,6 +953,29 @@ const MD = {
     await Promise.all([vote1.save(), vote2.save(), vote3.save(), officeVote1.save(), officeVote2.save(), officeVote3.save()])
   },
 
+  // RESUME
+  resume: {
+    userId: '5a3047c071b36b39cfce7700',
+    roleRequests: [{
+      roleRequested: 'lead',
+      reasons: 'I want to be paid',
+      questions: 'Do I need to be there all day?',
+      status: 'unreviewed',
+    }],
+    shortBio: 'Politial activist, Berner, environmentalist. Working towards direct democracy and election integrity.',
+    preferredContact: ['phone'],
+    references: 'Bernie Sanders: 555-555-5555',
+    facebook: 'www.facebook.com/user',
+    twitter: 'www.twitter.com/user',
+    instagram: 'www.instagram.com/user',
+    linkedin: 'www.linkedin.com/user',
+    website: 'www.mysite.com',
+    resume: 'www.resume.com/user',
+    areasOfExpertise: ['pr', 'business'],
+    relatedExperience: 'Campaigned for Bernie in 2016 and worked on Jill Stein media campaign as well.',
+    otherLinks: 'www.otherlinks.com, www.anotherlinkaswell.com'
+  },
+
   // FUNCTIONS
 
   createMockData: async function() {
