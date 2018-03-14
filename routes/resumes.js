@@ -51,7 +51,8 @@ router.get('/all', function(req, res, next) {
 });
 
 /* GET RESUME FOR CERTAIN USER */
-router.get('/resumes/user/:userId', function(req, res, next) {
+router.get('/user/:userId', function(req, res, next) {
+  console.log('HEREwtg4tgeg')
   userId = req.params.userId;
   Resume.findOne({
     userId: userId
