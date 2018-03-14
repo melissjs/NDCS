@@ -963,7 +963,7 @@ const MD = {
       questions: 'Do I need to be there all day?',
       status: 'unreviewed',
     }],
-    shortBio: 'Politial activist, Berner, environmentalist. Working towards direct democracy and election integrity.',
+    shortBio: 'Political activist, Berner, environmentalist. Working towards direct democracy and election integrity.',
     preferredContact: ['phone'],
     references: 'Bernie Sanders: 555-555-5555',
     facebook: 'www.facebook.com/user',
