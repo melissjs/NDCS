@@ -99,10 +99,7 @@ router.post('/add', function(req, res, next) { // handle if user exists already 
 /* ALL with pollingstationId listing. */
 router.route('/pollingstation/:pollingstationId')
 .all(async function(req, res, next) {
-  console.log('hiTTing')
   pollingstationId = req.params.pollingstationId;
-  console.log('HEREEEEEEEE req.authedUser', req.authedUser)
-
   if (req.authedUser.activeRoles.includes('user')) {
     Pollingstation.findById(pollingstationId, function(err, station) {
       if (err) {
