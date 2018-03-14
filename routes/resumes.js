@@ -52,23 +52,32 @@ router.get('/all', function(req, res, next) {
 
 /* GET RESUME FOR CERTAIN USER */
 router.get('/user/:userId', function(req, res, next) {
-  console.log('HEREwtg4tgeg')
-  userId = req.params.userId;
-  Resume.findOne({
-    userId: userId
-  })
-    .exec(function(err, resume) {
-      if (err) {
-        return res.status(500).json({
-          title: 'An error occurred',
-          error: err
+  if (req.authedUser._id === req.params.userId) {
+    userId = req.params.userId;
+    Resume.findOne({
+      userId: userId
+    })
+      .exec(function(err, resume) {
+        if (err) {
+          return res.status(500).json({
+            title: 'An error occurred',
+            error: err
+          });
+        }
+        res.status(200).json({
+          message: 'Success',
+          obj: resume
         });
-      }
-      res.status(200).json({
-        message: 'Success',
-        obj: resume
       });
+  }
+  else {
+    return res.status(401).json({
+      title: 'Not authenticated',
+      error: {
+        message: 'No access to resume'
+      }
     });
+  }
 });
 
 // ------------------- POST -------------------
