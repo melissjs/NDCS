@@ -13,7 +13,7 @@ const amendmentSchema = new Schema({
   // authenticatingVolunteerId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'AuthenticatingVolunteerId required'], validate: { validator: validateAuthenticatingVolunteer, message: "Volunteer may not authenticate self" } },
   auth: { type: AuthSchema, required: [true, 'AuthenticatingVolunteerId required'], validate: { validator: validateAuthenticatingVolunteer, message: 'Volunteer cannot authenticate self' } },
   electionId: { type: Schema.Types.ObjectId, ref: 'Election', required: [true, 'ElectionId required'] },
-  timestamp: { type: Date, default: Date.now, required: [true, 'Timestamp required'] }
+  timestamp: { type: Date, default: Date.now, required: [true, 'Timestamp required'] } // needed with auth??
 });
 
 module.exports = mongoose.model('Amendment', amendmentSchema);
