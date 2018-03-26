@@ -2,14 +2,10 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-var Pollingstation = require('../models/pollingstation');
-var Election = require('../models/election');
+// var Pollingstation = require('../models/pollingstation');
+// var Election = require('../models/election');
 var Audit = require('../models/audit');
 var User = require('../models/user');
-var Schedule = require('../models/schedule');
-const mongoose = require('mongoose');
-
-// Models
 var Affidavit = require('../models/affidavit');
 var Amendment = require('../models/amendment');
 var Anomaly = require('../models/anomaly');
@@ -21,6 +17,7 @@ var Vote = require('../models/vote');
 
 /* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
 router.use('/', function(req, res, next) {
+  console.log('HEREEEEEEEEEE')
   let token = req.headers.authorization.split(' ')[1]
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
@@ -36,19 +33,19 @@ router.use('/', function(req, res, next) {
 
 // ------------------- GET -------------------
 
-/* GET ALL AUDITS */
-router.get('/all', function(req, res, next) {
-  Audit.find({})
-    .exec(function(err, audits) {
+/* GET ALL USERS AFFIDAVIT TOTAL */
+router.get('/affidavit/all', function(req, res, next) {
+  Affidavit.find({})
+    .exec(function(err, affidavits) {
       if (err) {
         return res.status(500).json({
-          title: 'An error occurred',
+          title: 'An error occurred while finding affidavits',
           error: err
         });
       }
       res.status(200).json({
         message: 'Success',
-        obj: audits
+        obj: affidavits.length
       });
     });
 });
