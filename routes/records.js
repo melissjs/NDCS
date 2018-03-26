@@ -50,4 +50,35 @@ router.get('/affidavit/all', function(req, res, next) {
     });
 });
 
+// ------------------- POST -------------------
+
+/* CREATE NEW AFFIDAVIT */
+router.post('/affidavit/add', function(req, res, next) {
+  let affidavit = new Affidavit({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    consent: req.body.consent,
+    locationName: req.body.locationName,
+    streetAddress: req.body.streetAddress,
+    zip: req.body.zip,
+    emailAddress: req.body.emailAddress,
+    comments: req.body.comments,
+    volunteerId: req.body.volunteerId,
+    electionId: req.body.electionId,
+    timestamp: req.body.timestamp
+  });
+  affidavit.save(function(err, result){
+    if (err) {
+      return res.status(500).json({
+        title: 'An error occurred while creating affidavit',
+        error: err
+      });
+    }
+    res.status(201).json({
+      message: 'Affidavit created',
+      obj: result
+    });
+  });
+});
+
 module.exports = router;
