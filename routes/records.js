@@ -32,6 +32,8 @@ router.use('/', function(req, res, next) {
 
 // ------------------- GET -------------------
 
+// protect this for admin
+
 /* GET ALL AFFIDAVIT TOTAL */
 router.get('/affidavit/all', function(req, res, next) {
   Affidavit.find({})
@@ -99,6 +101,8 @@ router.get('/anomaly/all', function(req, res, next) {
       });
     });
 });
+
+// make CER record
 
 // ------------------- POST -------------------
 
