@@ -49,19 +49,36 @@ router.get('/affidavit/all', function(req, res, next) {
     });
 });
 
-/* GET ALL AMMENDMENT TOTAL */
-router.get('/ammendment/all', function(req, res, next) {
-  Amendment.find({})
-    .exec(function(err, ammendments) {
+/* GET ALL VOTE TOTAL */
+router.get('/vote/all', function(req, res, next) {
+  Vote.find({})
+    .exec(function(err, votes) {
       if (err) {
         return res.status(500).json({
-          title: 'An error occurred while finding ammendments',
+          title: 'An error occurred while finding votes',
           error: err
         });
       }
       res.status(200).json({
         message: 'Success',
-        obj: ammendments.length
+        obj: votes.length
+      });
+    });
+});
+
+/* GET ALL AMMENDMENT TOTAL */
+router.get('/amendment/all', function(req, res, next) {
+  Amendment.find({})
+    .exec(function(err, amendments) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred while finding amendments',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: amendments.length
       });
     });
 });
