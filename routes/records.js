@@ -17,7 +17,6 @@ var Vote = require('../models/vote');
 
 /* VALIDATE AUTHORIZATION HEADER THEN APPEND USER TO REQ */
 router.use('/', function(req, res, next) {
-  console.log('HEREEEEEEEEEE')
   let token = req.headers.authorization.split(' ')[1]
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
@@ -33,7 +32,7 @@ router.use('/', function(req, res, next) {
 
 // ------------------- GET -------------------
 
-/* GET ALL USERS AFFIDAVIT TOTAL */
+/* GET ALL AFFIDAVIT TOTAL */
 router.get('/affidavit/all', function(req, res, next) {
   Affidavit.find({})
     .exec(function(err, affidavits) {
@@ -46,6 +45,40 @@ router.get('/affidavit/all', function(req, res, next) {
       res.status(200).json({
         message: 'Success',
         obj: affidavits.length
+      });
+    });
+});
+
+/* GET ALL AMMENDMENT TOTAL */
+router.get('/ammendment/all', function(req, res, next) {
+  Amendment.find({})
+    .exec(function(err, ammendments) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred while finding ammendments',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: ammendments.length
+      });
+    });
+});
+
+/* GET ALL ANOMALY TOTAL */
+router.get('/anomaly/all', function(req, res, next) {
+  Amendment.find({})
+    .exec(function(err, anomalys) {
+      if (err) {
+        return res.status(500).json({
+          title: 'An error occurred while finding anomalys',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'Success',
+        obj: anomalys.length
       });
     });
 });
