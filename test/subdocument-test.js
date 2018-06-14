@@ -14,7 +14,7 @@ describe('Creating, adding and deleting Sub Schemas (volunteer userRoles)', () =
       })
   })
 
-  it.only('can create subsequent userRoles array item to existing volunteer', (done) => {
+  it('can create subsequent userRoles array item to existing volunteer', (done) => {
     const thisVolunteer = new User(THM.userObj);
     thisVolunteer.save()
       .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
@@ -33,11 +33,9 @@ describe('Creating, adding and deleting Sub Schemas (volunteer userRoles)', () =
           inactivated: [null]
         }]);
         volunteer.userRoles = newUserRoles;
-        console.log("hEFEqcdeyuserRoles", volunteer.userRoles)
         volunteer.save()
         .then(() => User.findOne({ firstName: 'thisVolunteerFirstName' }))
         .then((volunteer) => {
-          console.log("hey")
           assert(volunteer.userRoles[2].role === 'auditor');
           done();
         });
